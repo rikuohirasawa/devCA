@@ -2,6 +2,11 @@ import requests
 from dotenv import load_dotenv, dotenv_values
 import os
 
+import datetime
+
+now = datetime.date.today()
+print(now)
+
 # load env variables to get access token
 # load_dotenv()
 # client_id = os.getenv('INDEED_CLIENT_ID')
@@ -20,11 +25,11 @@ import os
 
 # get_access_token()
 
-url = "https://auth.emsicloud.com/connect/token"
+# url = "https://auth.emsicloud.com/connect/token"
 
-payload = "client_id=%3CCLIENT_ID%3E&client_secret=%3CCLIENT_SECRET%3E&grant_type=client_credentials&scope=jobs"
-headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+# payload = "client_id=%3CCLIENT_ID%3E&client_secret=%3CCLIENT_SECRET%3E&grant_type=client_credentials&scope=jobs"
+# headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
-response = requests.request("POST", url, data=payload, headers=headers)
+# response = requests.request("POST", url, data=payload, headers=headers)
 
-print(response.text)
+# print(response.text)
