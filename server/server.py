@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
 
+from utils.get_time import get_time
 
+print(get_time())
 
 
 
