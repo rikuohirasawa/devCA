@@ -6,21 +6,48 @@ from bs4 import BeautifulSoup
 import datetime
 
 from datetime import date
+from pymongo import MongoClient
 
 
-response = requests.get('https://www.adzuna.ca/search?q=python&w=alberta')
-soup = BeautifulSoup(response.text, 'html.parser')
-title = soup.find('title')
-title_split = title.text.split()
-print(title.text.split()[0])
+# load mongodb information stored in .env
+load_dotenv()
+MONGO_URI = os.getenv('MONGO_URI')
+DB_NAME = os.getenv('DB_NAME')
+
+def importData():
+    # connect to mongodb
+    client = MongoClient(MONGO_URI)
+    try:
+        # get db and collection
+        db = client[DB_NAME]
+        job_collection = db['job_data']
+        job_collection.insert_one({'hello': 'test'})
+    except Exception as err:
+        print(type(err))
+        print(err.args)
+        print(err)
+        raise
+
+importData()
 
 
-try:
-    int(title_split[0])
-    print('true')
-    print(int(title_split[0]))
-except ValueError: 
-    print('false')
+# response = requests.get('https://www.adzuna.ca/search?q=python&loc=111152')
+# soup = BeautifulSoup(response.text, 'html.parser')
+# title = soup.find('title')
+# title_split = title.text.split()
+# print(title.text.split()[0])
+# print(len(title_split[0]))
+
+
+# try:
+#     if (len(title_split[0]) >= 5):
+#         print(int(title_split[0].replace(',', '')))
+#     else: 
+#         int(title_split[0])
+#         print('true')
+#         print(int(title_split[0]))
+# except ValueError: 
+#     print('false')
 
 # if (soup.select_one('span.mr-1').get('data-cy-count')):
 #     # select tag that contains quanitity of jobs
