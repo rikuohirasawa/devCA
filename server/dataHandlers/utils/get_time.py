@@ -12,5 +12,3 @@ def get_time():
     currentMonth = str(datetime.datetime.now().month)
     currentYear = str(datetime.datetime.now().year)
     return f'{currentYear}-{currentMonth}-{currentDay}'
-
-print(get_time())

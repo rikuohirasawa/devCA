@@ -3,16 +3,15 @@ from bs4 import BeautifulSoup
 from datetime import date
 import datetime
 from time import sleep
-import sys
-sys.path.insert(0, '/Users/Rikuo/Desktop/devCA/server/utils/get_time.py')
 from utils.get_time import get_time
 
+# Assembly, R, Go, C were appended 'developer' or 'language' to their search query, as I did not find they were accurately represented - for example my initial query returned R as having 875 opening in Alberta, more than JS (257) and Python (371) combined
+# This does mean that the data could be misrepresented now in other ways, currently working towards a solution
+# Swift, APL, VBA and Crystal were omitted entirely as their names were not verbose enough for the search engine to accurately represent their data - my solution of appending 'developer' or 'language' to the query proved was not effective 
 # C# = c%23
 # C++ = c%2B%2B
 # F# = F%23
-# Assembly, R, Go, C were appended 'developer' or 'language' to their search query, as I did not find they were accurately represented - for example my initial query returned R as having 875 opening in Alberta, more than JS (257) and Python (371) combined
-# This does mean that the data could be misrepresented now in other ways, currently working towards a solution
-developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'Swift', 'R%20developer', 'VBA', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'APL', 'Crystal', 'COBOL']
+developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
 
 regions = [('alberta', '111149'), ('british_columbia', '111152'), ('manitoba', '111151'), ('new_brunswick', '111154'), ('newfoundland_and_labrador', '111157'), ('northwest_territories', '111155'), ('nova_scotia', '111153'), ('nunavut', '111148'), ('ontario', '111147'), ('prince_edward_island', '111156'), ('quebec', '111158'), ('saskatchewan', '111146'), ('yukon', '111150')]
 
