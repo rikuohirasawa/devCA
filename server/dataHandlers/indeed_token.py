@@ -20,8 +20,8 @@ def importData():
     try:
         # get db and collection
         db = client[DB_NAME]
-        job_collection = db['job_data']
-        job_collection.insert_one({'hello': 'test'})
+        job_collection = db['technology_data']
+        job_collection.delete_many({})
     except Exception as err:
         print(type(err))
         print(err.args)

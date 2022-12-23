@@ -45,7 +45,8 @@ def import_technology_data(date):
         for skill in developer_skills:
             technology_data = {}
             total_job_count = 0
-            technology_data[skill] = {
+            technology_data = {
+                'technology': skill,
                 date: {
                     'regions': {},
                     'total_job_count': 0
@@ -53,12 +54,12 @@ def import_technology_data(date):
             for region in regions:
                 region_name = region[0]
                 region_index = region[1]
-                data_point = data[region_index][region_name][date]['technologies'][skill]
-                technology_data[skill][date]['regions'][region_name] = data_point
+                data_point = data[region_index][date]['technologies'][skill]
+                technology_data[date]['regions'][region_name] = data_point
                 total_job_count += data_point
                 print(type(data_point))
                 print(f'{region_name} {skill} is {data_point}')
-            technology_data[skill][date]['total_job_count'] = total_job_count
+            technology_data[date]['total_job_count'] = total_job_count
             technology_data_list.append(technology_data)
         print(technology_data_list)
         technology_collection = db['technology_data']
@@ -69,6 +70,7 @@ def import_technology_data(date):
         print(err)
         raise
 
-# import_technology_data('2022-12-21')
+import_technology_data('2022-12-23')
+
 
 
