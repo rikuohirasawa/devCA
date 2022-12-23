@@ -70,7 +70,35 @@ def import_technology_data(date):
         print(err)
         raise
 
-import_technology_data('2022-12-23')
+# import_technology_data('2022-12-23')
+
+# added this fx afterwards to update data to also represent percentage of jobs in each region - using seperate fx as i dont want to scrape again
+# def update_percentages_region(date):
+#     client = MongoClient(MONGO_URI)
+#     try:
+#         db = client[DB_NAME]
+#         collection = db['region_data']
+#         data = list(collection.find({}))
+#         sum_jobs = 0
+#         region_count = [('alberta', 0), ('british_columbia', 0), ('manitoba', 0), ('new_brunswick', 0), ('newfoundland_and_labrador', 0), ('northwest_territories', 0), ('nova_scotia', 0), ('nunavut', 0), ('ontario', 0), ('prince_edward_island', 0), ('quebec', 0), ('saskatchewan', 0), ('yukon', 0)]
+#         for doc in data:
+#             sum_jobs += doc[date]['total_job_count']
+#         for region in region_count:
+#             region_name = region[0]
+#             region_total = region[1]
+#             collection.find_one_and_update(
+#                 { 'region': region_name },
+#                 { '$set ': {'percentage': '${total_job_count}'/sum_jobs}}
+#                 )
+#     except Exception as err:
+#         print(type(err))
+
+# update_percentages_region('2022-12-23')
+
+
+
+
+        
 
 
 
