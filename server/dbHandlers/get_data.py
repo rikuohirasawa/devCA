@@ -6,11 +6,11 @@ load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 DB_NAME = os.getenv('DB_NAME')
 
-def get_data():
+def get_data(collection_name):
     client = MongoClient(MONGO_URI)
     try:
         db = client[DB_NAME]
-        collection = db['job_data']
+        collection = db[collection_name]
         data = list(collection.find({}))
         for x in data:
             print(x)
@@ -20,4 +20,4 @@ def get_data():
         print(err)
         raise
 
-get_data()
+get_data('region_data')

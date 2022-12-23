@@ -26,7 +26,8 @@ def scraper():
 		region_code = region[1]
 		total_job_count = 0
 		date_key = get_time()
-		region_data[region_name] = {
+		region_data = {
+			'region': region_name,
 			date_key: {
 				'technologies': {},
 				'total_job_count': 0
@@ -46,11 +47,11 @@ def scraper():
 					num_jobs = int(num_jobs_string)
 			except ValueError:
 				num_jobs = 0
-			region_data[region_name][date_key]['technologies'][skill] = num_jobs
+			region_data[date_key]['technologies'][skill] = num_jobs
 			total_job_count += num_jobs
 			# add 1s delay in loop iterations to not overload their servers when scraping - i'm sure they are fine but just in case :)
 			sleep(1)
-		region_data[region_name][date_key]['total_job_count'] = total_job_count
+		region_data[date_key]['total_job_count'] = total_job_count
 		region_data_list.append(region_data)
 		print(f'{region_name} done')
 		sleep(1)
