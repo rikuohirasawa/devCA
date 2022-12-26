@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     :root {
         --cherry-red: #990011FF;
         --off-white: #FCF6F5FF;
+        --blend-cr-ow: #FCF6F5;
     }
     body {
         background-color: var(--off-white);
