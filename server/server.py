@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, Response, Request, make_response
 import requests
-from flask_cors import CORS
+# from flask_cors import CORS
 from apiHandlers.get_data import get_data
 
 
