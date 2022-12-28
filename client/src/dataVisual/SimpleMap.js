@@ -4,8 +4,16 @@ import d3 from "d3"
 
 const CANADA_TOPO_JSON = require('./Canada.topo.json')
 
+const MAP_CONFIG = {
+    scale: 350,
+    center: mapCoordinates
+}
+
+const mapCoordinates = [-106.3468, 68.1304]
+
 const projection = d3.geo.mercator()
     .center([-106.3468,70.1304])
+
 
 const albers = d3.geo.albers()
     .center([-106.3468, 68.1304])
