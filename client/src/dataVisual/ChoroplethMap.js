@@ -17,17 +17,17 @@ window.addEventListener('load', (event)=>{
 })
 export const ChoroplethMap = ({data}) => {
     console.log(data)
-    let dataset = {},
+    const dataset = {},
     onlyValues = data.map((e)=>e[1]),
     minValue = Math.min.apply(null, onlyValues),
     maxValue = Math.max.apply(null, onlyValues);
 
     const paletteScale = d3.scale.linear()
         .domain([minValue, maxValue])
-        .range(['#EFEFFF', '#02386F'])
+        .range(['#E5CCEE', '#990011'])
 
     data.forEach((e)=>{
-        let iso = e[0],
+        const iso = e[0],
         value = e[1];
         dataset[iso] = {number: value, fillColor: paletteScale(value)}
     })
@@ -38,7 +38,7 @@ export const ChoroplethMap = ({data}) => {
             geographyConfig: {
                 popupOnHover: true,
                 highlightOnHover: true,
-                highlightFillColor: '#990011FF',
+                highlightFillColor: '#FCF6F5',
                 borderColor: '#444',
                 highlightBorderWidth: 1,
                 borderWidth: 0.5,
@@ -62,12 +62,12 @@ export const ChoroplethMap = ({data}) => {
             },
             data: dataset,
             setProjection: function (element) {
-                var projection = d3.geo.mercator()
+                const projection = d3.geo.mercator()
                     .center([-106.3468, 68.1304]) // always in [East Latitude, North Longitude]
                     .scale(400)
                     .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
     
-                var path = d3.geo.path().projection(projection);
+                const path = d3.geo.path().projection(projection);
                 return { path: path, projection: projection };
             }
         })
