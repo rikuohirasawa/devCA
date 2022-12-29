@@ -8,19 +8,14 @@ import { Homepage } from './homepage/Homepage'
 
 import { useEffect } from 'react';
 
+import { PageContext, PageContextProvider } from './states/PageContext';
+
 
 const App: React.FC = () => {
 
-  useEffect(()=>{
-    fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
-    .then(res=>{
-      console.log(res)
-      return res.json()})
-      .then(data=>{
-        console.log(data)
-      })
-  }, [])
+
   return (
+    <PageContextProvider>
     <div className="App">
       <GlobalStyle/>
       <BrowserRouter>
@@ -30,6 +25,7 @@ const App: React.FC = () => {
         </Routes>
       </BrowserRouter>
     </div>
+    </PageContextProvider>
   );
 }
 

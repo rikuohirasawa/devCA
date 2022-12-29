@@ -13,7 +13,7 @@ from utils.get_time import get_time
 # F# = F%23
 developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
 
-regions = [('alberta', '111149'), ('british_columbia', '111152'), ('manitoba', '111151'), ('new_brunswick', '111154'), ('newfoundland_and_labrador', '111157'), ('northwest_territories', '111155'), ('nova_scotia', '111153'), ('nunavut', '111148'), ('ontario', '111147'), ('prince_edward_island', '111156'), ('quebec', '111158'), ('saskatchewan', '111146'), ('yukon', '111150')]
+regions = [('AB', '111149'), ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
 
 def scraper():
 	# initially used a dict to store data, but need list as mongodb insertmany fx creates one document as opposed to individual documents if data is stored in dict

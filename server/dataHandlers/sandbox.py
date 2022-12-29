@@ -14,21 +14,55 @@ load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 DB_NAME = os.getenv('DB_NAME')
 
-def importData():
-    # connect to mongodb
+def updateNames():
     client = MongoClient(MONGO_URI)
+    names = {
+        'alberta': 'AB', 
+        'british_columbia': 'BC',
+        'manitoba': 'MB',
+        'new_brunswick': 'NB',
+        'newfoundland_and_labrador': 'NF',
+        'northwest_territories': 'NT',
+        'nova_scotia': 'NS',
+        'nunavut': 'NU',
+        'ontario': 'ON',
+        'prince_edward_island': 'PE',
+        'quebec': 'QC',
+        'saskatchewan': 'SK',
+        'yukon': 'YT'
+    }
     try:
-        # get db and collection
         db = client[DB_NAME]
-        job_collection = db['technology_data']
-        job_collection.delete_many({})
-    except Exception as err:
-        print(type(err))
+        collection = db['region_data']
+        for name in names:
+            print(name)
+            print(names[name])
+            collection.find_one_and_update(
+                {'region': name},
+                {'$set': {'region': names[name]}}
+            )
+        # data = list(collection.find())
+        # print(data)
+    except Exception as err: 
         print(err.args)
-        print(err)
-        raise
 
-importData()
+# updateNames()
+
+# def importData():
+#     # connect to mongodb
+#     client = MongoClient(MONGO_URI)
+#     try:
+#         # get db and collection
+#         db = client[DB_NAME]
+#         job_collection = db['technology_data']
+#         job_collection.delete_many({})
+#     except Exception as err:
+#         print(type(err))
+#         print(err.args)
+#         print(err)
+#         raise
+
+# importData()
 
 
 # response = requests.get('https://www.adzuna.ca/search?q=python&loc=111152')

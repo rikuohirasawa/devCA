@@ -4,6 +4,9 @@ import { PageState, pageReducer, ActionTypes } from "./pageReducer";
 const initialPageState: PageState = {
     modalOpen: false,
     sidebarOpen: false,
+    viewTechnology: 'Python',
+    viewDate: '2022-12-23',
+    regionDataAll: undefined
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({
