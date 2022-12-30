@@ -19,7 +19,7 @@ const App: React.FC = () => {
     <div className="App">
       <GlobalStyle/>
       <BrowserRouter>
-        <Header/>
+        {/* <Header/> */}
         <Routes>
           <Route path='/' element={<Homepage/>}/>
         </Routes>

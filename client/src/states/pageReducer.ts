@@ -17,6 +17,7 @@ export interface PageState {
 export enum ActionTypes {
     openModal = 'OPEN_MODAL',
     closeModal = 'CLOSE_MODAL',
+    toggleModal = 'TOGGLE_MODAL',
     openSideBar = 'OPEN_SIDEBAR',
     regionData = 'REGION_DATA',
     viewTechnology = 'VIEW_TECHNOLOGY',
@@ -39,6 +40,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 modalOpen: false
+            }
+        } case ActionTypes.toggleModal: {
+            return {
+                ...state,
+                modalOpen: !state.modalOpen
             }
         } case ActionTypes.openSideBar: {
             return {

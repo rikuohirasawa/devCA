@@ -1,15 +1,16 @@
 import { Wrapper } from "./homepageStyles"
 
 import { ChoroplethMap } from "../dataVisual/ChoroplethMap"
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useRef } from "react"
 
 import { PageContext } from "../states/PageContext"
 import { DataMap } from "../dataVisual/DataMap"
 import { SimpleMap } from "../dataVisual/SimpleMap"
+import { RegionModal } from "../dataVisual/modal/RegionModal"
 export const Homepage: React.FC = () => {
-    const data = [["MB", 75], ["SK", 43], ["AB", 50], ["BC", 88], ["NU", 21], ["NT", 43],
-    ["YT", 21], ["ON", 19], ["QC", 60], ["NB", 4], ["NS", 44], ["NF", 38],
-    ["PE", 67]]
+    // const data = [["MB", 75], ["SK", 43], ["AB", 50], ["BC", 88], ["NU", 21], ["NT", 43],
+    // ["YT", 21], ["ON", 19], ["QC", 60], ["NB", 4], ["NS", 44], ["NF", 38],
+    // ["PE", 67]]
 
     const { state, dispatch } = useContext(PageContext);
 
@@ -28,36 +29,22 @@ export const Homepage: React.FC = () => {
     //     saskatchewan: 'SK',
     //     yukon: 'YT'
     // }
-    
-    if (state.regionDataAll) {
-        const regionData = state.regionDataAll.map(e => {
-            return [e.region ]
-            // date = '2022-12-23'
-            console.log(e)
-            // return [convertNames[e]]
-        })
-    }
 
-    console.log(state.regionDataAll)
-
+    const dataxyz = useRef(null);
     useEffect(()=>{
+        console.log('usefxx')
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
         .then(res=>{
           console.log(res)
           return res.json()})
           .then(data=>{
-            console.log(data);
             dispatch({type: 'REGION_DATA', payload: data})
           })
       }, [])
-
-    // if (state.regionDataAll) {
-
-    // }
     return (
-    
     <Wrapper>
-        <ChoroplethMap data={data}/>
+      <RegionModal/>
+        {/* <ChoroplethMap/> */}
         {/* <SimpleMap/> */}
         {/* <DataMap/> */}
     </Wrapper>
