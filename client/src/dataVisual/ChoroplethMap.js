@@ -1,4 +1,3 @@
-import { geoPatterson } from "d3-geo-projection";
 import Datamap from 'datamaps'
 import d3 from 'd3'
 
@@ -13,7 +12,6 @@ export const ChoroplethMap = () => {
     { regionDataAll, viewDate, viewTechnology } = state;
 
     if (regionDataAll && document.readyState === 'complete') {
-        console.log(document.getElementById('map-container'))
         const dataset = {},
         // get total job count - stored as last value in array
         totalJobCount = regionDataAll[-1],
@@ -35,7 +33,7 @@ export const ChoroplethMap = () => {
         // this is a ROUGH solution I've implemented to handle a bug where the maps is being rerendered up to 5 times...
         // I've tried a few different solutions with useRef and tinkering with states but nothing worked... so far. I'll come back
         // this at a later date
-        if (document.querySelectorAll('#map-container svg').length <= 1) {
+        if (document.querySelectorAll('#map-container svg').length < 1) {
             const map = new Datamap({
                 element: document.getElementById('map-container'),
                 scope: 'canada',
@@ -83,14 +81,29 @@ export const ChoroplethMap = () => {
 
         
 
-        // d3.selectAll('.datamaps-subunit').style('cursor', 'pointer')
-        // d3.selectAll('.datamaps-subunit').on('click', (geo)=>{
-        //     // console.log(geo.id)
-        //     // const selectedRegion = document.getElementsByClassName(geo.id)
-        //     // console.log(selectedRegion)
-        //     // d3.select(`.${geo.id}`).transition().duration(750).attr('style', 'position: absolute;top:50%;left:50%;transform:translate(-50%,-50%')
-        //     // d3.select(`.${geo.id}`).style('position', 'absolute')
-        // })
+        d3.selectAll('.datamaps-subunit').style('cursor', 'pointer')
+        d3.selectAll('.datamaps-subunit').on('click', (geo)=>{
+
+            const selectedRegion = document.getElementsByClassName(geo.id);
+            console.log(selectedRegion)
+            // const numJobs = JSON.parse(selectedRegion[0].getAttribute('data-info'))['number'];
+            const regionData = (regionDataAll.filter(e=>e.region === geo.id && e.region)[0]),
+            regionDataInterface = {
+                [geo.id]: {
+                    [viewDate]: {
+                        technologies: [regionData[viewDate]['technologies']],
+                        totalCount: regionData[viewDate]['total_job_count']
+                    },
+                }
+            }
+            console.log(regionDataInterface)
+            // console.log(regionData)
+            dispatch({type: 'SELECT_REGION', payload: regionDataInterface})
+            dispatch({type: 'SELECT_REGION_ID', id: geo.id})
+            dispatch({type: 'TOGGLE_MODAL'});
+            // d3.select(`.${geo.id}`).transition().duration(750).attr('style', 'position: absolute;top:50%;left:50%;transform:translate(-50%,-50%')
+            // d3.select(`.${geo.id}`).style('position', 'absolute')
+        })
     }
     return (
         <div id='map-container'

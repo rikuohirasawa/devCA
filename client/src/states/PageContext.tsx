@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 import { PageState, pageReducer, ActionTypes } from "./pageReducer";
 
 const initialPageState: PageState = {
-    modalOpen: true,
+    modalOpen: false,
     sidebarOpen: false,
     viewTechnology: 'Python',
     viewDate: '2022-12-23',

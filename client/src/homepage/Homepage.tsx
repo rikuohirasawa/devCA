@@ -44,7 +44,7 @@ export const Homepage: React.FC = () => {
     return (
     <Wrapper>
       <RegionModal/>
-        {/* <ChoroplethMap/> */}
+        <ChoroplethMap/>
         {/* <SimpleMap/> */}
         {/* <DataMap/> */}
     </Wrapper>

@@ -1,17 +1,21 @@
-
 interface RegionData {
-    region: string,
-    technologies: {
-        [key: string]: number
-    },
-    totalCount: number
+    [region: string]: {
+        [viewDate: string] : {
+            technologies: {
+                [key: string]: number
+            },
+            totalCount: number;
+        };
+    }
 }
 export interface PageState {
     modalOpen: boolean,
     sidebarOpen: boolean,
     regionDataAll?: RegionData[],
     viewTechnology: string | null,
-    viewDate: string | null
+    viewDate: string,
+    selectedRegion?: RegionData,
+    selectedRegionID?: string
 }
 
 export enum ActionTypes {
@@ -21,12 +25,15 @@ export enum ActionTypes {
     openSideBar = 'OPEN_SIDEBAR',
     regionData = 'REGION_DATA',
     viewTechnology = 'VIEW_TECHNOLOGY',
-    viewDate = 'VIEW_DATE'
+    viewDate = 'VIEW_DATE',
+    selectRegion = 'SELECT_REGION',
+    selectRegionID = 'SELECT_REGION_ID'
 }
 
 interface PageAction {
-    type: ActionTypes
-    payload? : any
+    type: ActionTypes;
+    payload? : any;
+    id: string;
 }
 
 export const pageReducer = (state: PageState, action: PageAction) => {
@@ -61,7 +68,16 @@ export const pageReducer = (state: PageState, action: PageAction) => {
                 ...state,
                 viewDate: action.payload
             }
-
+        } case ActionTypes.selectRegion: {
+            return {
+                ...state,
+                selectedRegion: action.payload
+            }
+        } case ActionTypes.selectRegionID: {
+            return {
+                ...state,
+                selectedRegionID: action.id
+            }
         }
         default: return state;
     }
