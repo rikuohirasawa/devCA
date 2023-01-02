@@ -23,7 +23,7 @@ export const ChoroplethMap = () => {
 
         const paletteScale = d3.scale.linear()
         .domain([minValue, maxValue])
-        .range(['#E5CCEE', '#990011'])
+        .range(['#feebe2', '#7a0177'])
 
         removeSumJobsArray.forEach(e=>{
             const iso = e.region,
@@ -41,10 +41,11 @@ export const ChoroplethMap = () => {
                 geographyConfig: {
                     popupOnHover: true,
                     highlightOnHover: true,
-                    highlightFillColor: '#FCF6F5',
-                    borderColor: '#444',
-                    highlightBorderWidth: 1,
-                    borderWidth: 0.5,
+                    highlightFillColor: 'var(--off-white)',
+                    borderColor: 'var(--slate)',
+                    highlightBorderColor: 'var(--burgundy)',
+                    highlightBorderWidth: 0.6,
+                    borderWidth: 0.6,
                     dataJson: CANADA_TOPO_JSON,
                     popupTemplate: (geo, data) => {
                         // don't show tooltip if country don't present in dataset
@@ -57,7 +58,7 @@ export const ChoroplethMap = () => {
                     }
                 },
                 fills: {
-                    HIGH: '#990011FF',
+                    HIGH: 'var(--lime-green)',
                     LOW: '#123456',
                     MEDIUM: 'blue',
                     UNKNOWN: 'rgb(0,0,0)',
@@ -76,29 +77,28 @@ export const ChoroplethMap = () => {
             d3.select(window).on('resize', function() {
                 map.resize();
             });
-
-        }
-
-        
-
+        };
         d3.selectAll('.datamaps-subunit').style('cursor', 'pointer')
         d3.selectAll('.datamaps-subunit').on('click', (geo)=>{
 
             const selectedRegion = document.getElementsByClassName(geo.id);
-            console.log(selectedRegion)
+            console.log(selectedRegion[0])
+            const svgPaths = document.getElementsByClassName('datamaps-subunit');
+            console.log(svgPaths)
             // const numJobs = JSON.parse(selectedRegion[0].getAttribute('data-info'))['number'];
             const regionData = (regionDataAll.filter(e=>e.region === geo.id && e.region)[0]),
-            regionDataInterface = {
-                [geo.id]: {
+            selectedRegionInterface = {
+                [geo.id] : {
                     [viewDate]: {
-                        technologies: [regionData[viewDate]['technologies']],
+                        technologies: regionData[viewDate]['technologies'],
                         totalCount: regionData[viewDate]['total_job_count']
-                    },
-                }
+                    }
+                },
+                id: geo.id,
+                totalCountAll: regionDataAll.slice(-1)[0]['sum_jobs']
             }
-            console.log(regionDataInterface)
             // console.log(regionData)
-            dispatch({type: 'SELECT_REGION', payload: regionDataInterface})
+            dispatch({type: 'SELECT_REGION', payload: selectedRegionInterface})
             dispatch({type: 'SELECT_REGION_ID', id: geo.id})
             dispatch({type: 'TOGGLE_MODAL'});
             // d3.select(`.${geo.id}`).transition().duration(750).attr('style', 'position: absolute;top:50%;left:50%;transform:translate(-50%,-50%')

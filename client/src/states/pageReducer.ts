@@ -8,13 +8,28 @@ interface RegionData {
         };
     }
 }
+
+interface SelectedRegion {
+    [region: string]: {
+        [viewDate: string]: {
+            technologies: {
+                [key:string]:number
+            },
+            totalCount: number;
+        }
+    } & {
+        id: string; 
+        totalCountAll: number;
+
+    }
+}
 export interface PageState {
     modalOpen: boolean,
     sidebarOpen: boolean,
     regionDataAll?: RegionData[],
-    viewTechnology: string | null,
+    viewTechnology: string,
     viewDate: string,
-    selectedRegion?: RegionData,
+    selectedRegion?: SelectedRegion,
     selectedRegionID?: string
 }
 
