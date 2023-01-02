@@ -12,31 +12,35 @@ export const BarGraph: React.FC<GraphProps> = ({data})  => {
     for (const key in data) {
         graphData.push(Object.assign({}, {name: key, count: data[key]}))
     }
-    const sortData = graphData.sort((a, b) => a.count - b.count)
+    const sortData = graphData.sort((a, b) => b.count - a.count)
     
     console.log(sortData)
-
     return (
         <GraphContainer>
             <ResponsiveContainer
-            aspect={3}
-            width='99%'
-            height='100%'
+            // aspect={3}
+            // width='99%'
+            // height='100%'
             >
                 <BarChart
-                height={100}
+                height={80}
                 layout='vertical'
+                barCategoryGap={1
+                }
                 // margin={{top: 5, right: 30, left: 20, bottom: 5}}
-                data={sortData}>
+                data={sortData.slice(0, 14)}
+                margin={{ top: 0, right: 50, left: 0, bottom: 0 }}>
                     <XAxis 
-                        dataKey='name' 
-                        type='category'/>
+                        type='number'
+                        />
                     <YAxis 
-                        dataKey='count' 
-                        type='number'/>
+                    width={130}
+                        dataKey='name' 
+                        type='category'
+/>
                     <Bar 
                         dataKey='count' 
-                        fill="#fb5012"/>
+                        fill="#7a0177"/>
                 </BarChart>
             </ResponsiveContainer>
         </GraphContainer>
