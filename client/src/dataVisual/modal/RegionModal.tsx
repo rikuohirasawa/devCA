@@ -8,8 +8,8 @@ import React, { useState, useContext, useEffect, useRef, MutableRefObject } from
 import { BackDrop, Wrapper, CloseButton, Content } from './modalStyles';
 
 import { PageContext } from "../../states/PageContext";
-import { useLinkClickHandler } from 'react-router-dom';
 import { BarGraph } from '../graphs/BarGraph'
+import { PieGraph } from '../graphs/PieGraph'
 
 export const RegionModal: React.FC = () => {
 
@@ -33,7 +33,7 @@ export const RegionModal: React.FC = () => {
         'YT': 'Yukon'
     };
 
-    const styles: {[key:string]: object} = {
+    const styles: {[key:string]: {[key: string]: {}}} = {
         modalStyles :{
             content: {
                 top: '50%',
@@ -78,7 +78,8 @@ export const RegionModal: React.FC = () => {
                             <div>
                                 <div>{`Represents ${percentageInRegion}% of jobs parsed in ${regionName}, and ${percentageInCanada}% of jobs in all of Canada`}</div>
                             </div>
-                            <BarGraph data={regionByDate['technologies']}/>
+                            {/* <BarGraph data={regionByDate['technologies']}/> */}
+                            <PieGraph data={regionByDate['technologies']}/>
                         </Content> 
                         :
                         <div>loading</div>}

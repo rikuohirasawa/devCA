@@ -6,7 +6,7 @@ const initialPageState: PageState = {
     sidebarOpen: false,
     viewTechnology: 'Python',
     viewDate: '2022-12-23',
-    regionDataAll: undefined
+    regionDataAll: []
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({

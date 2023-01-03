@@ -38,6 +38,7 @@ export const Homepage: React.FC = () => {
           console.log(res)
           return res.json()})
           .then(data=>{
+            console.log(data)
             dispatch({type: 'REGION_DATA', payload: data})
           })
       }, [])
