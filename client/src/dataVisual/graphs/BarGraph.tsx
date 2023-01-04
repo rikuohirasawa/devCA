@@ -1,5 +1,5 @@
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts"
-import { GraphContainer } from "./barGraphStyles"
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
+import { GraphContainer, BarGraphWrapper, StickyWrapper } from "./graphStyles"
 import { CustomToolTip } from "./CustomToolTip"
 
 import { getGraphData } from "./utils"
@@ -10,34 +10,46 @@ export interface GraphProps {
 }
 
 export const BarGraph: React.FC<GraphProps> = ({data})  => {
-    const sortData = getGraphData(data);
-    console.log(sortData)
+    if (data) {const sortData = getGraphData(data);
+    console.log(sortData.slice(0,14))
     return (
-        <GraphContainer>
-            <ResponsiveContainer
+        <BarGraphWrapper>
+            <ResponsiveContainer height={700}
+            width='65%'
             >
                 <BarChart
-                height={80}
+                width={500}
+                height={1000}
                 layout='vertical'
-                barCategoryGap={1
+                barCategoryGap={0
                 }
-                data={sortData.slice(0, 14)}
-                margin={{ top: 0, right: 50, left: 0, bottom: 0 }}>
+                data={sortData}
+                >
                     <XAxis 
-                        type='number'
-                        />
+                    type='number'/>
+                    <XAxis 
+                    id='axis-pos-top'
+                    allowDuplicatedCategory
+                    type='number'/>
                     <YAxis 
-                    width={130}
+                    width={120}
                         dataKey='name' 
-                        type='category'/>
+                        type='category'
+                        interval={0}/>
                         <Tooltip
                         content={<CustomToolTip/>}
                         cursor={false}/>
+                    <CartesianGrid stroke="#d3d3d3" strokeDasharray="2 2"/>
                     <Bar 
                         dataKey='count' 
                         fill="#7a0177"/>
                 </BarChart>
-            </ResponsiveContainer>
-        </GraphContainer>
-    )
+           </ResponsiveContainer>
+           <StickyWrapper>
+            
+           </StickyWrapper>
+        </BarGraphWrapper>
+    )} else {
+        return <div>loading</div>
+    }
 }
