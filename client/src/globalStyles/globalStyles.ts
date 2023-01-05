@@ -15,20 +15,44 @@ export const GlobalStyle = createGlobalStyle`
         --lime-green: #64ffda;
         --navy: #0a192f;
         --slate: #8892b0;
+        
         --burgundy: #7a0177;
+        
+        // darkMode colors (?)
+        --bg-dark: #011627;
+        --purple-kobi: #DD99BB;
+        --purple-lavender: #7B506F;
+        --light-pink: #EAD7D1;
+        --mint: #B5FED9
     }
     body {
         background-color: #fff;
         color: var(--burgundy);
-        font-family: 'Cousine', monospace;
+        /* font-family: 'Cousine', monospace; */
     }
 
     .hover-info {
         /* color: var(--lime-green); */
-        background-color: var(--off-white);
+        font-weight: 400;
+        background: #011627;
         border: 1px solid;
         padding: 18px;
-        font-family: 'Courier Prime', monospace;
+        /* font-family: 'Courier Prime', monospace; */
         border-radius: 8px;
+    }
+    ::-webkit-scrollbar {
+    width: 6px;
+}
+
+    ::-webkit-scrollbar-track {
+    background: #011627;
+    }
+
+    ::-webkit-scrollbar-thumb {
+    background: #319795;
+
+    &:hover {
+        background: #DD99BB
+    }
     }
     `

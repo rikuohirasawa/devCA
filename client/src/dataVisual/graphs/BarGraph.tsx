@@ -10,16 +10,17 @@ export interface GraphProps {
 }
 
 export const BarGraph: React.FC<GraphProps> = ({data})  => {
-    if (data) {const sortData = getGraphData(data);
+    if (data) {
+    const sortData = getGraphData(data);
     console.log(sortData.slice(0,14))
     return (
         <BarGraphWrapper>
             <ResponsiveContainer height={700}
-            width='65%'
+            width='75%'
             >
                 <BarChart
-                width={500}
-                height={1000}
+                // width={500}
+                // height={1000}
                 layout='vertical'
                 barCategoryGap={0
                 }
@@ -39,7 +40,10 @@ export const BarGraph: React.FC<GraphProps> = ({data})  => {
                         <Tooltip
                         content={<CustomToolTip/>}
                         cursor={false}/>
-                    <CartesianGrid stroke="#d3d3d3" strokeDasharray="2 2"/>
+                    <CartesianGrid 
+                    stroke="#d3d3d3" 
+                    strokeDasharray="2 4"
+                    style={{opacity: '0.2'}}/>
                     <Bar 
                         dataKey='count' 
                         fill="#7a0177"/>

@@ -74,9 +74,9 @@ export const RegionModal: React.FC = () => {
                         <ModalCloseButton/>
                             {selectedRegion && regionDataAll && selectedRegionID ? 
                                 <ModalContent 
-                                border='1px solid red'
+                                bg='darkMode.bg'
                                 maxW='80%'
-                                maxH='80%'
+                                h='80%'
                                 padding='12px'>
                                     <ModalHeader><Heading as='h1' size='xl'>{regionName} - {viewTechnology}</Heading></ModalHeader>
                                     <ModalCloseButton onClick={onClose}/>
