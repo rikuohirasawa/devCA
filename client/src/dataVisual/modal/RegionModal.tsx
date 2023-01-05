@@ -1,4 +1,4 @@
-import Modal from 'react-modal'
+// import Modal from 'react-modal'
 import moment from 'moment'
 import { GrClose } from 'react-icons/gr'
 import { MdClose } from 'react-icons/md'
@@ -8,8 +8,10 @@ import React, { useState, useContext, useEffect, useRef, MutableRefObject } from
 import { BackDrop, Wrapper, CloseButton, Content } from './modalStyles';
 
 import { PageContext } from "../../states/PageContext";
-import { useLinkClickHandler } from 'react-router-dom';
 import { BarGraph } from '../graphs/BarGraph'
+import { PieGraph } from '../graphs/PieGraph'
+import { GraphTabs } from '../graphTabs/GraphTabs';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, useDisclosure, ModalCloseButton } from '@chakra-ui/react'
 
 export const RegionModal: React.FC = () => {
 
@@ -33,7 +35,7 @@ export const RegionModal: React.FC = () => {
         'YT': 'Yukon'
     };
 
-    const styles: {[key:string]: object} = {
+    const styles: {[key:string]: {[key: string]: {}}} = {
         modalStyles :{
             content: {
                 top: '50%',
@@ -53,38 +55,44 @@ export const RegionModal: React.FC = () => {
     getMonth = moment(viewDate).format('MMMM'),
     getDay = moment(viewDate).format('DD');
 
-
+    const {isOpen, onOpen, onClose} = useDisclosure()
+    console.log(onClose)
 
     if (selectedRegion && regionDataAll && selectedRegionID) {
         const regionByDate = selectedRegion[selectedRegionID][viewDate],
         regionName = convertNames[selectedRegionID],
         percentageInRegion = (regionByDate['technologies'][viewTechnology]/Number(regionByDate['totalCount']) *100).toFixed(2),
-        percentageInCanada = (regionByDate['technologies'][viewTechnology]/Number(selectedRegion['totalCountAll']) * 100).toFixed(2);
+        percentageInCanada = (regionByDate['technologies'][viewTechnology]/Number(selectedRegion['totalCountAll']) * 100).toFixed(2)
+
         return (
-            <BackDrop 
-            onClick={toggleModal}
-            modalOpen={modalOpen}
-           >
                 <Modal
+                closeOnOverlayClick
+                isCentered
                 isOpen={modalOpen}
-                // closeTimeoutMS={2000}
-                style={styles.modalStyles}>
-                    <Wrapper onClick={(e)=>e.stopPropagation()}>
-                    <CloseButton onClick={toggleModal}><MdClose size={18}style={styles.iconStyles}/></CloseButton>
-                    {selectedRegion && regionDataAll && selectedRegionID ? 
-                        <Content>
-                            <h1 className='modal-heading'>{regionName} - {viewTechnology}</h1>
-                            <div>{getMonth + ' ' + getDay + ', ' + getYear}</div>
-                            <div>
-                                <div>{`Represents ${percentageInRegion}% of jobs parsed in ${regionName}, and ${percentageInCanada}% of jobs in all of Canada`}</div>
-                            </div>
-                            <BarGraph data={regionByDate['technologies']}/>
-                        </Content> 
-                        :
-                        <div>loading</div>}
-                    </Wrapper>
+                onClose={toggleModal}>
+                    <ModalOverlay/>
+                        <ModalCloseButton/>
+                            {selectedRegion && regionDataAll && selectedRegionID ? 
+                                <ModalContent 
+                                border='1px solid red'
+                                maxW='80%'
+                                maxH='80%'
+                                padding='12px'>
+                                    <ModalHeader><Heading as='h1' size='xl'>{regionName} - {viewTechnology}</Heading></ModalHeader>
+                                    <ModalCloseButton onClick={onClose}/>
+                                        <ModalBody>
+                                        <div>{getMonth + ' ' + getDay + ', ' + getYear}</div>
+                                        <div>
+                                            <div>{`Represents ${percentageInRegion}% of jobs parsed in ${regionName}, and ${percentageInCanada}% of jobs in all of Canada`}</div>
+                                        </div>
+                                        {/* <BarGraph data={regionByDate['technologies']}/> */}
+                                        {/* <PieGraph data={regionByDate['technologies']}/> */}
+                                        <GraphTabs data={regionByDate['technologies']}/>
+                                    </ModalBody>
+                                </ModalContent>
+                            :
+                            <div>loading</div>}
                 </Modal>
-            </BackDrop>
         )
     } else {
         return (

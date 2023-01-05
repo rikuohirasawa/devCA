@@ -20,7 +20,6 @@ interface SelectedRegion {
     } & {
         id: string; 
         totalCountAll: number;
-
     }
 }
 export interface PageState {

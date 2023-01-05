@@ -97,6 +97,8 @@ export const ChoroplethMap = () => {
                 id: geo.id,
                 totalCountAll: regionDataAll.slice(-1)[0]['sum_jobs']
             }
+            
+
             // console.log(regionData)
             dispatch({type: 'SELECT_REGION', payload: selectedRegionInterface})
             dispatch({type: 'SELECT_REGION_ID', id: geo.id})
