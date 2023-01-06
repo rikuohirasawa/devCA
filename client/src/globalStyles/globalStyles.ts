@@ -23,12 +23,14 @@ export const GlobalStyle = createGlobalStyle`
         --purple-kobi: #DD99BB;
         --purple-lavender: #7B506F;
         --light-pink: #EAD7D1;
-        --mint: #B5FED9
+        --mint: #B5FED9;
     }
     body {
         background-color: #fff;
         color: var(--burgundy);
         /* font-family: 'Cousine', monospace; */
+        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
     }
 
     .hover-info {

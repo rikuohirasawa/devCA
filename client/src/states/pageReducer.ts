@@ -22,6 +22,11 @@ interface SelectedRegion {
         totalCountAll: number;
     }
 }
+
+interface TechnologyData {
+    [date: string] : {},
+    technology: string
+}
 export interface PageState {
     modalOpen: boolean,
     sidebarOpen: boolean,
@@ -29,25 +34,27 @@ export interface PageState {
     viewTechnology: string,
     viewDate: string,
     selectedRegion?: SelectedRegion,
-    selectedRegionID?: string
+    selectedRegionID?: string,
+    technologyDataAll?: TechnologyData[]
 }
 
 export enum ActionTypes {
     openModal = 'OPEN_MODAL',
     closeModal = 'CLOSE_MODAL',
     toggleModal = 'TOGGLE_MODAL',
-    openSideBar = 'OPEN_SIDEBAR',
+    toggleSidebar = 'TOGGLE_SIDEBAR',
     regionData = 'REGION_DATA',
     viewTechnology = 'VIEW_TECHNOLOGY',
     viewDate = 'VIEW_DATE',
     selectRegion = 'SELECT_REGION',
-    selectRegionID = 'SELECT_REGION_ID'
+    selectRegionID = 'SELECT_REGION_ID',
+    technologyData = 'TECHNOLOGY_DATA'
 }
 
 interface PageAction {
     type: ActionTypes;
     payload? : any;
-    id: string;
+    id?: string;
 }
 
 export const pageReducer = (state: PageState, action: PageAction) => {
@@ -67,10 +74,10 @@ export const pageReducer = (state: PageState, action: PageAction) => {
                 ...state,
                 modalOpen: !state.modalOpen
             }
-        } case ActionTypes.openSideBar: {
+        } case ActionTypes.toggleSidebar: {
             return {
                 ...state,
-                sideBarOpen: true
+                sidebarOpen: !state.sidebarOpen
             }
         } case ActionTypes.regionData: {
             return {
@@ -82,6 +89,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
                 ...state,
                 viewDate: action.payload
             }
+        } case ActionTypes.viewTechnology: {
+            return {
+                ...state,
+                viewTechnology: action.payload
+            }
         } case ActionTypes.selectRegion: {
             return {
                 ...state,
@@ -91,6 +103,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 selectedRegionID: action.id
+            }
+        } case ActionTypes.technologyData: {
+            return {
+                ...state,
+                technologyDataAll: action.payload
             }
         }
         default: return state;

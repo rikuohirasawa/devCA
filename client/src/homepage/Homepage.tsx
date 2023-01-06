@@ -32,16 +32,20 @@ export const Homepage: React.FC = () => {
 
     const dataxyz = useRef(null);
     useEffect(()=>{
-        console.log('usefxx')
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
-        .then(res=>{
-          console.log(res)
-          return res.json()})
-          .then(data=>{
-            console.log(data)
-            dispatch({type: 'REGION_DATA', payload: data})
-          })
+        .then(res=>res.json())
+        .then(data=>{
+          dispatch({type: 'REGION_DATA', payload: data})
+        })
       }, [])
+
+    useEffect(()=>{
+      fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=technology_data`)
+      .then(res=>res.json())
+      .then(data=>{
+        dispatch({type: 'TECHNOLOGY_DATA', payload: data})
+      })
+    }, [])
     return (
     <Wrapper>
       <RegionModal/>

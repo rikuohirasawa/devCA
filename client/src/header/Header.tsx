@@ -3,8 +3,10 @@ import { Switch, Icon } from '@chakra-ui/react'
 import { BsGithub } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
+import { Sidebar } from '../sidebar/Sidebar'
 export const Header: React.FC = () => {
     return (
+        <>
         <HeaderWrapper>
             <HeaderLink to='/'>dev</HeaderLink>
             <ExternalLink href='https://github.com/rikuohirasawa' target='_blank'>
@@ -15,5 +17,7 @@ export const Header: React.FC = () => {
                 console.log('switch')
             }}/>
         </HeaderWrapper>
+        <Sidebar/>
+        </>
     )
 }
