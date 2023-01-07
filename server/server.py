@@ -20,6 +20,13 @@ def get_region():
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response
 
+@app.route('/get-technology-data', methods=['GET'])
+def get_technologies():
+    data = get_data(request.args.get('table'), request.args.get('date'))
+    response = jsonify(data)
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    return response
+
 # @app.route('/get-region-data/:name/:date', methods=['GET'])
 # def test():
 #     return jsonify({'content': None, 'sentBy': 'server'})

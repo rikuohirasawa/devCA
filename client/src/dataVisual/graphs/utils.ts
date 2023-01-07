@@ -1,24 +1,17 @@
 
-
-
 // data structure conversion, so can be used by recharts library
 export const getGraphData = (data: {[key:string]: number}) => {
+    console.log(data)
     const graphData: {name: string, count: number}[] = []
     for (let key in data) {
-        // switch(key) {
-        //     case 'c%23':
-        //         key = 'C#'
-        //         break;
-        //     case 'c%2B%2B':
-        //         key = 'C++'
-        //         break;
-        //     case 'F%23':
-        //         key = 'F#'
-        //         break;
-        //     default: 
-        //         break;
-        // } 
-        graphData.push(Object.assign({}, {name: key, count: data[key]}))
+        // decode keys such as 'c%23' 'c%2B%2B' etc
+        let decodedKey: string = decodeURIComponent(key);
+        if (decodedKey.toLowerCase().includes('developer')) {
+            decodedKey = decodedKey.replace('developer', '')
+        } else if (decodedKey.toLowerCase().includes('language')){
+            decodedKey = decodedKey.replace('language', '')
+        }
+        graphData.push(Object.assign({}, {name: decodedKey.charAt(0).toUpperCase() + decodedKey.slice(1), count: data[key]}))
     }
     return graphData.sort((a, b) => b.count - a.count)
 }

@@ -56,7 +56,6 @@ export const RegionModal: React.FC = () => {
     getDay = moment(viewDate).format('DD');
 
     const {isOpen, onOpen, onClose} = useDisclosure()
-    console.log(onClose)
 
     if (selectedRegion && regionDataAll && selectedRegionID) {
         const regionByDate = selectedRegion[selectedRegionID][viewDate],
@@ -71,16 +70,16 @@ export const RegionModal: React.FC = () => {
                 isOpen={modalOpen}
                 onClose={toggleModal}>
                     <ModalOverlay/>
-                        <ModalCloseButton/>
                             {selectedRegion && regionDataAll && selectedRegionID ? 
                                 <ModalContent 
-                                border='1px solid red'
+                                bg='darkMode.bg'
                                 maxW='80%'
-                                maxH='80%'
+                                h='80%'
                                 padding='12px'>
                                     <ModalHeader><Heading as='h1' size='xl'>{regionName} - {viewTechnology}</Heading></ModalHeader>
                                     <ModalCloseButton onClick={onClose}/>
                                         <ModalBody>
+                                        <code></code>
                                         <div>{getMonth + ' ' + getDay + ', ' + getYear}</div>
                                         <div>
                                             <div>{`Represents ${percentageInRegion}% of jobs parsed in ${regionName}, and ${percentageInCanada}% of jobs in all of Canada`}</div>
