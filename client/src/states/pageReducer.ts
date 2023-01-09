@@ -1,15 +1,15 @@
-interface RegionData {
-    [region: string]: {
+export interface RegionData {
+    [key: string]: {
         [viewDate: string] : {
             technologies: {
                 [key: string]: number
             },
             totalCount: number;
         };
-    }
+    } | string
 }
 
-interface SelectedRegion {
+export interface SelectedRegion {
     [region: string]: {
         [viewDate: string]: {
             technologies: {
@@ -23,13 +23,18 @@ interface SelectedRegion {
     }
 }
 
-interface TechnologyData {
-    [date: string] : {},
-    technology: string
+export interface TechnologyData {
+    [key: string] : {
+        regions: {
+            [key: string]: number
+        },
+        totalCount: number
+    } | string
 }
 export interface PageState {
     modalOpen: boolean,
     sidebarOpen: boolean,
+    sumJobs?: number,
     regionDataAll?: RegionData[],
     viewTechnology: string,
     viewDate: string,
@@ -39,10 +44,10 @@ export interface PageState {
 }
 
 export enum ActionTypes {
-    openModal = 'OPEN_MODAL',
-    closeModal = 'CLOSE_MODAL',
     toggleModal = 'TOGGLE_MODAL',
     toggleSidebar = 'TOGGLE_SIDEBAR',
+    // sum jobs by date
+    sumJobs = 'SUM_JOBS',
     regionData = 'REGION_DATA',
     viewTechnology = 'VIEW_TECHNOLOGY',
     viewDate = 'VIEW_DATE',
@@ -59,17 +64,7 @@ interface PageAction {
 
 export const pageReducer = (state: PageState, action: PageAction) => {
     switch(action.type) {
-        case ActionTypes.openModal: {
-            return {
-                ...state,
-                modalOpen: true
-            }
-        } case ActionTypes.closeModal: {
-            return {
-                ...state,
-                modalOpen: false
-            }
-        } case ActionTypes.toggleModal: {
+        case ActionTypes.toggleModal: {
             return {
                 ...state,
                 modalOpen: !state.modalOpen
@@ -78,6 +73,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 sidebarOpen: !state.sidebarOpen
+            }
+        } case ActionTypes.sumJobs: {
+            return {
+                ...state,
+                sumJobs: action.payload
             }
         } case ActionTypes.regionData: {
             return {

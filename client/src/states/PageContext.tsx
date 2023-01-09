@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { PageState, pageReducer, ActionTypes } from "./pageReducer";
+import { PageState, pageReducer, ActionTypes, RegionData, SelectedRegion, TechnologyData } from "./pageReducer";
 
 const initialPageState: PageState = {
     modalOpen: false,

@@ -1,6 +1,6 @@
-import Datamap from 'datamaps'
+// import Datamap from 'datamaps'
+import Datamap  from 'datamaps'
 import d3 from 'd3'
-
 import { useContext, useRef, useEffect, useState } from "react";
 import { PageContext } from "../states/PageContext";
 
