@@ -11,6 +11,14 @@
     color: #319795;
     border: 1px solid rgba(255, 255, 255, 0.3)
 } 
+/* @keyframes fadein {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+#map-container {
+    transition: fadein 8s ease-in;
+} */
+
 
 .leaflet-interactive:hover {
         fill: black;

@@ -92,7 +92,7 @@ export const LeafletMap: React.FC = () => {
             opacity: 1,
             color: 'rgba(255, 255, 255, 0.1)',
             dashArray: '0',
-            fillOpacity: 0.5
+            fillOpacity: 0.5,
         })
     })
 
