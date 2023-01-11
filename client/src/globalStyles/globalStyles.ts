@@ -57,4 +57,8 @@ export const GlobalStyle = createGlobalStyle`
         background: #DD99BB
     }
     }
+
+
+
+
     `

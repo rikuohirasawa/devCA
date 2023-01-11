@@ -18,6 +18,7 @@
     "d3-geo-projection": "^4.0.0",
     "datamaps": "^0.5.9",
     "framer-motion": "^6",
+    "geojson": "^0.5.0",
     "leaflet": "^1.9.3",
     "moment": "^2.29.4",
     "react": "^18.2.0",
