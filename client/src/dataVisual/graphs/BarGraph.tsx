@@ -46,7 +46,7 @@ export const BarGraph: React.FC<GraphProps> = ({data})  => {
                     style={{opacity: '0.2'}}/>
                     <Bar 
                         dataKey='count' 
-                        fill="#7a0177"/>
+                        fill="#319795"/>
                 </BarChart>
            </ResponsiveContainer>
            <StickyWrapper>

@@ -3,7 +3,7 @@ import { PageState, pageReducer, ActionTypes, RegionData, SelectedRegion, Techno
 
 const initialPageState: PageState = {
     modalOpen: false,
-    sidebarOpen: false,
+    sidebarOpen: true,
     viewTechnology: 'Python',
     viewDate: '2022-12-23',
 }

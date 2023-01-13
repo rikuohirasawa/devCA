@@ -53,7 +53,7 @@ export const Sidebar: React.FC = () => {
         >
             <DrawerOverlay>
                 <DrawerContent
-                bg='var(--bg-dark)'
+                bg='var(--bg-black)'
                 w='200'>
                 <DrawerCloseButton onClick={onClose}/>
 

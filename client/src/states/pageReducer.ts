@@ -6,14 +6,14 @@ export interface RegionData {
             },
             totalCount: number;
         };
-    } | string
+    }
 }
 
 export interface SelectedRegion {
     [region: string]: {
         [viewDate: string]: {
             technologies: {
-                [key:string]:number
+                [key: string ]: any
             },
             totalCount: number;
         }
@@ -38,7 +38,7 @@ export interface PageState {
     regionDataAll?: RegionData[],
     viewTechnology: string,
     viewDate: string,
-    selectedRegion?: SelectedRegion,
+    selectedRegion?: RegionData,
     selectedRegionID?: string,
     technologyDataAll?: TechnologyData[]
 }
