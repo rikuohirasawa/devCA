@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMap, GeoJSON, Popup, Marker, } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, GeoJSON, Popup, Marker, Polygon, Tooltip } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css';
 import './leafletmap.css'
@@ -8,6 +8,11 @@ import { PageContext } from '../../states/PageContext';
 import data from '../geojson.json';
 import { GeoJsonObject } from 'geojson';
 import { style } from 'd3';
+import { LatLngExpression } from 'leaflet';
+import { RegionTooltip } from './RegionTooltip';
+
+import { SelectedRegion } from '../../states/pageReducer';
+
 
 const CANADA_TOPO_JSON = require('../Canada.topo.json')
 
@@ -17,9 +22,14 @@ const Map = () => {
     return null
 }
 
+
+
 interface Features {
     [key: string]: string | {},
-    geometry: {},
+    geometry: {
+        coordinates: [][],
+        type: string
+    },
     id: string,
     properties: {
         [key:string]: null | number
@@ -31,50 +41,87 @@ interface GeoJSON {
     features: Features[]
 }
 
+interface Feature {
+    geometry: {
+        type: string,
+        coordinates: [][]
+    }, id: string,
+    properties: {
+        [key:string] : null | number
+    }, type: string
+}
+
+interface FeatureCollection {
+    type: string,
+    features: Feature[]
+}
+
+export interface ToolTipState {
+    display: boolean,
+    name?: string,
+    data?: {
+        technologies: {[key:string]: number},
+        total_job_count: number
+    }
+
+}
+
 export const LeafletMap: React.FC = () => {
-    const [canadaGeo, setCanadaGeo] = useState(data as GeoJSON)
+
+    const [toolTipData, setToolTipData] = useState<ToolTipState>();
+    const { state, dispatch } = useContext(PageContext),
+    { regionDataAll, viewDate } = state
+    const [canadaGeo, setCanadaGeo] = useState(data as unknown as FeatureCollection)
     const mapStyle = {
         background: 'var(--bg-color)',
-        height: '100vh',
+        height: '100%',
         width: '100%',
         margin: '0 auto',
+        overflow: 'hidden'
     };
-
-    if (canadaGeo) {
+    if (canadaGeo && regionDataAll) {
         const geoFeatures = canadaGeo.features
-        geoFeatures.forEach(e=>{
-            if (e.id !== '-99') {
-                e.properties.count = 30
+        geoFeatures.forEach((feature:any)=>{
+            if (feature.id !== '-99') {
+                regionDataAll.forEach(region=>{
+                    if (region.region === feature.id) {
+                        feature.properties.data = region[viewDate]
+                    }
+                })
             }
         })
-    }
-
-
-    interface HighlightData {
-        count: number,
-    }
-    const [onSelect, setOnSelect] = useState<HighlightData | any>()
+    
     // custom interface
     const highlightFeature = ((e:any) => {
-        const layer = e.target;
-        console.log(layer)
-        const { count } = e.target.feature.properties;
-        setOnSelect({
-            count: count
-        });
+        const layer = e.target
+        setToolTipData(Object.assign(layer.feature.properties, {display: true}))
         layer.setStyle({
             weight: 1,
-            color: 'white',
+            color: 'black',
             fillOpacity: 1
         })
     })
 
     const resetHighlight = ((e:any) => {
-        console.log('YO')
+        setToolTipData({display: false})
     })
 
     const clickFeature = ((e: any) => {
-        console.log('hi')
+        const id = e['target']['feature']['id']
+        console.log(id)
+        const regionData = regionDataAll.filter(e=>e.region === id && e.region)[0]
+        console.log(regionData[viewDate].technologies)
+        dispatch({type: 'SELECT_REGION', payload: regionData});
+        dispatch({type: 'SELECT_REGION_ID', id: id});
+        dispatch({type: 'TOGGLE_MODAL'});
+        // dispatch({type: 'SELECT_REGION', payload: {
+        //     [id]: {
+        //         [viewDate]:{
+        //             technologies: regionData[viewDate]['technologies']
+        //         },
+        //     }
+        // }})
+        // e.target.setStyle(style(e.target.feature));
     })
 
     const onEachFeature = (feature: any, layer: any)=> {
@@ -84,6 +131,7 @@ export const LeafletMap: React.FC = () => {
             mouseout: resetHighlight,
         });
     }
+
 
     const style = ((feature: any) => {
         return ({
@@ -95,32 +143,6 @@ export const LeafletMap: React.FC = () => {
             fillOpacity: 0.5,
         })
     })
-
-    const getFillColorByPercentage = (count: number) => {
-        switch (true) {
-            case (count <= 10):
-               return '#B8DFBA'
-            case (count <= 20):
-                return '#9CD2A8'
-            case (count <= 30):
-                return '#80C49D'
-            case (count <= 40):
-                return '#65B596'
-            case (count <= 50):
-                return '#4BA694'
-            case (count <= 60):
-                return '#319795'
-            case (count <= 70):
-                return '#297486'
-            case (count <= 80): 
-                return '#225374'
-            case (count <= 90): 
-                return '#1B3662'
-            case (count <= 100): 
-                return '#151F4F'
-        }   
-    }
-
     return (
             <MapContainer center={[67.614190, -99.718438]}
             id='map-container'
@@ -135,13 +157,32 @@ export const LeafletMap: React.FC = () => {
                     attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
                     url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
                 />
-                {data && (
+                {canadaGeo && (
+                    <>
                 <GeoJSON
                 style={style}
                 data={canadaGeo as GeoJsonObject}
                 onEachFeature={onEachFeature}/>
+                {toolTipData && (
+                    <RegionTooltip 
+                    display={toolTipData.display}
+                    name={toolTipData.name}
+                    data={toolTipData.data}/>
+                )} 
+                {/* {canadaGeo.features.map(e=>{
+                    console.log(e)
+                        return (
+                        <Polygon positions={multiPolygon as unknown as LatLngExpression[][] }
+                        pathOptions={{color: 'purple'}}>
+                            <Tooltip>Sticky tooltip</Tooltip>
+                        </Polygon>)
+                    })} */}
+                    </>
                 )}
-
             </MapContainer>
     )
+                } else {
+                    return <div>loading</div>
+                }
 }
+

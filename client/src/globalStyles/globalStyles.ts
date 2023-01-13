@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
+import "@fontsource/open-sans"
+
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -24,13 +26,17 @@ export const GlobalStyle = createGlobalStyle`
         --purple-lavender: #7B506F;
         --light-pink: #EAD7D1;
         --mint: #B5FED9;
+
+
+        --bg-black: #262626;
+        --teal: #319795;
     }
+    html,
     body {
-        background-color: #fff;
-        color: var(--burgundy);
+        max-height: 100vh;
+        overflow: hidden;
         /* font-family: 'Cousine', monospace; */
-        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+        /* font-family: "Open Sans", sans-serif !important; */
     }
 
     .hover-info {
@@ -47,14 +53,14 @@ export const GlobalStyle = createGlobalStyle`
 }
 
     ::-webkit-scrollbar-track {
-    background: #011627;
+    background: inherit;
     }
 
     ::-webkit-scrollbar-thumb {
     background: #319795;
 
     &:hover {
-        background: #DD99BB
+        background: #4BA694
     }
     }
 

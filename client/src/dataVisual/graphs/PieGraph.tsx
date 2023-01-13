@@ -15,19 +15,18 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
     const sortData = getGraphData(data);
 
     const { state } = useContext(PageContext),
-    { selectedRegion, selectedRegionID, viewTechnology, regionDataAll, viewDate } = state
+    { selectedRegion, selectedRegionID, viewTechnology, regionDataAll, viewDate, sumJobs } = state
 
     if (selectedRegion && selectedRegionID) {
-        console.log(selectedRegion['totalCountAll'])
-        const totalCountNation = selectedRegion['totalCountAll'],
-        totalCountInRegion = selectedRegion[selectedRegionID][viewDate]['totalCount'],
-        count = selectedRegion[selectedRegionID][viewDate]['technologies'][viewTechnology],
+        const regionByDate: any = selectedRegion[viewDate],
+        totalCountInRegion = regionByDate['total_job_count'],
+        count: any = regionByDate['technologies'][viewTechnology],
         pieData: {name: string, count: number}[] = 
             [{  name: viewTechnology,
-                count: selectedRegion[selectedRegionID][viewDate]['technologies'][viewTechnology],
+                count: count,
             }, {
                 name: `other`,
-                count: totalCountInRegion - selectedRegion[selectedRegionID][viewDate]['technologies'][viewTechnology]
+                count: totalCountInRegion - count
             }
             ]
 
@@ -40,7 +39,7 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                     data={pieData} 
                     dataKey='count' 
                     nameKey='name' 
-                    fill='#7a0177' 
+                    fill='#319795' 
                     label 
                     animationDuration={700}/>
                 </PieChart>

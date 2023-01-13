@@ -16,10 +16,10 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, use
 export const RegionModal: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
-    { modalOpen, selectedRegion, viewDate, viewTechnology, regionDataAll, selectedRegionID } = state,
+    { modalOpen, selectedRegion, viewDate, viewTechnology, regionDataAll, selectedRegionID, sumJobs } = state,
     toggleModal = () => dispatch({type: 'TOGGLE_MODAL'});
 
-    const convertNames: {[region: string ]: string} = {
+    const convertNames: {[ region: string ]: string} = {
         'AB': 'Alberta',
         'BC': 'British Columbia',
         'MB': 'Manitoba',
@@ -35,8 +35,8 @@ export const RegionModal: React.FC = () => {
         'YT': 'Yukon'
     };
 
-    const styles: {[key:string]: {[key: string]: {}}} = {
-        modalStyles :{
+    const styles: {[ key: string ]: {[ key: string ]: {}}} = {
+        modalStyles : {
             content: {
                 top: '50%',
                 left: '50%',
@@ -47,7 +47,6 @@ export const RegionModal: React.FC = () => {
                 border: '1px solid'
             }
         }, iconStyles: {
-
         },
     };
 
@@ -57,12 +56,20 @@ export const RegionModal: React.FC = () => {
 
     const {isOpen, onOpen, onClose} = useDisclosure()
 
-    if (selectedRegion && regionDataAll && selectedRegionID) {
-        const regionByDate = selectedRegion[selectedRegionID][viewDate],
+    interface TechnologyList {
+        [key:string]: number
+    }
+    if (selectedRegion && regionDataAll && selectedRegionID && sumJobs) {
+        console.log(viewTechnology)
+        const regionByDate: any = selectedRegion[viewDate],
         regionName = convertNames[selectedRegionID],
-        percentageInRegion = (regionByDate['technologies'][viewTechnology]/Number(regionByDate['totalCount']) *100).toFixed(2),
-        percentageInCanada = (regionByDate['technologies'][viewTechnology]/Number(selectedRegion['totalCountAll']) * 100).toFixed(2)
+        percentageInRegion = (regionByDate['technologies'][viewTechnology]/Number(regionByDate['total_job_count']) *100).toFixed(2),
+        percentageInCanada = (regionByDate['technologies'][viewTechnology]/Number(sumJobs) * 100).toFixed(2)
 
+        console.log(selectedRegion[viewDate])
+
+
+     
         return (
                 <Modal
                 closeOnOverlayClick
@@ -72,6 +79,7 @@ export const RegionModal: React.FC = () => {
                     <ModalOverlay/>
                             {selectedRegion && regionDataAll && selectedRegionID ? 
                                 <ModalContent 
+                                zIndex='9999'
                                 bg='darkMode.bg'
                                 maxW='80%'
                                 h='80%'

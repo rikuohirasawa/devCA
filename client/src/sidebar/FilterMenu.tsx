@@ -58,7 +58,7 @@ import { convertNames } from '../utils';
         <Heading>{technology}</Heading>
         <RadioGroup onChange={setTechnology} value={technology}>
             <RadioScrollColumn>
-                {regionDataAll && regionDataAll.slice(0, -1).map((e, index) =>{
+                {regionDataAll && regionDataAll.map((e, index) =>{
                     const regionId = e['region'].toString();
                     return (
                         <Radio

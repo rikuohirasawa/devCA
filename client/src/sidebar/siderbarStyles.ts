@@ -4,8 +4,8 @@ export const RadioScrollColumn = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
-    max-height: 39vh;
-    padding: 16px 8px;
+    max-height: 35vh;
+    padding: 8px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
