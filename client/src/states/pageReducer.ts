@@ -40,7 +40,8 @@ export interface PageState {
     viewDate: string,
     selectedRegion?: RegionData,
     selectedRegionID?: string,
-    technologyDataAll?: TechnologyData[]
+    technologyDataAll?: TechnologyData[],
+    viewByPercentage?: boolean
 }
 
 export enum ActionTypes {
@@ -53,7 +54,8 @@ export enum ActionTypes {
     viewDate = 'VIEW_DATE',
     selectRegion = 'SELECT_REGION',
     selectRegionID = 'SELECT_REGION_ID',
-    technologyData = 'TECHNOLOGY_DATA'
+    technologyData = 'TECHNOLOGY_DATA',
+    viewByPercentage = 'VIEW_BY_PERCENTAGE'
 }
 
 interface PageAction {
@@ -108,6 +110,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 technologyDataAll: action.payload
+            }
+        } case ActionTypes.viewByPercentage: {
+            return {
+                ...state,
+                viewByPercentage: !state.viewByPercentage
             }
         }
         default: return state;

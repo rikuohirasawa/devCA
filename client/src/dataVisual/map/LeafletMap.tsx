@@ -9,9 +9,13 @@ import data from '../geojson.json';
 import { GeoJsonObject } from 'geojson';
 import { style } from 'd3';
 import { LatLngExpression } from 'leaflet';
-import { RegionTooltip } from './RegionTooltip';
+import { RegionTooltip } from './tooltip/RegionTooltip';
 
 import { SelectedRegion } from '../../states/pageReducer';
+
+import { getFillColor } from './mapUtils';
+
+import { MapLegend } from './legend/MapLegend';
 
 
 const CANADA_TOPO_JSON = require('../Canada.topo.json')
@@ -70,7 +74,7 @@ export const LeafletMap: React.FC = () => {
 
     const [toolTipData, setToolTipData] = useState<ToolTipState>();
     const { state, dispatch } = useContext(PageContext),
-    { regionDataAll, viewDate } = state
+    { regionDataAll, viewDate, viewTechnology, viewByPercentage } = state
     const [canadaGeo, setCanadaGeo] = useState(data as unknown as FeatureCollection)
     const mapStyle = {
         background: 'var(--bg-color)',
@@ -91,7 +95,6 @@ export const LeafletMap: React.FC = () => {
             }
         })
     
-    // custom interface
     const highlightFeature = ((e:any) => {
         const layer = e.target
         setToolTipData(Object.assign(layer.feature.properties, {display: true}))
@@ -134,19 +137,33 @@ export const LeafletMap: React.FC = () => {
 
 
     const style = ((feature: any) => {
-        return ({
-            fillColor: '#319795',
-            weight: 1,
-            opacity: 1,
-            color: 'rgba(255, 255, 255, 0.1)',
-            dashArray: '0',
-            fillOpacity: 0.5,
-        })
+        if (feature.id !== '-99' && viewByPercentage !== undefined) {
+            console.log(feature.id, feature['properties']['data']['technologies'][viewTechnology])
+            return ({
+                fillColor: getFillColor(feature['properties']['data']['technologies'][viewTechnology], viewByPercentage),
+                weight: 1,
+                opacity: 1,
+                color: 'rgba(255, 255, 255, 0.3)',
+                dashArray: '0',
+                fillOpacity: 0.8,
+            })
+        } else {
+            return ({
+                fillcolor: '#fff',
+                weight: 1,
+                opacity: 1,
+                color: 'rgba(255, 255, 255, 0.1)',
+                dashArray: '0',
+                fillOpacity: 0.5,
+            })
+        }
+
+
     })
     return (
-            <MapContainer center={[67.614190, -99.718438]}
+            <MapContainer center={[71.614190, -99.718438]}
             id='map-container'
-            zoom={3}
+            zoom={4}
             maxZoom={8} 
             minZoom={2}
             scrollWheelZoom={true}
@@ -179,6 +196,7 @@ export const LeafletMap: React.FC = () => {
                     })} */}
                     </>
                 )}
+                <MapLegend/>
             </MapContainer>
     )
                 } else {

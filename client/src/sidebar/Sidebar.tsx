@@ -48,16 +48,17 @@ export const Sidebar: React.FC = () => {
         <>
         <Drawer
         placement='right'
+        size='sm'
         isOpen={sidebarOpen}
         onClose={toggleSidebar}
         >
             <DrawerOverlay>
                 <DrawerContent
-                bg='var(--bg-black)'
-                w='200'>
+                bg='var(--bg-black)'>
                 <DrawerCloseButton onClick={onClose}/>
 
-                    <DrawerBody>
+                    <DrawerBody w=''
+                    >
                         <ContentColumn>
                             <FilterMenu/>
                         </ContentColumn>

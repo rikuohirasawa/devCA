@@ -12,4 +12,15 @@ export const TooltipWrapper = styled.div<{display?:boolean}>`
     border-radius: 8px;
     z-index: 400;
     top: 50%;
-    left: 50%`
+    left: 50%;
+    font-size: 1.15rem;
+    
+    .region-tooltip-header {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+    `

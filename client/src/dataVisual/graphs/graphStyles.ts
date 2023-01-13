@@ -16,3 +16,9 @@ overflow-y: scroll;
 `
 
 export const StickyWrapper = styled.div``
+
+export const TooltipWrapper = styled.div`
+    background: var(--bg-black);
+    border: 1px solid rgba(49, 151, 149, 0.3);
+    border-radius: 4px;
+    padding: 4px 8px;`
