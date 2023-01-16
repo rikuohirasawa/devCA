@@ -161,7 +161,6 @@ export const LeafletMap: React.FC = () => {
         }
     })[0]
 
-    console.log(singleCountTechnology)
 
 
 
