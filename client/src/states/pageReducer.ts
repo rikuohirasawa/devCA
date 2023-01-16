@@ -29,7 +29,7 @@ export interface TechnologyData {
             [key: string]: number
         },
         totalCount: number
-    } | string
+    } & string
 }
 export interface PageState {
     modalOpen: boolean,
@@ -41,7 +41,9 @@ export interface PageState {
     selectedRegion?: RegionData,
     selectedRegionID?: string,
     technologyDataAll?: TechnologyData[],
-    viewByPercentage?: boolean
+    viewByPercentage?: boolean,
+    viewByFormat: string,
+    scrapedDates?: string[]
 }
 
 export enum ActionTypes {
@@ -55,13 +57,20 @@ export enum ActionTypes {
     selectRegion = 'SELECT_REGION',
     selectRegionID = 'SELECT_REGION_ID',
     technologyData = 'TECHNOLOGY_DATA',
-    viewByPercentage = 'VIEW_BY_PERCENTAGE'
+    viewByPercentage = 'VIEW_BY_PERCENTAGE',
+    viewByFormat = 'VIEW_BY_FORMAT',
+    scrapedDates = 'SCRAPED_DATES'
 }
 
 interface PageAction {
     type: ActionTypes;
     payload? : any;
     id?: string;
+    viewByFormat: string;
+    scrapedDates: string[];
+    viewDate: string;
+    viewTechnology: string;
+
 }
 
 export const pageReducer = (state: PageState, action: PageAction) => {
@@ -89,12 +98,12 @@ export const pageReducer = (state: PageState, action: PageAction) => {
         } case ActionTypes.viewDate: {
             return {
                 ...state,
-                viewDate: action.payload
+                viewDate: action.viewDate
             }
         } case ActionTypes.viewTechnology: {
             return {
                 ...state,
-                viewTechnology: action.payload
+                viewTechnology: action.viewTechnology
             }
         } case ActionTypes.selectRegion: {
             return {
@@ -115,6 +124,16 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 viewByPercentage: !state.viewByPercentage
+            }
+        }  case ActionTypes.viewByFormat: {
+            return {
+                ...state,
+                viewByFormat: action.viewByFormat
+            }
+        } case ActionTypes.scrapedDates: {
+            return {
+                ...state,
+                scrapedDates: action.scrapedDates
             }
         }
         default: return state;

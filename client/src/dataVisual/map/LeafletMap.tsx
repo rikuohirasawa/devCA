@@ -74,7 +74,7 @@ export const LeafletMap: React.FC = () => {
 
     const [toolTipData, setToolTipData] = useState<ToolTipState>();
     const { state, dispatch } = useContext(PageContext),
-    { regionDataAll, viewDate, viewTechnology, viewByPercentage } = state
+    { regionDataAll, viewDate, viewTechnology, technologyDataAll, viewByFormat } = state
     const [canadaGeo, setCanadaGeo] = useState(data as unknown as FeatureCollection)
     const mapStyle = {
         background: 'var(--bg-color)',
@@ -135,12 +135,46 @@ export const LeafletMap: React.FC = () => {
         });
     }
 
+    // console.log(viewTechnology[viewDate]['total_job_count'])
+    console.log(viewTechnology)
+
+
+    interface SingleTechnology {    
+        [key: string]: {
+            regions: {
+                [key: string]: number
+            },
+            total_job_count: number
+        } & {
+            technology: string
+        }
+
+    }
+    const singleCountTechnology: any = technologyDataAll && technologyDataAll.filter((e: any)=>{
+        if (e['technology'] === viewTechnology) {
+            console.log(e[viewDate]['total_job_count'])
+            console.log(e['technology'])
+            // const count = e[viewDate]['total_job_count']
+            return e
+
+            // return e[viewDate]['total_job_count']
+        }
+    })[0]
+
+    console.log(singleCountTechnology)
+
+
+
 
     const style = ((feature: any) => {
-        if (feature.id !== '-99' && viewByPercentage !== undefined) {
-            console.log(feature.id, feature['properties']['data']['technologies'][viewTechnology])
+        if (feature.id !== '-99') {
+            // console.log(feature.id, feature['properties']['data']['technologies'][viewTechnology])
             return ({
-                fillColor: getFillColor(feature['properties']['data']['technologies'][viewTechnology], viewByPercentage),
+                fillColor: getFillColor(
+                    feature['properties']['data']['technologies'][viewTechnology], 
+                    viewByFormat,
+                    viewByFormat === 'Percent' && singleCountTechnology[viewDate]['total_job_count']
+                    ),
                 weight: 1,
                 opacity: 1,
                 color: 'rgba(255, 255, 255, 0.3)',

@@ -6,7 +6,8 @@ const initialPageState: PageState = {
     sidebarOpen: true,
     viewTechnology: 'Python',
     viewDate: '2022-12-23',
-    viewByPercentage: false
+    viewByPercentage: false,
+    viewByFormat: 'Percent'
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({

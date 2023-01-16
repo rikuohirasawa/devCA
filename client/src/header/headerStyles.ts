@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom'
 export const HeaderWrapper = styled.header`
   /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace; */
+    width: 100%;
+    border: 1px solid white;
     position: absolute;
     top: 0;
-    z-index: 99999999999;
+    z-index: 999;
+    background: var(--bg-black);
+    display: flex;
 `
 
 export const HeaderLink = styled(Link)`
@@ -15,4 +19,8 @@ export const HeaderLink = styled(Link)`
 `
 
 export const ExternalLink = styled.a`
+`
+
+export const FilterSettings = styled.div`
+  display: flex;
 `

@@ -23,36 +23,40 @@ import moment from 'moment';
   export const FilterMenu: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
-    { viewTechnology, technologyDataAll, viewDate, regionDataAll, selectedRegionID } = state,
-    [language, setLanguage] = useState(viewTechnology),
-    [date, setDate] = useState(viewDate),
-    [technology, setTechnology] = useState('Region (optional)')
-    // setTechnology = (technology: string) => {
-    //     dispatch({type: 'VIEW_TECHNOLOGY', payload: technology})
-    // }
-
+    { viewTechnology, technologyDataAll, viewByFormat, viewDate, regionDataAll, selectedRegionID, scrapedDates } = state,
+    [technologyFilter, setTechnologyFilter] = useState(viewTechnology),
+    [dateFilter, setDateFilter] = useState(viewDate),
+    [sortByFilter, setSortByFilter] = useState(viewByFormat),
+    [region, setRegion] = useState('Region (optional)')
     const onSubmit = (e: React.FormEvent) =>{ 
         e.preventDefault();
+        // pass form data to context api
+        dispatch({type: 'VIEW_DATE', viewDate: dateFilter});
+        dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: sortByFilter});
+        dispatch({type: 'VIEW_TECHNOLOGY', viewTechnology: technologyFilter});
+        dispatch({type: 'TOGGLE_SIDEBAR'})
         console.log('submit')
     }
     return (
         <>
-        <form onSubmit={(e)=>{onSubmit(e)}}>
+        <form onSubmit={(e: React.FormEvent)=>{onSubmit(e)}}>
         <FormControl
         >
-            <Heading>{language}</Heading>
+            <Heading>{decodeTechnologyName(technologyFilter)}</Heading>
         {/* <Typewriter>
-            <p key={language}>{language}</p>
+            <p key={technologyFilter}>{technologyFilter}</p>
         </Typewriter> */}
 
-        <RadioGroup onChange={setLanguage} value={language}>
+        <RadioGroup onChange={(e:string)=>{
+            setTechnologyFilter(e)
+      }} value={technologyFilter}>
                 <RadioScrollColumn>
                 {technologyDataAll && technologyDataAll.map((e, index)=>{
                     return (
                     <Radio 
                     isRequired
                     key={`technology-${index}`}
-                    value={decodeTechnologyName(e.technology.toString())}
+                    value={e.technology.toString()}
                     colorScheme='teal'
                     defaultChecked={viewTechnology === e.technology}
                     >
@@ -63,14 +67,37 @@ import moment from 'moment';
                 </RadioScrollColumn>
         </RadioGroup>
         <Heading>{decodeDate(viewDate)}</Heading>
-        <RadioGroup onChange={setDate} value={date}>
+        <RadioGroup onChange={(e:string)=>{setDateFilter(e)}} value={dateFilter}>
             <RadioScrollColumn>
+                {scrapedDates && scrapedDates.map((e, index)=>{
+                    return (
+                        <Radio
+                        isRequired
+                        colorScheme='teal'
+                        key={`date-${index}`}
+                        value={e}>
+                            {decodeDate(e)}
+                        </Radio>
+                    )
+                })}
                 
             </RadioScrollColumn>
         </RadioGroup>
 
-        <Heading>{technology}</Heading>
-        <RadioGroup onChange={setTechnology} value={technology}>
+        <Heading>Sort by: {sortByFilter}</Heading>
+        <RadioGroup value={sortByFilter} onChange={(e:string)=>{
+            setSortByFilter(e)
+            // dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: e})
+            }}>
+            <RadioScrollColumn>
+                <Radio value='Count' colorScheme='teal'>Count</Radio>
+                <Radio value='Percent' colorScheme='teal'>Percent</Radio>
+                <Radio value='Ranking' colorScheme='teal'>Ranking</Radio>
+            </RadioScrollColumn>
+        </RadioGroup>
+{/* 
+        <Heading>{region}</Heading>
+        <RadioGroup onChange={setRegion} value={region}>
             <RadioScrollColumn>
                 {regionDataAll && regionDataAll.map((e, index) =>{
                     const regionId = e['region'].toString();
@@ -87,7 +114,7 @@ import moment from 'moment';
                     )
                 })}
             </RadioScrollColumn>
-        </RadioGroup>
+        </RadioGroup> */}
         <Button 
         bgColor='var(--bg-black)'
         border='1px solid teal'

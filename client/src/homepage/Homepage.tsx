@@ -8,15 +8,19 @@ import { DataMap } from "../dataVisual/DataMap"
 import { SimpleMap } from "../dataVisual/SimpleMap"
 import { RegionModal } from "../dataVisual/modal/RegionModal"
 import { LeafletMap } from "../dataVisual/map/LeafletMap"
+import { decodeDate } from "../utils"
 export const Homepage: React.FC = () => {
+
+
 
     const { state, dispatch } = useContext(PageContext);
     useEffect(()=>{
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
         .then(res=>res.json())
         .then(data=>{
-          console.log(data)
+          const datesArray = Object.keys(data[0]).filter((e:string) => e !== 'region')
           const sumJobs = data.slice(-1)[0]['sum_jobs']
+          dispatch({type: 'SCRAPED_DATES', scrapedDates: datesArray})
           dispatch({type: 'SUM_JOBS', payload: sumJobs})
           dispatch({type: 'REGION_DATA', payload: data.slice(0, -1)})
         })
