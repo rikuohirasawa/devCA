@@ -1,3 +1,7 @@
+interface TechnologyList {
+    [key: string]: number
+}
+
 export interface RegionData {
     [key: string]: {
         [viewDate: string] : {

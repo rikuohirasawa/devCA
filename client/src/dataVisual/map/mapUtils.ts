@@ -15,7 +15,7 @@ export const getRanking = () => {
 
 
 const fillColors: string[] = [
-    'rgba(255, 255, 255, 0.8)',
+    'rgba(0, 0, 0, 0.1)',
     '#C8F2C2',
     '#A4E9A7',
     '#89DD9C',
@@ -29,19 +29,19 @@ const fillColors: string[] = [
     '#0A47A1',
     '#032DA1'
 ];
-export const getFillColor = (count: number, viewByFormat: string, totalCount?: number) => {
+export const getFillColor = (count: number, viewByFormat: string, totalCount?: number, rank?: number) => {
 
     let multiplier: number = viewByFormat === 'Percent' ? 10 : viewByFormat === 'Count' ? 100 : 0
     let fillColor: string = ''
     let sum = 0;
     const sliceFillColors = fillColors.slice(0, 11)
-    if (viewByFormat === 'Percent') {
+    if (viewByFormat === 'Percent' && totalCount) {
         console.log(totalCount)
         if (count === 0) {
             return sliceFillColors[0]
         } else {
             for (let i = 0; i <= sliceFillColors.length - 1; i++) {
-                if (count < i * 10) {
+                if (count/totalCount < i * 10) {
                     fillColor = sliceFillColors[i]
                     break
                 } else if (i === sliceFillColors.length - 1) {
@@ -64,19 +64,16 @@ export const getFillColor = (count: number, viewByFormat: string, totalCount?: n
                 }
             }
         }
+    } else if (viewByFormat === 'Ranking') {
 
-        // fillColors.slice(0, 11).forEach((e: string, index: number)=>{
-        //     console.log(count)
-        //     if (count === 0 && index === 0) {
-        //         fillColor = e
-        //         console.log('fillcolor zero', fillColor)
-        //         return fillColor
-        //     } else if (count < index * 100) {
-        //         fillColor = e
-        //     }
-        // })
-    } else {
-        fillColor = 'red'
+
+        // console.log(count, rank, (reverseFillColors[rank-1]))
+        console.log('rank', rank)
+        if (count === 0 || rank === 0) {
+            fillColor = fillColors[0]
+        } else if (rank) {
+            fillColor = fillColors[rank]
+        }
     }
     return fillColor
 

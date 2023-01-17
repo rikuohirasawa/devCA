@@ -11,6 +11,7 @@ import { decodeDate } from '../utils'
 import { Button } from '@chakra-ui/react'
 
 import { IoMdSettings } from 'react-icons/io'
+import { Logo } from '../logo/Logo'
 export const Header: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
@@ -18,14 +19,7 @@ export const Header: React.FC = () => {
     return (
         <>
         <HeaderWrapper>
-            <HeaderLink to='/'>CA</HeaderLink>
-
-            <FilterSettings>
-                <div className='filter-setting'>{viewTechnology}</div>
-                <div className='filter-setting'>{decodeDate(viewDate)}</div>
-                <div className='filter-setting'>{viewByFormat}</div>
-            </FilterSettings>
-            
+            <Logo/>
             <ExternalLink href='https://github.com/rikuohirasawa' target='_blank'>
                 <Icon as={BsGithub}/>
             </ExternalLink>
@@ -40,10 +34,6 @@ export const Header: React.FC = () => {
             onClick={()=>{dispatch({type: 'TOGGLE_SIDEBAR'})}}>
                 <Icon as={IoMdSettings} boxSize={6}/>
             </Button>
-            {/* <Switch size='md' colorScheme='teal'
-            onChange={()=>{
-                console.log('switch')
-            }}/> */}
         </HeaderWrapper>
         <Sidebar/>
         </>

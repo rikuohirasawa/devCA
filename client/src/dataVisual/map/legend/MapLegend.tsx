@@ -6,7 +6,7 @@ export const MapLegend: React.FC = () => {
     const { state } = useContext(PageContext),
     { viewByFormat } = state
     let legendColors: string[] = [
-        'rgba(255, 255, 255, 0.8)',
+        'rgba(0, 0, 0, 1)',
         '#C8F2C2',
         '#A4E9A7',
         '#89DD9C',
