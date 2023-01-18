@@ -1,4 +1,4 @@
-import { HeaderWrapper, HeaderLink, ExternalLink, FilterSettings } from './headerStyles'
+import { HeaderWrapper, HeaderLink, ExternalLink, FilterSettings, SidebarBtn, SidebarBtnIcon } from './headerStyles'
 import { Switch, Icon } from '@chakra-ui/react'
 import { BsGithub } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
@@ -15,24 +15,20 @@ import { Logo } from '../logo/Logo'
 export const Header: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
-    { viewTechnology, viewByFormat, viewDate } = state
+    { viewTechnology, viewByFormat, viewDate, sidebarOpen } = state
     return (
         <>
         <HeaderWrapper>
             <Logo/>
-            <ExternalLink href='https://github.com/rikuohirasawa' target='_blank'>
-                <Icon as={BsGithub}/>
-            </ExternalLink>
             <Button 
             bg='inherit'
-            border='1px solid'
+            rightIcon={<Icon as={IoMdSettings} boxSize={6}/>}
             _hover={{
                 bg: 'teal',
                 color: 'var(--black)',
-                border: '1px solid'
             }}
             onClick={()=>{dispatch({type: 'TOGGLE_SIDEBAR'})}}>
-                <Icon as={IoMdSettings} boxSize={6}/>
+                Filter 
             </Button>
         </HeaderWrapper>
         <Sidebar/>

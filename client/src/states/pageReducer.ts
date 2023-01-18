@@ -13,6 +13,16 @@ export interface RegionData {
     }
 }
 
+export interface SelectedRegionData {
+    [key: string]: {
+        technologies: {
+            [key: string]: number
+        }, total_job_count: number
+    } & {
+        region: string
+    }
+}
+
 export interface SelectedRegion {
     [region: string]: {
         [viewDate: string]: {

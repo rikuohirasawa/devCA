@@ -31,7 +31,9 @@ export const GlobalStyle = createGlobalStyle`
         --bg-black: #262626;
         --teal: #319795;
         --black: #262626;
+        --dark-teal: #24879B;
         --teal-light: rgba(49, 151, 149, 0.3);
+        --teal-med: rgba(49, 151, 149, 0.6);
     }
     html,
     body {

@@ -40,91 +40,73 @@ import moment from 'moment';
     return (
         <>
         <form onSubmit={(e: React.FormEvent)=>{onSubmit(e)}}>
-        <FormControl
-        >
-            <Heading>{decodeTechnologyName(technologyFilter)}</Heading>
-        {/* <Typewriter>
-            <p key={technologyFilter}>{technologyFilter}</p>
-        </Typewriter> */}
+            <FormControl>
+                <Heading>{decodeTechnologyName(technologyFilter)}</Heading>
+            {/* <Typewriter>
+                <p key={technologyFilter}>{technologyFilter}</p>
+            </Typewriter> */}
 
-        <RadioGroup onChange={(e:string)=>{
-            setTechnologyFilter(e)
-      }} value={technologyFilter}>
-                <RadioScrollColumn>
-                {technologyDataAll && technologyDataAll.map((e, index)=>{
-                    return (
-                    <Radio 
-                    isRequired
-                    key={`technology-${index}`}
-                    value={e.technology.toString()}
-                    colorScheme='teal'
-                    defaultChecked={viewTechnology === e.technology}
-                    >
-                        {decodeTechnologyName(e.technology.toString())}
-                    </Radio>
-                    )
-                })}
-                </RadioScrollColumn>
-        </RadioGroup>
-        <Heading>{decodeDate(viewDate)}</Heading>
-        <RadioGroup onChange={(e:string)=>{setDateFilter(e)}} value={dateFilter}>
-            <RadioScrollColumn>
-                {scrapedDates && scrapedDates.map((e, index)=>{
-                    return (
-                        <Radio
-                        isRequired
-                        colorScheme='teal'
-                        key={`date-${index}`}
-                        value={e}>
-                            {decodeDate(e)}
-                        </Radio>
-                    )
-                })}
-                
-            </RadioScrollColumn>
-        </RadioGroup>
-
-        <Heading>Sort by: {sortByFilter}</Heading>
-        <RadioGroup value={sortByFilter} onChange={(e:string)=>{
-            setSortByFilter(e)
-            // dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: e})
-            }}>
-            <RadioScrollColumn>
-                <Radio value='Count' colorScheme='teal'>Count</Radio>
-                <Radio value='Percent' colorScheme='teal'>Percent</Radio>
-                <Radio value='Ranking' colorScheme='teal'>Ranking</Radio>
-            </RadioScrollColumn>
-        </RadioGroup>
-{/* 
-        <Heading>{region}</Heading>
-        <RadioGroup onChange={setRegion} value={region}>
-            <RadioScrollColumn>
-                {regionDataAll && regionDataAll.map((e, index) =>{
-                    const regionId = e['region'].toString();
-                    return (
-                        <Radio
-                        isRequired={false}
-                        key={index}
-                        value={convertNames[regionId]}
-                        colorScheme='teal'
-                        defaultChecked={selectedRegionID === regionId}
-                        >
-                            {convertNames[regionId]}
-                        </Radio>
-                    )
-                })}
-            </RadioScrollColumn>
-        </RadioGroup> */}
-        <Button 
-        bgColor='var(--bg-black)'
-        border='1px solid teal'
-        _hover={{
-        bg: 'teal', 
-        color: 'var(--bg-black)',
-        border: '1px solid var(--bg-black)'}}
-        leftIcon={<Icon as={IoFilterOutline}/>}
-        type='submit'>Filter</Button>
-        </FormControl>
+                <RadioGroup 
+                onChange={(e:string)=>{
+                setTechnologyFilter(e)
+                }} 
+                value={technologyFilter}>
+                    <RadioScrollColumn>
+                    {technologyDataAll && technologyDataAll.map((e, index)=>{
+                        return (
+                            <Radio 
+                            isRequired
+                            key={`technology-${index}`}
+                            value={e.technology.toString()}
+                            colorScheme='teal'
+                            defaultChecked={viewTechnology === e.technology}
+                            >
+                                {decodeTechnologyName(e.technology.toString())}
+                            </Radio>
+                        )
+                    })}
+                    </RadioScrollColumn>
+                    </RadioGroup>
+                    <Heading>{decodeDate(viewDate)}</Heading>
+                    <RadioGroup onChange={(e:string)=>{setDateFilter(e)}} value={dateFilter}>
+                        <RadioScrollColumn>
+                            {scrapedDates && scrapedDates.map((e, index)=>{
+                                return (
+                                    <Radio
+                                    isRequired
+                                    colorScheme='teal'
+                                    key={`date-${index}`}
+                                    value={e}>
+                                        {decodeDate(e)}
+                                    </Radio>
+                                )
+                            })}   
+                        </RadioScrollColumn>
+                    </RadioGroup>
+                <Heading>Sort by: {sortByFilter}</Heading>
+                <RadioGroup value={sortByFilter} onChange={(e:string)=>{
+                    setSortByFilter(e)
+                    // dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: e})
+                    }}>
+                    <RadioScrollColumn>
+                        <Radio value='Count' colorScheme='teal'>Count</Radio>
+                        <Radio value='Percent' colorScheme='teal'>Percent</Radio>
+                        <Radio value='Ranking' colorScheme='teal'>Ranking</Radio>
+                    </RadioScrollColumn>
+                </RadioGroup>
+                <Button 
+                width='100%'
+                bgColor='var(--bg-black)'
+                border='1px solid teal'
+                _hover={{
+                bg: 'teal', 
+                color: 'var(--bg-black)',
+                border: '1px solid var(--bg-black)'}}
+                leftIcon={<Icon as={IoFilterOutline}/>}
+                type='submit'>
+                    Filter
+                </Button>
+            </FormControl>
         </form>
         </>
     )

@@ -1,6 +1,9 @@
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
-import { GraphContainer, BarGraphWrapper, StickyWrapper } from "./graphStyles"
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Label } from "recharts"
+import { BarGraphContainer, StickyWrapper } from "./graphStyles"
 import { CustomToolTip } from "./CustomToolTip"
+
+import { useContext } from "react"
+import { PageContext } from "../../states/PageContext"
 
 import { getGraphData } from "./utils"
 export interface GraphProps {
@@ -9,37 +12,56 @@ export interface GraphProps {
     } 
 }
 
-export const BarGraph: React.FC<GraphProps> = ({data})  => {
-    if (data) {
-    const sortData = getGraphData(data);
-    console.log(sortData.slice(0,14))
+export const BarGraph: React.FC<GraphProps> = ()  => {
+
+    const { state } = useContext(PageContext),
+    { selectedRegion, viewDate, viewTechnology, } = state
+
+    if (selectedRegion) {
+    const data: any = selectedRegion[viewDate]['technologies'],
+    sortData = getGraphData(data, viewTechnology);
     return (
-        <BarGraphWrapper>
-            <ResponsiveContainer height={700}
-            width='75%'
+        <BarGraphContainer>
+            <ResponsiveContainer height={800}
+            width='95%'
             >
                 <BarChart
-                // width={500}
-                // height={1000}
+                margin={{
+                    top: 20,
+                    bottom: 35
+                }}
                 layout='vertical'
                 barCategoryGap={0
                 }
                 data={sortData}
                 >
                     <XAxis 
-                    type='number'/>
+                    type='number'
+                    >
+                        <Label 
+                        value='Count'
+                        position='bottom'
+                        fill='var(--teal-med)'
+                        />
+                    </XAxis>
                     <XAxis 
                     id='axis-pos-top'
                     allowDuplicatedCategory
                     type='number'/>
                     <YAxis 
                     width={120}
-                        dataKey='name' 
-                        type='category'
-                        interval={0}/>
-                        <Tooltip
-                        content={<CustomToolTip/>}
-                        cursor={false}/>
+                    dataKey='name' 
+                    type='category'
+                    interval={0}
+                    label={{
+                        value: 'Technology',
+                        angle: -90,
+                        position: 'insideLeft',
+                        fill: 'var(--teal-med)'
+                        }}/>
+                    <Tooltip
+                    content={<CustomToolTip/>}
+                    cursor={false}/>
                     <CartesianGrid 
                     stroke="#d3d3d3" 
                     strokeDasharray="2 4"
@@ -49,10 +71,7 @@ export const BarGraph: React.FC<GraphProps> = ({data})  => {
                         fill="#319795"/>
                 </BarChart>
            </ResponsiveContainer>
-           <StickyWrapper>
-            
-           </StickyWrapper>
-        </BarGraphWrapper>
+        </BarGraphContainer>
     )} else {
         return <div>loading</div>
     }

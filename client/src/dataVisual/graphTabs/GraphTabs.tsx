@@ -8,8 +8,6 @@ export interface GraphProps {
     } 
 }
 export const GraphTabs: React.FC<GraphProps> = ({data}) => {
-
-    console.log(PieGraph)
     if (data) {
         return (
             <Tabs 
@@ -21,15 +19,19 @@ export const GraphTabs: React.FC<GraphProps> = ({data}) => {
             colorScheme='teal'
            >
                 <TabList>
-                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Technologies</Tab>
-                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Region</Tab>
+                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Popular Technologies</Tab>
+                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>All Technologies</Tab>
+                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Technology Trends</Tab>
                 </TabList>
                 <TabPanels color='teal'>
                     <TabPanel height='100%'>
+                        <PieGraph data={data}/>
+                    </TabPanel>
+                    <TabPanel height='100%'>
                         <BarGraph data={data}/>
                     </TabPanel>
-                    <TabPanel>
-                        <PieGraph data={data}/>
+                    <TabPanel height='100%'>
+                        <div>tab 3</div>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

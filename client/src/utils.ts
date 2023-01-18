@@ -23,3 +23,17 @@ export const decodeDate = (date: string) => {
     getDay = moment(date).format('DD')
     return getYear && getMonth && getDay ? getMonth + ' ' + getDay + ', ' + getYear : date
 }
+
+export const getPercentage = (count: number, totalCount: number) => {
+    return (Number(count)/Number(totalCount) * 100).toFixed(2)
+}
+
+export const decodeTechnologyName = (technology: string) => {
+    let decoded: string = decodeURIComponent(technology);
+    if (decoded.toLowerCase().includes('developer')) {
+        decoded = decoded.replace('developer', '');
+    } else if (decoded.toLowerCase().includes('language')) {
+        decoded = decoded.replace('language', '');
+    };
+    return decoded.charAt(0).toUpperCase() + decoded.slice(1);
+}

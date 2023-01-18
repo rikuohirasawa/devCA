@@ -1,17 +1,20 @@
 import styled from "styled-components";
 
-export const GraphContainer = styled.div`
+export const PieGraphContainer = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 70%;
-    gap: 16px;
+    height: auto;
+    gap: 30px;
+
+    .font-700 {
+        font-weight: 700;
+    }
 `
 
-export const BarGraphWrapper = styled.div`
+export const BarGraphContainer = styled.div`
 display: flex;
-height: 450px;
+height: 850px;
 overflow-y: scroll;
 `
 

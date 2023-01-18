@@ -46,4 +46,6 @@
 
 .leaflet-interactive:hover {
         fill: black;
+        stroke: var(--teal);
+        color: var(--teal)
 }

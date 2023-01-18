@@ -5,7 +5,6 @@ export const LogoWrapper = styled.div`
     width: 50px;
     height: 50px;
     border: 1px solid var(--teal);
-    margin: 8px;
 `
 
 export const Icon = styled.div`

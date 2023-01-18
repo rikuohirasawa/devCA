@@ -5,9 +5,10 @@ export const TooltipWrapper = styled.div<{display?:boolean}>`
     display: ${props=>props.display ? 'flex' : 'none'};
     flex-direction: column;
     width: fit-content;
-
-    background: var(--bg-black);
-    border: 1px solid var(--teal);
+    
+    background: var(--black);
+    color: var(--teal-med);
+    border: 1px solid var(--teal-light);
     padding: 12px 18px;
     border-radius: 8px;
     z-index: 400;

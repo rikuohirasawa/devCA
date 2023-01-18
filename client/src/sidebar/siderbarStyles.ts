@@ -41,4 +41,11 @@ export const ContentColumn = styled.div`
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    gap: 24px;
 `
+
+export const LinkContainer = styled.div`
+    display: flex;
+    gap: 6px;`
+
+export const LinkBtn = styled.a``

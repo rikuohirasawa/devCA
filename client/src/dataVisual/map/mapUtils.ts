@@ -1,21 +1,5 @@
-import { useContext } from "react"
-import { PageContext } from "../../states/PageContext"
-
-export const getPercent = () => {
-    return
-}
-
-export const getCount = () => {
-    return
-}
-
-export const getRanking = () => {
-    return
-}
-
-
 const fillColors: string[] = [
-    'rgba(0, 0, 0, 0.1)',
+    '#E4F7D1',
     '#C8F2C2',
     '#A4E9A7',
     '#89DD9C',
@@ -30,16 +14,11 @@ const fillColors: string[] = [
     '#032DA1'
 ];
 export const getFillColor = (count: number, viewByFormat: string, totalCount?: number, rank?: number) => {
-
-    let multiplier: number = viewByFormat === 'Percent' ? 10 : viewByFormat === 'Count' ? 100 : 0
     let fillColor: string = ''
-    let sum = 0;
     const sliceFillColors = fillColors.slice(0, 11)
-    if (viewByFormat === 'Percent' && totalCount) {
-        console.log(totalCount)
-        if (count === 0) {
-            return sliceFillColors[0]
-        } else {
+    if (count === 0 ) {
+        return 'rgba(0, 0, 0, 0.3)'
+    } if (viewByFormat === 'Percent' && totalCount) {
             for (let i = 0; i <= sliceFillColors.length - 1; i++) {
                 if (count/totalCount < i * 10) {
                     fillColor = sliceFillColors[i]
@@ -49,11 +28,7 @@ export const getFillColor = (count: number, viewByFormat: string, totalCount?: n
                     break
                 }
             }
-        }
     } else if (viewByFormat === 'Count') {
-        if (count === 0) {
-            return sliceFillColors[0]
-        } else {
             for (let i = 0; i <= sliceFillColors.length - 1; i++) {
                 if (count < i * 100) {
                     fillColor = sliceFillColors[i]
@@ -63,71 +38,13 @@ export const getFillColor = (count: number, viewByFormat: string, totalCount?: n
                     break
                 }
             }
-        }
     } else if (viewByFormat === 'Ranking') {
-
-
-        // console.log(count, rank, (reverseFillColors[rank-1]))
-        console.log('rank', rank)
-        if (count === 0 || rank === 0) {
+        if (rank === 0) {
             fillColor = fillColors[0]
         } else if (rank) {
             fillColor = fillColors[rank]
         }
     }
     return fillColor
-
-
-    // if (viewByFormat === 'Percent') {
-    //     switch (true) {
-    //         case (count === 0):
-    //             return 'rgba(255, 255, 255, 0.8)'
-    //         case (count < 10):
-    //            return '#C8F2C2'
-    //         case (count <= 20):
-    //             return '#A4E9A7'
-    //         case (count <= 30):
-    //             return '#89DD9C'
-    //         case (count <= 40):
-    //             return '#70CE98'
-    //         case (count <= 50):
-    //             return '#59BE96'
-    //         case (count <= 60):
-    //             return '#44AC96'
-    //         case (count <= 70):
-    //             return '#319795'
-    //         case (count <= 80): 
-    //             return '#24879B'
-    //         case (count <= 90): 
-    //             return '#1B759E'
-    //         case (count <= 100): 
-    //             return '#12609F'
-    //     }   
-    // } else if (viewByFormat === 'Count'){
-    //     switch (true) {
-    //         case (count === 0):
-    //             return 'rgba(255, 255, 255, 0.8)'
-    //         case (count <= 100):
-    //            return '#C8F2C2'
-    //         case (count <= 200):
-    //             return '#A4E9A7'
-    //         case (count <= 300):
-    //             return '#89DD9C'
-    //         case (count <= 400):
-    //             return '#70CE98'
-    //         case (count <= 500):
-    //             return '#59BE96'
-    //         case (count <= 600):
-    //             return '#44AC96'
-    //         case (count <= 700):
-    //             return '#319795'
-    //         case (count <= 800): 
-    //             return '#24879B'
-    //         case (count <= 900): 
-    //             return '#1B759E'
-    //         case (count > 1000): 
-    //             return '#12609F'
-    //     }   
-    // }
 }
 
