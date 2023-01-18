@@ -13,9 +13,10 @@ export const HeaderWrapper = styled.header`
     display: flex;
 `
 
-export const HeaderLink = styled(Link)`
+export const HeaderLink = styled.div`
     text-decoration: none;
     color: inherit;
+    font-weight: 600;
 `
 
 export const ExternalLink = styled.a`

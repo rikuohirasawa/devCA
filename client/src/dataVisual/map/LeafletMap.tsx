@@ -16,6 +16,7 @@ import { SelectedRegion } from '../../states/pageReducer';
 import { getFillColor } from './mapUtils';
 
 import { MapLegend } from './legend/MapLegend';
+import { SettingDisplay } from './settingsDisplay/SettingsDisplay';
 
 
 const CANADA_TOPO_JSON = require('../Canada.topo.json')
@@ -97,7 +98,7 @@ export const LeafletMap: React.FC = () => {
     
     const highlightFeature = ((e:any) => {
         const layer = e.target
-        setToolTipData(Object.assign(layer.feature.properties, {display: true}))
+        setToolTipData(Object.assign(layer.feature.properties, {...layer.feature.properties, display: true}))
         layer.setStyle({
             weight: 1,
             color: 'black',
@@ -111,9 +112,8 @@ export const LeafletMap: React.FC = () => {
 
     const clickFeature = ((e: any) => {
         const id = e['target']['feature']['id']
-        console.log(id)
         const regionData = regionDataAll.filter(e=>e.region === id && e.region)[0]
-        console.log(regionData[viewDate].technologies)
+        console.log(e)
         dispatch({type: 'SELECT_REGION', payload: regionData});
         dispatch({type: 'SELECT_REGION_ID', id: id});
         dispatch({type: 'TOGGLE_MODAL'});
@@ -135,10 +135,6 @@ export const LeafletMap: React.FC = () => {
         });
     }
 
-    // console.log(viewTechnology[viewDate]['total_job_count'])
-    console.log(viewTechnology)
-
-
     interface SingleTechnology {    
         [key: string]: {
             regions: {
@@ -151,47 +147,90 @@ export const LeafletMap: React.FC = () => {
 
     }
     const singleCountTechnology: any = technologyDataAll && technologyDataAll.filter((e: any)=>{
-        if (e['technology'] === viewTechnology) {
-            console.log(e[viewDate]['total_job_count'])
-            console.log(e['technology'])
-            // const count = e[viewDate]['total_job_count']
+        if (e['technology'] === viewTechnology && viewDate) {
             return e
-
-            // return e[viewDate]['total_job_count']
         }
-    })[0]
+    })
+
+    const rankList: {[key: string]: number} = {}
+    const countArray = regionDataAll.map(e=>{
+        const technologies: any = e[viewDate]['technologies'];
+        const name: any = e['region']
+        return {name: name, count: technologies[viewTechnology]}
+    })
+    const sortByRank = countArray.sort((a, b)=>{
+        return (a['count'] - b['count'])
+    })
+    console.log(sortByRank)
+    sortByRank.forEach((e, index)=>{
+        Object.assign(rankList, {[e['name']]: index})
+    })
+    console.log(rankList)
+    geoFeatures.forEach(feature=>{
+        feature['properties']['rank'] = rankList[feature['id']]
+    })
+        //     regionDataAll.forEach(e=>{
+        //         const technologies: any = e[viewDate]['technologies'];
+        //         const name: any = e['region']
+        //         Object.assign(rankList, {[name] : technologies[viewTechnology]})
+        //     })
+        //     console.log(rankList)
+        // geoFeatures.forEach(feature=>{
 
 
-
-
-
+    interface Feat {
+        geometry: {};
+        id: string;
+        properties: {
+            name: string | null;
+            data?: {
+                technologies: {};
+                total_job_count: number
+            }
+        };
+        type: string;
+    }
     const style = ((feature: any) => {
-        if (feature.id !== '-99') {
-            // console.log(feature.id, feature['properties']['data']['technologies'][viewTechnology])
-            return ({
-                fillColor: getFillColor(
-                    feature['properties']['data']['technologies'][viewTechnology], 
-                    viewByFormat,
-                    viewByFormat === 'Percent' && singleCountTechnology[viewDate]['total_job_count']
-                    ),
-                weight: 1,
-                opacity: 1,
-                color: 'rgba(255, 255, 255, 0.3)',
-                dashArray: '0',
-                fillOpacity: 0.8,
-            })
-        } else {
-            return ({
-                fillcolor: '#fff',
-                weight: 1,
-                opacity: 1,
-                color: 'rgba(255, 255, 255, 0.1)',
-                dashArray: '0',
-                fillOpacity: 0.5,
-            })
-        }
-
-
+        // try {
+            if (feature.id !== '-99' && feature['properties']['data']['technologies'][viewTechnology] >= 0) {
+                // console.log(feature.id, feature['properties']['data']['technologies'][viewTechnology])
+                // console.log(feature['properties']['data']['technologies'][viewTechnology])
+                console.log(feature['properties']['rank'])
+                return ({
+            
+                    fillColor: getFillColor(
+                        feature['properties']['data']['technologies'][viewTechnology] ?? 0, 
+                        viewByFormat,
+                        viewByFormat === 'Percent' && singleCountTechnology && viewDate && singleCountTechnology[0][viewDate]['total_job_count'],
+                        viewByFormat === 'Ranking' && feature['properties']['rank']
+                        ),
+                    weight: 1,
+                    opacity: 1,
+                    color: 'rgba(255, 255, 255, 0.1)',
+                    dashArray: '0',
+                    fillOpacity: 0.8,
+                })
+            } else {
+                return ({
+                    fillcolor: '#fff',
+                    weight: 1,
+                    opacity: 1,
+                    color: 'rgba(255, 255, 255, 0.1)',
+                    dashArray: '0',
+                    fillOpacity: 0.5,
+                })
+            }
+        // } catch (err) {
+        //     console.log(err)
+        //     return ({
+        //         fillcolor: '#fff',
+        //         weight: 1,
+        //         opacity: 1,
+        //         color: 'rgba(255, 255, 255, 0.1)',
+        //         dashArray: '0',
+        //         fillOpacity: 0.5,
+        //     })
+        // }
     })
     return (
             <MapContainer center={[71.614190, -99.718438]}
@@ -229,7 +268,8 @@ export const LeafletMap: React.FC = () => {
                     })} */}
                     </>
                 )}
-                <MapLegend/>
+                <SettingDisplay/>
+                {/* <MapLegend/> */}
             </MapContainer>
     )
                 } else {

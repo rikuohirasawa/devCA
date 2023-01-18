@@ -1,14 +1,13 @@
 import styled from "styled-components"
 
 export const MapLegendWrapper = styled.div`
-display: flex;
-flex-direction: column;
-position: absolute;
-z-index: 9999999999;
-bottom: 2%;
-left: 2%;
-font-size: 1rem;
-font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 1rem;
+    font-weight: 700;
+    height: 325px;
+    width: 28%;
 `
 export const FlexRow = styled.div`
     display: flex;
@@ -19,5 +18,5 @@ export const LegendColor= styled.div<{bgColor: string}> `
     background: ${props=>props.bgColor};
 
     width: 40px;
-    height: 40px;
+    height: 20px;
     color: var(--teal)`

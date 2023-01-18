@@ -3,11 +3,11 @@ import { PageState, pageReducer, ActionTypes, RegionData, SelectedRegion, Techno
 
 const initialPageState: PageState = {
     modalOpen: false,
-    sidebarOpen: true,
+    sidebarOpen: false,
     viewTechnology: 'Python',
     viewDate: '2022-12-23',
     viewByPercentage: false,
-    viewByFormat: 'Percent'
+    viewByFormat: 'Ranking'
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({
