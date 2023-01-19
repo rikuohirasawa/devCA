@@ -10,13 +10,17 @@ export const LogoWrapper = styled.div`
 export const Icon = styled.div`
     position: absolute;
     right: 0;
-    bottom: 38%;`
+    bottom: 38%;
+    border-bottom: 1px solid var(--teal);
+    padding: 0 0 0 6px;
+    `
 
 export const LogoText = styled.div`
+    margin: 2px 0 0 0;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     position: absolute;
-    bottom: 1%;
-    right: 0;
-    border-top: 1px solid var(--teal);
+    bottom: -1%;
+    right: 2%;
+    /* border-top: 1px solid var(--teal); */
 `

@@ -6,9 +6,9 @@ export const Logo: React.FC = () => {
     return (
     <LogoWrapper>
         <Icon>
-            <MdComputer size={20}/>
+            <MdComputer size={22}/>
         </Icon>
-        <LogoText>devCA</LogoText>
+        <LogoText>dev</LogoText>
     </LogoWrapper>
     )
 }

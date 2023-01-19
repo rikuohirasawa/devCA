@@ -4,8 +4,11 @@ import { TooltipWrapper } from "./graphStyles"
 
 import { useContext } from 'react'
 import { PageContext } from "../../states/PageContext"
+import { decodeTechnologyName, decodeDate } from '../../utils'
 
-export const CustomToolTip = ({active, payload, label}: TooltipProps<ValueType, NameType>) => {
+import { Text } from "@chakra-ui/layout"
+
+export const CustomToolTipBarGraph = ({active, payload, label}: TooltipProps<ValueType, NameType>) => {
     const { state } = useContext(PageContext),
     { selectedRegion, viewDate } = state
     if (active && selectedRegion) {
@@ -19,6 +22,26 @@ export const CustomToolTip = ({active, payload, label}: TooltipProps<ValueType, 
                 : 
                 <div>loading</div>
                 }     
+            </TooltipWrapper>
+        )
+    }
+    return null
+}
+
+export const CustomToolTipLineGraph = ({active, payload, label}: TooltipProps<ValueType, NameType>) => {
+    if (active) {
+        return (
+            <TooltipWrapper>
+                {active && payload && payload.length ? 
+                <>
+                <Text
+                color='var(--teal)'
+                textAlign='left'>{decodeDate(label)}</Text>
+                <Text
+                color='var(--teal)'
+                textAlign='left'>Count: {payload[0]['value']}</Text>
+                </>
+                : <div>loading</div>}
             </TooltipWrapper>
         )
     }

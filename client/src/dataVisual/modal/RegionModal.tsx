@@ -13,7 +13,7 @@ import { PageContext } from "../../states/PageContext";
 import { BarGraph } from '../graphs/BarGraph'
 import { PieGraph } from '../graphs/PieGraph'
 import { GraphTabs } from '../graphTabs/GraphTabs';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, useDisclosure, ModalCloseButton } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, useDisclosure, ModalCloseButton, Text } from '@chakra-ui/react'
 
 export const RegionModal: React.FC = () => {
 
@@ -64,10 +64,11 @@ export const RegionModal: React.FC = () => {
                     <ModalHeader><Heading as='h1' size='xl'>{regionName} - {decodeTechnologyName(viewTechnology)}</Heading></ModalHeader>
                     <ModalCloseButton onClick={onClose}/>
                         <ModalBody>
-                        <Heading as='h3' size='lg'>{getMonth + ' ' + getDay + ', ' + getYear}</Heading>
-                        <div>
-                            <div>{`Represents ${percentageInRegion}% of jobs parsed in ${regionName}, and ${percentageInCanada}% of jobs in all of Canada`}</div>
-                        </div>
+                            <Heading 
+                            as='h3' 
+                            size='lg'
+                            marginBottom='20px'
+                            >{getMonth + ' ' + getDay + ', ' + getYear}</Heading>
                         <GraphTabs data={regionByDate['technologies']}/>
                     </ModalBody>
                 </ModalContent>

@@ -1,6 +1,6 @@
 import { getPercentage } from "../../utils";
 // data structure conversion, so can be used by recharts library
-export const getGraphData = (data: {[key:string]: number}, viewTechnology: string) => {
+export const getBarGraphData = (data: {[key:string]: number}, viewTechnology: string) => {
     const graphData: {name: string, count: number, fill: string}[] = []
     for (let key in data) {
         // decode keys such as 'c%23' 'c%2B%2B' etc

@@ -52,12 +52,12 @@ export interface PageState {
     regionDataAll?: RegionData[],
     viewTechnology: string,
     viewDate: string,
-    selectedRegion?: RegionData,
+    selectedRegion?: RegionData | SelectedRegionData,
     selectedRegionID?: string,
     technologyDataAll?: TechnologyData[],
     viewByPercentage?: boolean,
     viewByFormat: string,
-    scrapedDates?: string[]
+    scrapedDates?: string[],
 }
 
 export enum ActionTypes {
@@ -73,7 +73,7 @@ export enum ActionTypes {
     technologyData = 'TECHNOLOGY_DATA',
     viewByPercentage = 'VIEW_BY_PERCENTAGE',
     viewByFormat = 'VIEW_BY_FORMAT',
-    scrapedDates = 'SCRAPED_DATES'
+    scrapedDates = 'SCRAPED_DATES',
 }
 
 interface PageAction {

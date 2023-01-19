@@ -1,5 +1,6 @@
 import { PieGraph } from '../graphs/PieGraph'
 import { BarGraph } from '../graphs/BarGraph'
+import { LineGraph } from '../graphs/LineGraph'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 export interface GraphProps {
@@ -31,7 +32,7 @@ export const GraphTabs: React.FC<GraphProps> = ({data}) => {
                         <BarGraph data={data}/>
                     </TabPanel>
                     <TabPanel height='100%'>
-                        <div>tab 3</div>
+                        <LineGraph/>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

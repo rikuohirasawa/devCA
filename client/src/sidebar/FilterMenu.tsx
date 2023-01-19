@@ -55,6 +55,8 @@ import moment from 'moment';
                     {technologyDataAll && technologyDataAll.map((e, index)=>{
                         return (
                             <Radio 
+                            _focus={{opacity: '1'}}
+                            opacity='0.8'
                             isRequired
                             key={`technology-${index}`}
                             value={e.technology.toString()}
@@ -73,6 +75,8 @@ import moment from 'moment';
                             {scrapedDates && scrapedDates.map((e, index)=>{
                                 return (
                                     <Radio
+                                    _focus={{opacity: '1'}}
+                                    opacity='0.8'
                                     isRequired
                                     colorScheme='teal'
                                     key={`date-${index}`}
@@ -89,9 +93,17 @@ import moment from 'moment';
                     // dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: e})
                     }}>
                     <RadioScrollColumn>
-                        <Radio value='Count' colorScheme='teal'>Count</Radio>
-                        <Radio value='Percent' colorScheme='teal'>Percent</Radio>
-                        <Radio value='Ranking' colorScheme='teal'>Ranking</Radio>
+                        <Radio                         
+                        _focus={{opacity: '1'}}
+                        opacity='0.8' value='Count' colorScheme='teal'>Count</Radio>
+                        <Radio 
+                        _focus={{opacity: '1'}}
+                        opacity='0.8'
+                        value='Percent' colorScheme='teal'>Percent</Radio>
+                        <Radio
+                        _focus={{opacity: '1'}} 
+                        opacity='0.8'
+                        value='Ranking' colorScheme='teal'>Ranking</Radio>
                     </RadioScrollColumn>
                 </RadioGroup>
                 <Button 

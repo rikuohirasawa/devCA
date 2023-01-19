@@ -17,6 +17,7 @@ export const Homepage: React.FC = () => {
         .then(data=>{
           const datesArray = Object.keys(data[0]).filter((e:string) => e !== 'region'),
           sumJobs = data.slice(-1)[0]['sum_jobs'];
+          dispatch({type: 'VIEW_DATE', viewDate: datesArray.slice(-1)[0]})
           dispatch({type: 'SCRAPED_DATES', scrapedDates: datesArray});
           dispatch({type: 'SUM_JOBS', payload: sumJobs});
           dispatch({type: 'REGION_DATA', payload: data.slice(0, -1)});

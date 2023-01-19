@@ -17,7 +17,7 @@ def import_region_data():
         db = client[DB_NAME]
         job_collection = db['region_data']
         scraped_data = scraper() 
-        job_collection.insert_many(scraped_data)
+        job_collection.insert_many(scraped_data[0])
         print(scraped_data)
     except Exception as err:
         print(type(err))

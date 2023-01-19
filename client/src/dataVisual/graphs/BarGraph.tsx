@@ -1,11 +1,11 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Label } from "recharts"
 import { BarGraphContainer, StickyWrapper } from "./graphStyles"
-import { CustomToolTip } from "./CustomToolTip"
+import { CustomToolTipBarGraph } from "./CustomToolTip"
 
 import { useContext } from "react"
 import { PageContext } from "../../states/PageContext"
 
-import { getGraphData } from "./utils"
+import { getBarGraphData } from "./graphUtils"
 export interface GraphProps {
     data : {
         [key:string] : number
@@ -19,7 +19,7 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
 
     if (selectedRegion) {
     const data: any = selectedRegion[viewDate]['technologies'],
-    sortData = getGraphData(data, viewTechnology);
+    sortData = getBarGraphData(data, viewTechnology);
     return (
         <BarGraphContainer>
             <ResponsiveContainer height={800}
@@ -37,11 +37,13 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
                 >
                     <XAxis 
                     type='number'
+                    stroke='var(--teal-med)'
                     >
                         <Label 
                         value='Count'
                         position='bottom'
                         fill='var(--teal-med)'
+                        
                         />
                     </XAxis>
                     <XAxis 
@@ -52,6 +54,7 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
                     width={120}
                     dataKey='name' 
                     type='category'
+                    stroke='var(--teal-med)'
                     interval={0}
                     label={{
                         value: 'Technology',
@@ -60,12 +63,12 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
                         fill: 'var(--teal-med)'
                         }}/>
                     <Tooltip
-                    content={<CustomToolTip/>}
+                    content={<CustomToolTipBarGraph/>}
                     cursor={false}/>
                     <CartesianGrid 
-                    stroke="#d3d3d3" 
+                    stroke="var(--teal)" 
                     strokeDasharray="2 4"
-                    style={{opacity: '0.2'}}/>
+                    style={{opacity: '0.3'}}/>
                     <Bar 
                         dataKey='count' 
                         fill="#319795"/>

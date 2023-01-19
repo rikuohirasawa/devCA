@@ -11,12 +11,13 @@ export const PieGraphContainer = styled.div`
         font-weight: 700;
     }
 `
-
 export const BarGraphContainer = styled.div`
-display: flex;
-height: 850px;
-overflow-y: scroll;
+    display: flex;
+    height: 500px;
+    overflow-y: scroll;
 `
+
+export const LineGraphContainer = styled.div``
 
 export const StickyWrapper = styled.div``
 
