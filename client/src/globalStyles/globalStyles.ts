@@ -37,8 +37,9 @@ export const GlobalStyle = createGlobalStyle`
     }
     html,
     body {
+        background: var(--black);
         max-height: 100vh;
-        overflow: hidden;
+        overflow: none !important;
         /* font-family: 'Cousine', monospace; */
         /* font-family: "Open Sans", sans-serif !important; */
     }

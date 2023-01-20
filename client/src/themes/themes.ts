@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-
+import { ParagraphText } from "./chakraComponents";
 export const theme = extendTheme({
     colors: {
         darkMode: {
@@ -16,5 +16,8 @@ export const theme = extendTheme({
             }
         }
 
+    },
+    components: {
+        ParagraphText
     }
 })

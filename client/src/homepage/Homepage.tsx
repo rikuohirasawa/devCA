@@ -11,6 +11,14 @@ import { LeafletMap } from "../dataVisual/map/LeafletMap"
 import { decodeDate } from "../utils"
 export const Homepage: React.FC = () => {
     const { state, dispatch } = useContext(PageContext);
+
+    useEffect(()=>{
+      const onResize = () => {
+        dispatch({type: 'WINDOW_WIDTH', windowWidth: window.innerWidth})
+      }
+      window.addEventListener('resize', onResize)
+      return ()=> window.removeEventListener('resize', onResize)
+      }, [])
     useEffect(()=>{
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
         .then(res=>res.json())

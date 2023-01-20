@@ -58,6 +58,7 @@ export interface PageState {
     viewByPercentage?: boolean,
     viewByFormat: string,
     scrapedDates?: string[],
+    windowWidth: number
 }
 
 export enum ActionTypes {
@@ -74,6 +75,7 @@ export enum ActionTypes {
     viewByPercentage = 'VIEW_BY_PERCENTAGE',
     viewByFormat = 'VIEW_BY_FORMAT',
     scrapedDates = 'SCRAPED_DATES',
+    windowWidth = 'WINDOW_WIDTH'
 }
 
 interface PageAction {
@@ -84,6 +86,7 @@ interface PageAction {
     scrapedDates: string[];
     viewDate: string;
     viewTechnology: string;
+    windowWidth: number;
 
 }
 
@@ -148,6 +151,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 scrapedDates: action.scrapedDates
+            }
+        } case ActionTypes.windowWidth: {
+            return {
+                ...state, 
+                windowWidth: action.windowWidth
             }
         }
         default: return state;

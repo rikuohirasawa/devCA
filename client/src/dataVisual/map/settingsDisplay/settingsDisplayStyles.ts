@@ -30,25 +30,29 @@ export const TextContainer = styled.div`
 export const MinimizeIcon = styled.div<{minimize: boolean}>`
         width: 30px;
 		height: 30px;
-		float: right;
 		position: relative;
         &:before,
-		&:after{
-                position: absolute;
-				content: "";
-				width: 10px;
-				height: 2px;
-				background-color: ${props=>props.minimize ? 'var(--black)' : 'var(--teal)'};
-				border-radius: 2px;
-                top: 14px;
-				left: 10px;
-                transition: all .35s ease-in-out;   
+		&:after {
+            position: absolute;
+            content: "";
+            width: 10px;
+            height: 2px;
+            background-color: ${props=>props.minimize ? 'var(--black)' : 'var(--teal)'};
+            border-radius: 2px;
+            top: 14px;
+            left: 10px;
+            transition: all .35s ease-in-out;   
 			}
 			
-			&:before{
-				transform: ${props=>props.minimize ? 'translateX(3px) rotate(45deg)' : 'translateX(-3px) rotate(45deg)'} 
-			}
-			
-			&:after{
-                transform: ${props=>props.minimize ? 'translateX(-3px) rotate(-45deg)' : 'translateX(3px) rotate(-45deg)'} 
-			}`
+        &:before{
+            transform: ${props=>props.minimize ? 'translateX(3px) rotate(45deg)' : 'translateX(-3px) rotate(45deg)'} 
+        }
+        
+        &:after{
+            transform: ${props=>props.minimize ? 'translateX(-3px) rotate(-45deg)' : 'translateX(3px) rotate(-45deg)'} 
+        }
+        
+        @media only screen and (min-width: 450px) {
+            float: right;
+            
+        }`

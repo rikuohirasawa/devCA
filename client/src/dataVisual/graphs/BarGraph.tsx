@@ -22,7 +22,7 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
     sortData = getBarGraphData(data, viewTechnology);
     return (
         <BarGraphContainer>
-            <ResponsiveContainer height={800}
+            <ResponsiveContainer height={1000}
             width='95%'
             >
                 <BarChart
@@ -31,8 +31,7 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
                     bottom: 35
                 }}
                 layout='vertical'
-                barCategoryGap={0
-                }
+                barCategoryGap={0}
                 data={sortData}
                 >
                     <XAxis 

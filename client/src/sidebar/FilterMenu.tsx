@@ -35,7 +35,7 @@ import moment from 'moment';
         dispatch({type: 'VIEW_BY_FORMAT', viewByFormat: sortByFilter});
         dispatch({type: 'VIEW_TECHNOLOGY', viewTechnology: technologyFilter});
         dispatch({type: 'TOGGLE_SIDEBAR'})
-        console.log('submit')
+
     }
     return (
         <>

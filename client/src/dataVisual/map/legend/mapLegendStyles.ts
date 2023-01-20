@@ -8,6 +8,10 @@ export const MapLegendWrapper = styled.div`
     font-weight: 700;
     height: 325px;
     width: 28%;
+    
+    @media only screen and (max-width: 370px) {
+            margin-right: 16px;     
+        }
 `
 export const FlexRow = styled.div`
     display: flex;

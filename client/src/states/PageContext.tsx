@@ -8,7 +8,8 @@ const initialPageState: PageState = {
     viewDate: '2022-12-23',
     viewByPercentage: false,
     viewByFormat: 'Ranking',
-    scrapedDates: []
+    scrapedDates: [],
+    windowWidth: window.innerWidth
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({

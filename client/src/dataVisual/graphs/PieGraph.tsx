@@ -8,7 +8,7 @@ import { getPercentage, decodeTechnologyName, convertNames } from '../../utils'
 import { useState, useContext } from 'react'
 import { PageContext } from '../../states/PageContext'
 
-import { PieGraphContainer } from './graphStyles'
+import { PieGraphContainer, FlexContainer } from './graphStyles'
 import { Heading, Text, Flex } from '@chakra-ui/react'
 
 import { SelectedRegionData } from '../../states/pageReducer'
@@ -22,9 +22,7 @@ interface PieData {
 export const PieGraph: React.FC<GraphProps> = ({data}) => {
 
     const { state } = useContext(PageContext),
-    { selectedRegion, selectedRegionID, viewTechnology, viewDate, sumJobs } = state
-
-
+    { selectedRegion, selectedRegionID, viewTechnology, viewDate, sumJobs, windowWidth } = state
 
     if (selectedRegion && selectedRegionID && sumJobs) {
         const totalCountRegion = (selectedRegion as unknown as SelectedRegionData)[viewDate]['total_job_count']
@@ -36,11 +34,31 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
         percentInCanada = (count/sumJobs * 100).toFixed(2),
         pieData: PieData[] = getPieGraphData(technologyList, viewTechnology, totalCountInRegion)
         const renderLabel = (e: any) => {
+            console.log(e)
             const name: string = e['payload']['payload']['name']
             if (name === 'Other') {
-                return `Other (< 3%) (${getPercentage(e['count'], totalCountInRegion)}%)`
+                return (
+                    <text
+                    stroke={'var(--teal)'}
+                    x={e['x']}
+                    y={e['y']}
+                    textAnchor='middle'
+                    fontWeight={100}>
+                        {`Other (< 3%) (${getPercentage(e['count'], totalCountInRegion)}%)`}
+                    </text>
+                )
             }
-            return `${decodeTechnologyName(name)} (${getPercentage(e['count'], totalCountInRegion)}%)`
+            return (
+            <text
+            x={e['x']}
+            y={e['y']}
+            textAnchor='middle'
+            stroke={name === viewTechnology ? 'rgba(255, 255, 255, 0.7)' : 'var(--teal)'}
+            fontWeight={100}>{
+            `${decodeTechnologyName(name)} (${getPercentage(e['count'], totalCountInRegion)}%)`
+            }
+            </text>
+            )
         }
         // get ranking within region
         const getRankingInRegion = () => {
@@ -54,12 +72,15 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
             })
             return rank
         }
+
+        console.log(windowWidth)
          return (
             <PieGraphContainer>
-                <PieChart 
-                style={{ marginRight: 'auto'}}
-                width={700} 
-                height={500}>
+                <ResponsiveContainer 
+                width={windowWidth < 900 ? '90%' : windowWidth < 1200 ? '80%' : '70%'}
+                height={700}
+                >
+                <PieChart>
                     <Pie 
                     data={pieData} 
                     dataKey='count' 
@@ -68,42 +89,42 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                     animationDuration={700}>
                     </Pie>
                 </PieChart>
-                <Flex
-                flexDirection='column'
-                gap='16px'
-                alignItems='center'
-                textAlign='left'>
+                </ResponsiveContainer>
+                <FlexContainer>
                     <Heading
                     size='xl'
-                    width='80%'
+                    width='100%'
                     borderBottom='1px solid var(--teal-med)'
                     paddingBottom='16px'
                     >{convertNames[selectedRegionID]}</Heading>
+                    {/* <h1
+                    style={{fontSize: '2.25rem',
+                    fontWeight: '700'}}>Test</h1> */}
                     <Text 
                     fontSize='xl'
-                    width='80%'
+                    width='100%'
                     >
-                        {viewTechnology} is represented in {percentInRegion}% of the parsed job listings in {convertNames[selectedRegionID]}, with mention in <span className='font-700'>{count}</span> of the <span className='font-700'>{totalCountInRegion}</span> returned queries.
+                        {viewTechnology} is represented in <span className='font-700'>{percentInRegion}%</span> of the parsed job listings in {convertNames[selectedRegionID]}, with mention in <span className='font-700'>{count}</span> of the <span className='font-700'>{totalCountInRegion}</span> returned queries.
                     </Text>
                     <Text 
                     fontSize='xl'
-                    width='80%'
+                    width='100%'
                     textAlign='left'>
                         This makes {viewTechnology} the <span className='font-700'>{getRankingInRegion()}</span> most popular technology in {convertNames[selectedRegionID]} at the time of data collection.
                     </Text>
                     <Heading
                     size='xl'
-                    width='80%'
+                    width='100%'
                     borderBottom='1px solid var(--teal-med)'
                     paddingBottom='16px'
                     >Nationwide</Heading>
                     <Text
                     fontSize='xl'
-                    width='80%'
+                    width='100%'
                     textAlign='left'>
-                        {viewTechnology} represents {percentInCanada}% of the parsed job listings across Canada (total count of {sumJobs}).
+                        {viewTechnology} in {convertNames[selectedRegionID]} represents <span className='font-700'>{percentInCanada}%</span> of the parsed job listings across Canada (total count of <span className='font-700'>{sumJobs}</span>).
                     </Text>
-                </Flex>
+                </FlexContainer>
             </PieGraphContainer>
         )
     } else {
