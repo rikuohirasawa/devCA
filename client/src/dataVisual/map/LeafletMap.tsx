@@ -65,7 +65,8 @@ export interface ToolTipState {
     data?: {
         technologies: {[key:string]: number},
         total_job_count: number
-    }
+    },
+    totalCountTechnology?: number
 }
 
 export const LeafletMap: React.FC = () => {
@@ -92,9 +93,15 @@ export const LeafletMap: React.FC = () => {
             }
         })
     
+    const singleCountTechnology: any = technologyDataAll && technologyDataAll.filter((e: any)=>{
+        if (e['technology'] === viewTechnology && viewDate) {
+            return e
+        }
+    })
+    
     const highlightFeature = ((e:any) => {
         const layer = e.target
-        setToolTipData(Object.assign(layer['feature']['properties'], {...layer['feature']['properties'], display: true}))
+        viewDate && singleCountTechnology && setToolTipData(Object.assign(layer['feature']['properties'], {...layer['feature']['properties'], display: true}))
         layer.setStyle({
             weight: 1,
             fillColor: 'black',
@@ -122,12 +129,6 @@ export const LeafletMap: React.FC = () => {
         });
     }
 
-    const singleCountTechnology: any = technologyDataAll && technologyDataAll.filter((e: any)=>{
-        if (e['technology'] === viewTechnology && viewDate) {
-            return e
-        }
-    })
-
     // create ranking list
     const rankList: {[key: string]: number} = {}
     const countArray = regionDataAll.map(e=>{
@@ -149,7 +150,7 @@ export const LeafletMap: React.FC = () => {
             if (feature.id !== '-99' && feature['properties']['data']['technologies'][viewTechnology] >= 0) {
                 return ({
                     fillColor: getFillColor(
-                        feature['properties']['data']['technologies'][viewTechnology] ?? 0, 
+                        feature['properties']['data']['technologies'][viewTechnology], 
                         viewByFormat,
                         viewByFormat === 'Percent' && singleCountTechnology && viewDate && singleCountTechnology[0][viewDate]['total_job_count'],
                         viewByFormat === 'Ranking' && feature['properties']['rank']

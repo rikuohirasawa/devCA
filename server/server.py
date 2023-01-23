@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, Response, Request, make_response
 import requests
 # from flask_cors import CORS
 from apiHandlers.get_data import get_data
-
+from apiHandlers.get_scraper_stats import scraper_stats
 
 # print(get_data('region_data'))
 app = Flask(__name__)
@@ -23,6 +23,13 @@ def get_region():
 @app.route('/get-technology-data', methods=['GET'])
 def get_technologies():
     data = get_data(request.args.get('table'), request.args.get('date'))
+    response = jsonify(data)
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/scraper-stats', methods=['GET'])
+def get_scraper_stats():
+    data = scraper_stats()
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response

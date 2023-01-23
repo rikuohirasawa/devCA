@@ -32,7 +32,7 @@ export const GraphTabs: React.FC<GraphProps> = ({data}) => {
                     <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Technology Trends</Tab>
                 </TabList>
                 <TabPanels color='teal'>
-                    <TabPanel height='100%'
+                    <TabPanel height='fit-content'
                     width='100%'
                     padding='0'>
                         <PieGraph data={data}/>

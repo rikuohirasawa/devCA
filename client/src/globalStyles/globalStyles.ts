@@ -70,6 +70,10 @@ export const GlobalStyle = createGlobalStyle`
     }
 
 
+    .css-wl0d9u {
+        overflow: none !important;
+    }
+
 
 
     `

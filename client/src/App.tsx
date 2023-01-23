@@ -8,6 +8,8 @@ import { Homepage } from './homepage/Homepage'
 
 import { useEffect } from 'react';
 
+import { Dashboard } from './dashboard/Dashboard';
+
 import { PageContext, PageContextProvider } from './states/PageContext';
 
 
@@ -16,15 +18,14 @@ const App: React.FC = () => {
 
   return (
     <PageContextProvider>
-    <div className="App">
       <GlobalStyle/>
       <BrowserRouter>
         <Header/>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
-    </div>
     </PageContextProvider>
   );
 }

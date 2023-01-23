@@ -12,29 +12,6 @@ developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java
 
 regions = [('AB', '111149'), ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
 
-# updating data in mongodb by region
-def update_region_data():
-    client = MongoClient(MONGO_URI)
-    try:
-        db = client[DB_NAME]
-        region_collection = db['region_data'] 
-        scraped_data = scraper()
-        date = scraped_data[1]
-        for data in scraped_data[0]:
-            region_collection.find_one_and_update(
-            {'region': data['region']},
-            {'$set': {date: data[date]}},
-            return_document=ReturnDocument.AFTER
-            )
-    except Exception as err: 
-        print(type(err))
-        print(err.args)
-        print(err)
-        raise
-    client.close()
-
-# update_region_data()
-
 def update_technology_data(date):
     client = MongoClient(MONGO_URI)
     try:
@@ -42,6 +19,7 @@ def update_technology_data(date):
         technology_collection = db['technology_data']
         region_collection = db['region_data']
         region_list = list(region_collection.find())
+        print(region_list[0][date]['technologies']['Javascript'])
         for skill in developer_skills:
             total_job_count = 0
             technology_data = {
@@ -51,7 +29,7 @@ def update_technology_data(date):
                 }
             }
             for region in region_list:
-                count = region[date]['technologies'][skill]
+                count = (region[date]['technologies'][skill])
                 technology_data[date]['regions'][region['region']] = count
                 total_job_count += count
             technology_data[date]['total_job_count'] = total_job_count
@@ -66,4 +44,31 @@ def update_technology_data(date):
         print(err)
         raise
 
-update_technology_data('2023-1-19')
+# update_technology_data('2023-1-23')
+
+# updating data in mongodb by region
+def update_region_data():
+    client = MongoClient(MONGO_URI)
+    try:
+        db = client[DB_NAME]
+        region_collection = db['region_data'] 
+        scraped_data = scraper()
+        date = scraped_data[1]
+        for data in scraped_data[0]:
+            region_collection.find_one_and_update(
+            {'region': data['region']},
+            {'$set': {date: data[date]}},
+            return_document=ReturnDocument.AFTER)
+        update_technology_data(date)
+    except Exception as err: 
+        print(type(err))
+        print(err.args)
+        print(err)
+        raise
+    client.close()
+
+update_region_data()
+
+
+
+# update_technology_data('2023-1-23')

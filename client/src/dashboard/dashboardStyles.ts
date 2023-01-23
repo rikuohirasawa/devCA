@@ -1,0 +1,11 @@
+import styled from "styled-components";
+
+export const DashboardWrapper = styled.section`
+    border: 1px solid;
+    height: 100vh;
+    width: 100vw;
+    display: block;
+    z-index: 99999999999999999;
+    color: var(--teal);
+    padding: 80px;
+`

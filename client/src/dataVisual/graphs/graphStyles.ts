@@ -29,8 +29,8 @@ export const PieGraphContainer = styled.div`
         overflow-y: scroll;
         gap: 8px;
         min-width: 100%;
-
         padding: 16px 0;
+        min-height: 100%;
     }
 
     @media only screen and (min-width: 900px) {

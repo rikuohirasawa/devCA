@@ -8,43 +8,96 @@ import datetime
 from datetime import date
 from pymongo import MongoClient
 
+# import time
+# from time import sleep
 
-# load mongodb information stored in .env
+# developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
+
+# def start():
+#     start_time = time.time()
+#     for skill in developer_skills:
+#         print(skill)
+#         sleep(1)
+#     print('time:', time.time() - start_time)
+# start()
+
+regions = [('AB', '111149'), ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 DB_NAME = os.getenv('DB_NAME')
 
-def updateNames():
+def import_scraper_data():
+    # connect to mongodb
     client = MongoClient(MONGO_URI)
-    names = {
-        'alberta': 'AB', 
-        'british_columbia': 'BC',
-        'manitoba': 'MB',
-        'new_brunswick': 'NB',
-        'newfoundland_and_labrador': 'NF',
-        'northwest_territories': 'NT',
-        'nova_scotia': 'NS',
-        'nunavut': 'NU',
-        'ontario': 'ON',
-        'prince_edward_island': 'PE',
-        'quebec': 'QC',
-        'saskatchewan': 'SK',
-        'yukon': 'YT'
-    }
+    try:
+        # get db and collection
+        db = client[DB_NAME]
+        scraper_collection = db['scraper_stats']
+        for region in regions:
+            insert = scraper_collection.insert_one(
+                {'region': region[0]}
+            )
+            print(insert)
+    except Exception as err:
+        print(type(err))
+        print(err.args)
+        print(err)
+        raise
+    client.close()
+
+# import_scraper_data()
+
+def x():
+    client = MongoClient(MONGO_URI)
     try:
         db = client[DB_NAME]
-        collection = db['region_data']
-        for name in names:
-            print(name)
-            print(names[name])
-            collection.find_one_and_update(
-                {'region': name},
-                {'$set': {'region': names[name]}}
-            )
-        # data = list(collection.find())
-        # print(data)
-    except Exception as err: 
-        print(err.args)
+        technology_collection = db['technology_data']
+        region_collection = db['region_data']
+        region_list = list(region_collection.find())
+        for region in region_list:
+            print(region['2023-1-19']['technologies']['Javascript'])
+    except:
+        print('lol')
+
+# x()
+
+print(int('0'))
+# load mongodb information stored in .env
+# load_dotenv()
+# MONGO_URI = os.getenv('MONGO_URI')
+# DB_NAME = os.getenv('DB_NAME')
+
+# def updateNames():
+#     client = MongoClient(MONGO_URI)
+#     names = {
+#         'alberta': 'AB', 
+#         'british_columbia': 'BC',
+#         'manitoba': 'MB',
+#         'new_brunswick': 'NB',
+#         'newfoundland_and_labrador': 'NF',
+#         'northwest_territories': 'NT',
+#         'nova_scotia': 'NS',
+#         'nunavut': 'NU',
+#         'ontario': 'ON',
+#         'prince_edward_island': 'PE',
+#         'quebec': 'QC',
+#         'saskatchewan': 'SK',
+#         'yukon': 'YT'
+#     }
+#     try:
+#         db = client[DB_NAME]
+#         collection = db['region_data']
+#         for name in names:
+#             print(name)
+#             print(names[name])
+#             collection.find_one_and_update(
+#                 {'region': name},
+#                 {'$set': {'region': names[name]}}
+#             )
+#         # data = list(collection.find())
+#         # print(data)
+#     except Exception as err: 
+#         print(err.args)
 
 # updateNames()
 

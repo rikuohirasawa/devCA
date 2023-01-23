@@ -20,7 +20,7 @@ export const getFillColor = (count: number, viewByFormat: string, totalCount?: n
         return 'rgba(0, 0, 0, 0.3)'
     } if (viewByFormat === 'Percent' && totalCount) {
             for (let i = 0; i <= sliceFillColors.length - 1; i++) {
-                if (count/totalCount < i * 10) {
+                if ((count/totalCount * 100) < i * 10) {
                     fillColor = sliceFillColors[i]
                     break
                 } else if (i === sliceFillColors.length - 1) {

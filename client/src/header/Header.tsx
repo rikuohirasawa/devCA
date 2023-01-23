@@ -19,7 +19,8 @@ export const Header: React.FC = () => {
     return (
         <>
         <HeaderWrapper>
-            <Logo/>
+            <Link to='/'><Logo/></Link>
+            <Link to='/dashboard'>Dashboard</Link>
             <Button 
             bg='inherit'
             rightIcon={<Icon as={IoMdSettings} boxSize={6}/>}

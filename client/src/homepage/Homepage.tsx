@@ -9,6 +9,7 @@ import { SimpleMap } from "../dataVisual/SimpleMap"
 import { RegionModal } from "../dataVisual/modal/RegionModal"
 import { LeafletMap } from "../dataVisual/map/LeafletMap"
 import { decodeDate } from "../utils"
+
 export const Homepage: React.FC = () => {
     const { state, dispatch } = useContext(PageContext);
 
