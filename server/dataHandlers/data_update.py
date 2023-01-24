@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import os
 from pymongo import MongoClient, ReturnDocument
 from scraper import scraper
-from scraper_update import scraper_update
 
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
@@ -10,16 +9,21 @@ DB_NAME = os.getenv('DB_NAME')
 
 developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
 
+                    # Javascript ,'HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
+
 regions = [('AB', '111149'), ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
+          #[('AB', '111149')]   , ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
+            # , ('BC', '111152'), ('MB', '111151'), ('NB', '111154'), ('NF', '111157'), ('NT', '111155'), ('NS', '111153'), ('NU', '111148'), ('ON', '111147'), ('PE', '111156'), ('QC', '111158'), ('SK', '111146'), ('YT', '111150')]
 
 def update_technology_data(date):
+    print(date)
     client = MongoClient(MONGO_URI)
     try:
         db = client[DB_NAME]
         technology_collection = db['technology_data']
         region_collection = db['region_data']
         region_list = list(region_collection.find())
-        print(region_list[0][date]['technologies']['Javascript'])
+        print('region list', region_list[0])
         for skill in developer_skills:
             total_job_count = 0
             technology_data = {
@@ -29,7 +33,7 @@ def update_technology_data(date):
                 }
             }
             for region in region_list:
-                count = (region[date]['technologies'][skill])
+                count = region[date]['technologies'][skill]
                 technology_data[date]['regions'][region['region']] = count
                 total_job_count += count
             technology_data[date]['total_job_count'] = total_job_count

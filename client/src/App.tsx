@@ -14,8 +14,6 @@ import { PageContext, PageContextProvider } from './states/PageContext';
 
 
 const App: React.FC = () => {
-
-
   return (
     <PageContextProvider>
       <GlobalStyle/>

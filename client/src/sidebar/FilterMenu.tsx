@@ -19,6 +19,7 @@ import { PageContext } from '../states/PageContext';
 import { decodeTechnologyName, decodeDate } from './utils';
 import { convertNames } from '../utils';
 
+import { ChakraBtn } from '../themes/ChakraCustom';
 import moment from 'moment';
   export const FilterMenu: React.FC = () => {
 
@@ -106,18 +107,11 @@ import moment from 'moment';
                         value='Ranking' colorScheme='teal'>Ranking</Radio>
                     </RadioScrollColumn>
                 </RadioGroup>
-                <Button 
-                width='100%'
-                bgColor='var(--bg-black)'
-                border='1px solid teal'
-                _hover={{
-                bg: 'teal', 
-                color: 'var(--bg-black)',
-                border: '1px solid var(--bg-black)'}}
+                <ChakraBtn 
                 leftIcon={<Icon as={IoFilterOutline}/>}
                 type='submit'>
                     Filter
-                </Button>
+                </ChakraBtn>
             </FormControl>
         </form>
         </>

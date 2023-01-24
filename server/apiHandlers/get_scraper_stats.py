@@ -21,3 +21,20 @@ def scraper_stats():
         print(err.args)
         print(err)
         return err
+    
+def scraper_status():
+    client = MongoClient(MONGO_URI)
+    try:
+        db = client[DB_NAME]
+        collection = db['scraper_status']
+        data = collection.find_one()
+        del data['_id']
+        print(data)
+        return data
+    except Exception as err:
+        print(type(err))
+        print(err.args)
+        print(err)
+        return err
+    
+print(scraper_status())

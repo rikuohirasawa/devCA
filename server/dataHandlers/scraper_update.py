@@ -1,9 +1,16 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import date
-import datetime
-from time import sleep
+from time import sleep, time
 from utils.get_time import get_time
+from pymongo import MongoClient, ReturnDocument
+from dotenv import load_dotenv
+import os
+from utils.check_int import check_int
+
+load_dotenv()
+MONGO_URI = os.getenv('MONGO_URI')
+DB_NAME = os.getenv('DB_NAME')
 
 developer_skills = ['Javascript', 'Python','HTML', 'CSS', 'Python', 'SQL', 'Java', 'Node.js', 'Typescript','c%23', 'Bash', 'c%2B%2B', 'PHP', 'C%20developer', 'PowerShell', 'Golang', 'Kotlin', 'Rust', 'Ruby', 'Dart', 'assembly%20language', 'R%20developer', 'Matlab', 'Groovy', 'Objective-C', 'Scala', 'Perl', 'Haskell', 'Delphi', 'Clojure', 'Elixir', 'LISP', 'Julia', 'F%23', 'Erlang', 'COBOL']
 
@@ -32,6 +39,10 @@ def scraper_update():
 			title_node = soup.find('title')
 			num_jobs_string = title_node.text.split()[0]
 			try:
+				if not (check_int(num_jobs_string)):
+					num_jobs = 0
+
+
 				# if over a thousand, replace commas so can be parsed to int
 				if (len(num_jobs_string) >= 5):
 					num_jobs = int(num_jobs_string.replace(',', ''))
@@ -47,4 +58,115 @@ def scraper_update():
 		region_data_list.append(region_data)
 		print(f'{region_name} done')
 		sleep(1)
+	return region_data_list, date_key
+
+def scraper_status(start_end):
+	try: 
+		client = MongoClient(MONGO_URI)
+		db = client[DB_NAME]
+		scraper_status_collection = db['scraper_status']
+		if (scraper_status_collection == None):
+			raise Exception('could not connect to DB')
+		elif (start_end == 'start'):
+			start_scraper = scraper_status_collection.find_one_and_update(
+				{'is_live': False},
+				{'$set': {'is_live': True}}
+     			)
+			if (start_scraper == None):
+				raise Exception('document not found, check parameter is set appropriately to start or end')
+		elif (start_end == 'end'):
+			end_scraper = scraper_status_collection.find_one_and_update(
+				{'is_live': True},
+     			{'$set': {'is_live': False}}
+			)
+			if (end_scraper == None):
+				raise Exception('document not found, check parameter is set appropriately to start or end')
+		else: raise Exception('please ensure parameter and set to start or end')
+	except Exception as err:
+		print(type(err))
+		print(err) 
+		print(err.args)
+		raise err
+	
+# scraper_status('end')
+
+def scraper_stats_insert(data):
+	try: 
+		client = MongoClient(MONGO_URI)
+		db = client[DB_NAME]
+		scraper_stats_collection = db['scraper_stats']
+		scraper_stats_collection.insert_one(data)
+		# insert_data = scraper_stats_collection.insert_one(data)
+		# if (insert_data == None):
+		# 	raise Exception('failed to insert data to mongoDB')
+	except Exception as err:
+		print(type(err))
+		print(err)
+		raise err
+# scraper_stats_insert()
+
+
+def scraper():
+	scraper_status('start')
+	start_time_total = time()
+	date_key = get_time()
+	# initially used a dict to store data, but need list as mongodb insertmany fx creates one document as opposed to individual documents if data is stored in dict
+	# https://stackoverflow.com/questions/72085876/dictionary-to-mongodb-insert-all-data-in-one-document
+	region_data_list = []
+	scraper_stats = {date_key : {}}
+	scraper_error_total = 0
+	for region in regions:
+		scraper_error = 0
+		region_data = {}
+		region_name = region[0]
+		scraper_stats[date_key][region_name] = {}
+		region_code = region[1]
+		total_job_count = 0
+		region_data = {
+			'region': region_name,
+			date_key: {
+				'technologies': {},
+				'total_job_count': 0
+			}}
+		for skill in developer_skills:
+			response = requests.get(f'https://www.adzuna.ca/search?q={skill}&loc={region_code}')
+			# parse response with bs4
+			soup = BeautifulSoup(response.text, 'html.parser')
+			title_node = soup.find('title')
+			num_jobs_string = title_node.text.split()[0]
+			try:
+				# if jobs exist, set num to equal number of jobs - else zero (zero jobs start with 'No' as of 1/24/23)
+				if not (check_int(num_jobs_string)):
+					num_jobs = 0
+				elif (len(num_jobs_string) >= 5):
+					num_jobs = int(num_jobs_string.replace(',', ''))
+				else: 
+					num_jobs = int(num_jobs_string)	
+				scraper_stats[date_key][region_name][skill] = 'success'
+				region_data[date_key]['technologies'][skill] = num_jobs
+				total_job_count += num_jobs
+				# add 0.5s delay in loop iterations to not overload their servers when scraping - i'm sure they are fine but just in case :)
+				sleep(0.5)
+			except Exception as err:
+				num_jobs = 0
+				region_data[date_key]['technologies'][skill] = num_jobs
+				total_job_count += num_jobs
+				scraper_error += 1
+				scraper_error_total += 1
+				scraper_stats[date_key][region_name][skill] = {
+					'type': type(err),
+					'args' : err.args,
+					'error': err}
+				sleep(0.5)
+				continue
+		scraper_stats[date_key][region_name]['error_count'] = scraper_error
+		region_data[date_key]['total_job_count'] = total_job_count
+		region_data_list.append(region_data)
+		print(f'{region_name} done')
+		sleep(0.5)
+	scraper_stats[date_key]['total_error_count'] = scraper_error_total
+	elapsed_time_total = time() - start_time_total
+	scraper_stats[date_key]['time_elapsed'] = elapsed_time_total
+	scraper_stats_insert(scraper_stats)
+	scraper_status('end')
 	return region_data_list, date_key

@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import datetime
 
 from datetime import date
-from pymongo import MongoClient
+from pymongo import MongoClient, ReturnDocument
 
 # import time
 # from time import sleep
@@ -47,21 +47,40 @@ def import_scraper_data():
 
 # import_scraper_data()
 
-def x():
-    client = MongoClient(MONGO_URI)
-    try:
+# def x():
+# 	try:
+#         client = MongoClient(MONGO_URI)
+#         db = client[DB_NAME]
+#         scraper_collection = db['scraper_stats']
+#         update = scraper_collection.find_one_and_update(
+#         {'is_live' : False},
+#         {'$set': {'is_live': True}},
+#         return_document=ReturnDocument.AFTER)
+#         print(update)
+#     except Exception as err:
+#         print(err)
+
+
+def b():
+    try: 
+        client = MongoClient(MONGO_URI)
         db = client[DB_NAME]
-        technology_collection = db['technology_data']
-        region_collection = db['region_data']
-        region_list = list(region_collection.find())
-        for region in region_list:
-            print(region['2023-1-19']['technologies']['Javascript'])
-    except:
-        print('lol')
+        scraper_collection = db['scraper_stats']
+        update = scraper_collection.find_one_and_update(
+        {'is_live' : False},
+        {'$set': {'is_live': True}},
+        return_document=ReturnDocument.AFTER
+        )
+        print(update)
+    except Exception as err:
+        print(err)
+
+b()
+
 
 # x()
 
-print(int('0'))
+
 # load mongodb information stored in .env
 # load_dotenv()
 # MONGO_URI = os.getenv('MONGO_URI')

@@ -12,6 +12,7 @@ import { Button } from '@chakra-ui/react'
 
 import { IoMdSettings } from 'react-icons/io'
 import { Logo } from '../logo/Logo'
+import { ChakraBtn } from '../themes/ChakraCustom'
 export const Header: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
@@ -21,16 +22,12 @@ export const Header: React.FC = () => {
         <HeaderWrapper>
             <Link to='/'><Logo/></Link>
             <Link to='/dashboard'>Dashboard</Link>
-            <Button 
-            bg='inherit'
+            <ChakraBtn 
+            width='auto'
             rightIcon={<Icon as={IoMdSettings} boxSize={6}/>}
-            _hover={{
-                bg: 'teal',
-                color: 'var(--black)',
-            }}
             onClick={()=>{dispatch({type: 'TOGGLE_SIDEBAR'})}}>
                 Filter 
-            </Button>
+            </ChakraBtn>
         </HeaderWrapper>
         <Sidebar/>
         </>

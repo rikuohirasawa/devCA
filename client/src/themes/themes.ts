@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, Button } from "@chakra-ui/react";
 import { ParagraphText } from "./chakraComponents";
 export const theme = extendTheme({
     colors: {
@@ -21,3 +21,4 @@ export const theme = extendTheme({
         ParagraphText
     }
 })
+

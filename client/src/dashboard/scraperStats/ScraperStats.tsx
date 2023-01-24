@@ -2,6 +2,7 @@ import { ScraperStatsWrapper } from "./scraperStatsStyles"
 import { ScrapedData } from '../Dashboard'
 
 import { Heading, Text } from "@chakra-ui/react"
+import { ChakraDashboardHeading } from "../../themes/ChakraCustom"
 
 import {
     Table,
@@ -19,10 +20,9 @@ interface DataProps {
     data: ScrapedData[]
 }
 export const ScraperStats: React.FC<DataProps> = ({data}: DataProps) => {
-    console.log(data)
     return (
         <ScraperStatsWrapper>
-            <Heading as='h2' size='xl' borderBottom='1px solid' padding='16px'>Scraper History</Heading>
+            <ChakraDashboardHeading as='h2' padding='16px'>Scraper History</ChakraDashboardHeading>
             <TableContainer>
                 <Table colorScheme='teal' variant='unstyled'>
                     <TableCaption>Scrapes are scheduled every seven days</TableCaption>
