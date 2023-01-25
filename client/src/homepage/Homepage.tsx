@@ -22,7 +22,8 @@ export const Homepage: React.FC = () => {
       }, [])
     useEffect(()=>{
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
-        .then(res=>res.json())
+        .then(res=>{
+          return res.json()})
         .then(data=>{
           const datesArray = Object.keys(data[0]).filter((e:string) => e !== 'region'),
           sumJobs = data.slice(-1)[0]['sum_jobs'];
@@ -30,6 +31,7 @@ export const Homepage: React.FC = () => {
           dispatch({type: 'SCRAPED_DATES', scrapedDates: datesArray});
           dispatch({type: 'SUM_JOBS', payload: sumJobs});
           dispatch({type: 'REGION_DATA', payload: data.slice(0, -1)});
+          dispatch({type: 'R_DATA', regionDataAll: data})
         })
       }, [])
 
@@ -37,9 +39,15 @@ export const Homepage: React.FC = () => {
       fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=technology_data`)
       .then(res=>res.json())
       .then(data=>{
+        console.log(data)
         dispatch({type: 'TECHNOLOGY_DATA', payload: data});
+
       })
     }, [])
+
+    // useEffect(()=>{
+    //   fetch('http://localhost:8000/debug-sentry')
+    // })
     return (
     <Wrapper>
       <RegionModal/>

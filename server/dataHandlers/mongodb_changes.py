@@ -7,6 +7,16 @@ import datetime
 
 from datetime import date
 from pymongo import MongoClient, ReturnDocument
+import sentry_sdk
+sentry_sdk.init(
+    dsn="https://60f36b041a2a4bac872c58c5a2af65ab@o4504565682667520.ingest.sentry.io/4504565687255041",
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0
+)
+division_by_zero = 1/0
 
 
 # THIS FILE IS A SANDBOX FOR INTERACTING WITH MONGODB/TESTING FXs
@@ -42,7 +52,7 @@ def mongodb_unset():
     except Exception as err:
         print(err)
 
-mongodb_unset()
+# mongodb_unset()
 
 def import_scraper_data():
     # connect to mongodb

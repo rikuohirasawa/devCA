@@ -75,7 +75,6 @@ export const Dashboard: React.FC = () => {
                     <Icon as={IoCloudOfflineOutline}/> Offline
                 </Text>}
                 <ChakraDashboardHeading
-
                     >Next scheduled scrape:
                 </ChakraDashboardHeading>
                 <Text

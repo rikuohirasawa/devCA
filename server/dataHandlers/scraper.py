@@ -7,6 +7,17 @@ from pymongo import MongoClient, ReturnDocument
 from dotenv import load_dotenv
 import os
 from utils.check_int import check_int
+import sentry_sdk
+from sentry_sdk.integrations.pymongo import PyMongoIntegration
+
+
+sentry_sdk.init(
+    dsn="https://1d6f6261c1e74f8a93e261b4c3fba837@o4504565682667520.ingest.sentry.io/4504565687255043",
+    integrations=[
+        PyMongoIntegration(),
+    ],
+    traces_sample_rate=1.0,
+)
 
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')

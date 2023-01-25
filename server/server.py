@@ -1,11 +1,21 @@
 from flask import Flask, request, jsonify, Response, Request, make_response
 import requests
-# from flask_cors import CORS
+from flask_cors import CORS
 from apiHandlers.get_data import get_data
 from apiHandlers.get_scraper_stats import scraper_stats, scraper_status
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
-# print(get_data('region_data'))
+sentry_sdk.init(
+    dsn="https://38fa2a655bbe49adb857c5230aefa055@o4504565682667520.ingest.sentry.io/4504565687320576",
+    integrations=[
+        FlaskIntegration(),
+    ],
+    traces_sample_rate=1.0
+)
+
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/test', methods=['GET'])
 def test():
@@ -38,6 +48,13 @@ def get_scraper_status():
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response
+
+# @app.route('/debug-sentry')
+# def trigger_error():
+#     data = division_by_zero = 1 / 0
+#     response = jsonify(data)
+#     response.headers.set('Access-Control-Allow-Origin', '*')
+#     return response
 
 
 # @app.route('/get-region-data/:name/:date', methods=['GET'])

@@ -6,20 +6,49 @@ export const MapLegend: React.FC = () => {
     const { state } = useContext(PageContext),
     { viewByFormat } = state
     let legendColors: string[] = [
-        '#E4F7D1',
-        '#C8F2C2',
-        '#A4E9A7',
-        '#89DD9C',
-        '#70CE98',
-        '#59BE96',
-        '#44AC96',
-        '#319795',
-        '#24879B',
-        '#1B759E',
-        '#12609F',
-        '#0A47A1',
-        '#032DA1'
+    '#E4F7D1',
+    '#C8F2C2',
+    '#A4E9A7',
+    '#89DD9C',
+    '#70CE98',
+    '#59BE96',
+    '#44AC96',
+    '#319795',
+    '#24879B',
+    '#1B759E',
+    '#12609F',
+    '#0A47A1',
+    '#032DA1'
     ];
+
+    // '#CAF0F8',
+    // '#B9DCEB',
+    // '#A9C9DE',
+    // '#98B5D2',
+    // '#88A1C5',
+    // '#778EB8',
+    // '#677AAB',
+    // '#56669E',
+    // '#455391',
+    // '#353F85',
+    // '#242B78',
+    // '#14186B',
+    // '#03045E'
+
+    // '#BAE2D3',
+    // '#A8D4D3',
+    // '#A0C7CD',
+    // '#99B7C5',
+    // '#92A8BD',
+    // '#8B99B5',
+    // '#8189AB',
+    // '#74769F',
+    // '#6B6794',
+    // '#645B88',
+    // '#5E4F7B',
+    // '#57446E',
+    // '#503960'
+
     return (
         <MapLegendWrapper>
             {viewByFormat === 'Ranking' ? legendColors.reverse().map((color, index)=> {

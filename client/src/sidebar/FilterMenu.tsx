@@ -25,9 +25,9 @@ import moment from 'moment';
 
     const { state, dispatch } = useContext(PageContext),
     { viewTechnology, technologyDataAll, viewByFormat, viewDate, regionDataAll, selectedRegionID, scrapedDates } = state,
-    [technologyFilter, setTechnologyFilter] = useState(viewTechnology),
-    [dateFilter, setDateFilter] = useState(viewDate),
-    [sortByFilter, setSortByFilter] = useState(viewByFormat),
+    [technologyFilter, setTechnologyFilter] = useState<string>(viewTechnology),
+    [dateFilter, setDateFilter] = useState<string>(viewDate),
+    [sortByFilter, setSortByFilter] = useState<string>(viewByFormat),
     [region, setRegion] = useState('Region (optional)')
     const onSubmit = (e: React.FormEvent) =>{ 
         e.preventDefault();
@@ -62,9 +62,9 @@ import moment from 'moment';
                             key={`technology-${index}`}
                             value={e.technology.toString()}
                             colorScheme='teal'
-                            defaultChecked={viewTechnology === e.technology}
+                            defaultChecked={viewTechnology === e['technology'].toString()}
                             >
-                                {decodeTechnologyName(e.technology.toString())}
+                                {decodeTechnologyName(e['technology'].toString())}
                             </Radio>
                         )
                     })}

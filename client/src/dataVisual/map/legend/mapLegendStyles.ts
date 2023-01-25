@@ -20,7 +20,7 @@ export const FlexRow = styled.div`
 `
 export const LegendColor= styled.div<{bgColor: string}> `
     background: ${props=>props.bgColor};
-
+    opacity: 0.8;
     width: 40px;
     height: 20px;
-    color: var(--teal)`
+`

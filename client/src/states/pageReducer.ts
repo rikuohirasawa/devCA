@@ -1,15 +1,33 @@
-interface TechnologyList {
-    [key: string]: number
+export type RegionData = {
+    [date: string] : {
+        technologies: {
+            [technology: string]: number
+        }, total_job_count: number
+    } & {
+        region: string
+    }
 }
 
-export interface RegionData {
-    [key: string]: {
-        [viewDate: string] : {
-            technologies: {
-                [key: string]: number
-            },
-            totalCount: number;
-        };
+export type TechData = {
+    [date:string]: {
+        regions: {
+            [region: string]: number
+        },
+        total_job_count: number
+    } & {
+        technology: string
+    }
+}
+
+type rrData = RegionData | {region: string}
+
+export interface RData {
+    [date: string] : {
+        technologies: {
+            [technology: string]: number
+        }, total_job_count: number
+    } & {
+        region: string
     }
 }
 
@@ -37,14 +55,27 @@ export interface SelectedRegion {
     }
 }
 
+// export interface TechnologyData {
+//     [key: string] : {
+//         regions: {
+//             [key: string]: number
+//         },
+//         totalCount: number
+//     } & string
+// }
+
 export interface TechnologyData {
-    [key: string] : {
+    [date:string]: {
         regions: {
-            [key: string]: number
+            [region: string]: number
         },
-        totalCount: number
-    } & string
+        total_job_count: number
+    } & {
+        technology: string
+    }
 }
+
+
 export interface PageState {
     modalOpen: boolean,
     sidebarOpen: boolean,
@@ -59,6 +90,7 @@ export interface PageState {
     viewByFormat: string,
     scrapedDates?: string[],
     windowWidth: number
+    rData?: RData[]
 }
 
 export enum ActionTypes {
@@ -75,7 +107,8 @@ export enum ActionTypes {
     viewByPercentage = 'VIEW_BY_PERCENTAGE',
     viewByFormat = 'VIEW_BY_FORMAT',
     scrapedDates = 'SCRAPED_DATES',
-    windowWidth = 'WINDOW_WIDTH'
+    windowWidth = 'WINDOW_WIDTH',
+    rData = 'R_DATA'
 }
 
 interface PageAction {
@@ -87,7 +120,7 @@ interface PageAction {
     viewDate: string;
     viewTechnology: string;
     windowWidth: number;
-
+    regionDataAll: RData[]
 }
 
 export const pageReducer = (state: PageState, action: PageAction) => {
@@ -156,6 +189,11 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state, 
                 windowWidth: action.windowWidth
+            }
+        } case ActionTypes.rData: {
+            return {
+                ...state,
+                rData: action.regionDataAll
             }
         }
         default: return state;

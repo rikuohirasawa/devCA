@@ -3,7 +3,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css';
 import './leafletmap.css'
 
-import { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import { PageContext } from '../../states/PageContext';
 import data from '../geojson.json';
 import { GeoJsonObject } from 'geojson';
@@ -18,6 +18,8 @@ import { getFillColor } from './mapUtils';
 import { MapLegend } from './legend/MapLegend';
 import { SettingDisplay } from './settingsDisplay/SettingsDisplay';
 
+import { TechnologyData } from '../../states/pageReducer';
+
 
 const CANADA_TOPO_JSON = require('../Canada.topo.json')
 
@@ -27,40 +29,30 @@ const Map = () => {
     return null
 }
 
-interface GeoJSONFeatures {
-    [key: string]: string | {},
-    geometry: {
-        coordinates: [][],
-        type: string
-    },
-    id: string,
-    properties: {
-        [key:string]: null | number
-    },
-    type: string,
-}
-interface GeoJSON {
-    type: string,
-    features: GeoJSONFeatures[]
-}
-
-interface Feature {
+interface GeoFeature {
     geometry: {
         type: string,
         coordinates: [][]
-    }, id: string,
+    }, 
+    id: string,
     properties: {
-        [key:string] : null | number
-    }, type: string
+        data: {
+            technologies: {
+                [key: string]: number,
+            }, total_job_count: number
+        }, name: string | null,
+        rank: number | undefined
+    }, 
+    type: string
 }
 
 interface FeatureCollection {
     type: string,
-    features: Feature[]
+    features: GeoFeature[]
 }
 
 export interface ToolTipState {
-    display: boolean,
+    display: string,
     name?: string,
     data?: {
         technologies: {[key:string]: number},
@@ -73,7 +65,7 @@ export const LeafletMap: React.FC = () => {
     const [toolTipData, setToolTipData] = useState<ToolTipState>(),
     { state, dispatch } = useContext(PageContext),
     { regionDataAll, viewDate, viewTechnology, technologyDataAll, viewByFormat } = state,
-    [canadaGeo, setCanadaGeo] = useState(data as unknown as FeatureCollection),
+    [canadaGeo, setCanadaGeo] = useState(data as FeatureCollection),
     mapStyle = {
         background: 'var(--black)',
         height: '100%',
@@ -81,27 +73,28 @@ export const LeafletMap: React.FC = () => {
         margin: '0 auto',
         overflow: 'hidden'
     };
-    if (canadaGeo && regionDataAll) {
-        const geoFeatures = canadaGeo['features']
-        geoFeatures.forEach((feature: any)=>{
+
+    if (canadaGeo && regionDataAll && technologyDataAll) {
+        const geoFeatures: GeoFeature[] = canadaGeo['features']
+        geoFeatures.forEach((feature: GeoFeature)=>{
             if (feature.id !== '-99') {
                 regionDataAll.forEach(region=>{
-                    if (region.region === feature.id) {
+                    if (region['region'].toString() === feature['id']) {      
                         feature['properties']['data'] = region[viewDate]
                     }
                 })
             }
         })
     
-    const singleCountTechnology: any = technologyDataAll && technologyDataAll.filter((e: any)=>{
-        if (e['technology'] === viewTechnology && viewDate) {
+    const singleCountTechnology: TechnologyData[] | undefined = technologyDataAll && technologyDataAll.filter((e: TechnologyData)=>{
+        if (e['technology'].toString() === viewTechnology && viewDate) {
             return e
         }
     })
-    
-    const highlightFeature = ((e:any) => {
+
+    const highlightFeature = ((e: any) => {
         const layer = e.target
-        viewDate && singleCountTechnology && setToolTipData(Object.assign(layer['feature']['properties'], {...layer['feature']['properties'], display: true}))
+        viewDate && singleCountTechnology && setToolTipData(Object.assign(layer['feature']['properties'], {...layer['feature']['properties'], display: 'flex'}))
         layer.setStyle({
             weight: 1,
             fillColor: 'black',
@@ -109,8 +102,8 @@ export const LeafletMap: React.FC = () => {
         })
     })
 
-    const resetHighlight = ((e:any) => {
-        setToolTipData({display: false})
+    const resetHighlight = ((e: React.MouseEvent<HTMLElement>) => {
+        setToolTipData({display: 'none'})
     })
 
     const clickFeature = ((e: any) => {
@@ -129,39 +122,73 @@ export const LeafletMap: React.FC = () => {
         });
     }
 
-    // create ranking list
     const rankList: {[key: string]: number} = {}
+    
+    interface RegionCount {
+        name: string,
+        count: number
+    }
     const countArray = regionDataAll.map(e=>{
-        const technologies: any = e[viewDate]['technologies'];
-        const name: any = e['region']
-        return {name: name, count: technologies[viewTechnology]}
+        const technologyCount: number = e[viewDate]['technologies'][viewTechnology];
+        const name = e['region']
+        const countObj: RegionCount = {name: name.toString(), count: technologyCount}
+        return countObj
     })
-    const sortByRank = countArray.sort((a, b)=>{
+
+    const sortByRank: RegionCount[] = countArray.sort((a, b)=>{
         return (a['count'] - b['count'])
-    })
+    }) 
     sortByRank.forEach((e, index)=>{
         Object.assign(rankList, {[e['name']]: index})
     })
-    geoFeatures.forEach(feature=>{
+    geoFeatures.forEach((feature: GeoFeature)=>{
         feature['properties']['rank'] = rankList[feature['id']]
     })
 
+    // this needs to be refactored badly, i was conditionally passing arguments before but it got messy pretty quickly, so there is some overlap in conditions when calling the fillcolor fx
+    // will return later to fix
     const style = ((feature: any) => {
-            if (feature.id !== '-99' && feature['properties']['data']['technologies'][viewTechnology] >= 0) {
-                return ({
-                    fillColor: getFillColor(
-                        feature['properties']['data']['technologies'][viewTechnology], 
-                        viewByFormat,
-                        viewByFormat === 'Percent' && singleCountTechnology && viewDate && singleCountTechnology[0][viewDate]['total_job_count'],
-                        viewByFormat === 'Ranking' && feature['properties']['rank']
+            if (feature['id'] !== '-99' && feature['properties']['data']['technologies'][viewTechnology] >= 0) {
+                if (viewByFormat === 'Percent' && singleCountTechnology !== undefined) {
+                    return ({
+                        fillColor: getFillColor(
+                            feature['properties']['data']['technologies'][viewTechnology], 
+                            viewByFormat,
+                            singleCountTechnology[0][viewDate]['total_job_count'],
+                            ),
+                        weight: 1,
+                        opacity: 1,
+                        color: 'rgba(208, 209, 213, 0.4)',
+                        dashArray: '1',
+                        fillOpacity: 0.6,
+                    })
+                } else if (viewByFormat === 'Ranking') {
+                    return ({
+                        fillColor: getFillColor(
+                            feature['properties']['data']['technologies'][viewTechnology], 
+                            viewByFormat,
+                            0,
+                            feature['properties']['rank']
+                            ),
+                        weight: 1,
+                        opacity: 1,
+                        color: 'rgba(208, 209, 213, 0.4)',
+                        dashArray: '1',
+                        fillOpacity: 0.6,
+                    })
+                } else if (viewByFormat === 'Count') {
+                    return ({
+                        fillColor: getFillColor(
+                            feature['properties']['data']['technologies'][viewTechnology], 
+                            viewByFormat,
                         ),
-                    weight: 1,
-                    opacity: 1,
-                    color: 'rgba(208, 209, 213, 0.4)',
-                    dashArray: '1',
-                    fillOpacity: 0.6,
-                })
-            } else {
+                        weight: 1,
+                        opacity: 1,
+                        color: 'rgba(208, 209, 213, 0.4)',
+                        dashArray: '1',
+                        fillOpacity: 0.6,
+                    })
+                }} 
                 return ({
                     fillcolor: '#fff',
                     weight: 1,
@@ -170,7 +197,7 @@ export const LeafletMap: React.FC = () => {
                     dashArray: '0',
                     fillOpacity: 0.5,
                 })
-            }
+            
     })
     return (
         <MapContainer center={[71.614190, -99.718438]}
@@ -187,26 +214,18 @@ export const LeafletMap: React.FC = () => {
                 url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
             />
             {canadaGeo && (
-                <>
-            <GeoJSON
-            style={style}
-            data={canadaGeo as GeoJsonObject}
-            onEachFeature={onEachFeature}/>
-            {toolTipData && (
-                <RegionTooltip 
-                display={toolTipData.display}
-                name={toolTipData.name}
-                data={toolTipData.data}/>
-            )} 
-            {/* {canadaGeo.features.map(e=>{
-                console.log(e)
-                    return (
-                    <Polygon positions={multiPolygon as unknown as LatLngExpression[][] }
-                    pathOptions={{color: 'purple'}}>
-                        <Tooltip>Sticky tooltip</Tooltip>
-                    </Polygon>)
-                })} */}
-                </>
+            <>
+                <GeoJSON
+                style={style}
+                data={canadaGeo as GeoJsonObject}
+                onEachFeature={onEachFeature}/>
+                {toolTipData && (
+                    <RegionTooltip 
+                    display={toolTipData.display}
+                    name={toolTipData.name}
+                    data={toolTipData.data}/>
+                )} 
+            </>
             )}
             <SettingDisplay/>
         </MapContainer>
