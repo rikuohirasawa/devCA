@@ -6,7 +6,6 @@ export const DashboardWrapper = styled.section`
     width: 100vw;
     display: block;
     z-index: 99999999999999999;
-    color: var(--teal);
     padding: 80px;
     display: flex;
     flex-direction: column;

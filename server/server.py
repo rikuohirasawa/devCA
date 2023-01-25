@@ -13,7 +13,6 @@ def test():
 
 @app.route('/get-region-data', methods=['GET'])
 def get_region():
-    print(request.args.get('table'))
     data = get_data(request.args.get('table'), request.args.get('date'))
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')

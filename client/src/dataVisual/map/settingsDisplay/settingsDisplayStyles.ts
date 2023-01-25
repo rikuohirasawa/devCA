@@ -7,8 +7,8 @@ export const SettingsDisplayHeader = styled.header`
 `
 export const SettingsDisplayWrapper = styled.div<{minimize: boolean}>`
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    background: ${props=>props.minimize ? 'var(--teal)' : 'var(--black)'};
-    border: 1px solid var(--teal-light);
+    background: ${props=>props.minimize ? 'var(--blue-slate)' : 'var(--black)'};
+    border: 1px solid var(--blue-slate-light);
     z-index: 9999;
     position: fixed;
     bottom: 0%;
@@ -37,7 +37,7 @@ export const MinimizeIcon = styled.div<{minimize: boolean}>`
             content: "";
             width: 10px;
             height: 2px;
-            background-color: ${props=>props.minimize ? 'var(--black)' : 'var(--teal)'};
+            background-color: ${props=>props.minimize ? 'var(--black)' : 'var(--blue-slate)'};
             border-radius: 2px;
             top: 14px;
             left: 10px;

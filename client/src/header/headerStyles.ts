@@ -62,3 +62,10 @@ export const SidebarBtnIcon = styled.div<{open: boolean}>`
     &:after {
         transform: ${props=>props.open === true ? 'rotate(-45deg) translate(0px, 0px)' : 'translateY(10px)'}
     }`
+
+export const NavContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%
+`

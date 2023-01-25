@@ -13,10 +13,10 @@ export const ChakraBtn = (props: ButtonProps) => {
     return (
         <Button                 
         width='100%'
-        bgColor='var(--black)'
-        border='1px solid teal'
+        bgColor='darkMode.black'
+        border='1px solid'
         _hover={{
-        bg: 'teal', 
+        bg: 'darkMode.blueSlate', 
         color: 'var(--black)',
         border: '1px solid var(--black)'
         }}
@@ -32,6 +32,7 @@ export const ChakraDashboardHeading = (props: HeadingProps) => {
         borderBottom='1px solid'
         paddingBottom='8px'
         size='xl'
+        color='darkMode.lightBlueSlate'
         {...props}/>
     )
 }

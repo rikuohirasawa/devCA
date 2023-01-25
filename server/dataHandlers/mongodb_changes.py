@@ -8,6 +8,9 @@ import datetime
 from datetime import date
 from pymongo import MongoClient, ReturnDocument
 
+
+# THIS FILE IS A SANDBOX FOR INTERACTING WITH MONGODB/TESTING FXs
+
 # import time
 # from time import sleep
 
@@ -25,6 +28,21 @@ regions = [('AB', '111149'), ('BC', '111152'), ('MB', '111151'), ('NB', '111154'
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 DB_NAME = os.getenv('DB_NAME')
+
+def mongodb_unset():
+    try: 
+        client = MongoClient(MONGO_URI)
+        db = client[DB_NAME]
+        collection = db['technology_data']
+        update = collection.update_many({},
+        {'$unset': {'2023-1-24': 1}},
+        upsert=False,
+        )
+        print(update)
+    except Exception as err:
+        print(err)
+
+mongodb_unset()
 
 def import_scraper_data():
     # connect to mongodb
@@ -74,12 +92,6 @@ def b():
         print(update)
     except Exception as err:
         print(err)
-
-b()
-
-
-# x()
-
 
 # load mongodb information stored in .env
 # load_dotenv()

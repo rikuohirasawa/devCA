@@ -1,7 +1,7 @@
 import { ScraperStatsWrapper } from "./scraperStatsStyles"
 import { ScrapedData } from '../Dashboard'
 
-import { Heading, Text } from "@chakra-ui/react"
+import { Accordion, AccordionItem, Heading, Text } from "@chakra-ui/react"
 import { ChakraDashboardHeading } from "../../themes/ChakraCustom"
 
 import {
@@ -22,9 +22,9 @@ interface DataProps {
 export const ScraperStats: React.FC<DataProps> = ({data}: DataProps) => {
     return (
         <ScraperStatsWrapper>
-            <ChakraDashboardHeading as='h2' padding='16px'>Scraper History</ChakraDashboardHeading>
+            <ChakraDashboardHeading as='h2' padding='16px'>History</ChakraDashboardHeading>
             <TableContainer>
-                <Table colorScheme='teal' variant='unstyled'>
+                <Table variant='unstyled'>
                     <TableCaption>Scrapes are scheduled every seven days</TableCaption>
                     <Thead>
                         <Tr>
@@ -49,7 +49,7 @@ export const ScraperStats: React.FC<DataProps> = ({data}: DataProps) => {
                                     <Td>{(((36 * 13 - errorCount)/(36 * 13)) * 100).toFixed(2)}%</Td>
                                 </Tr>
                             )
-                        })}
+                        })}   
                     </Tbody>
                 </Table>
             </TableContainer>

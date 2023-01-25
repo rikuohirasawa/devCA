@@ -29,8 +29,11 @@ export const Dashboard: React.FC = () => {
 
     useEffect(()=>{
         fetch(`http://localhost:8000/scraper-status`)
-        .then(res=>res.json())
+        .then(res=>{
+            console.log(res)
+            return res.json()})
         .then(data=>{
+            
             setScraperStatus(data)})
     },[])
 
@@ -55,6 +58,7 @@ export const Dashboard: React.FC = () => {
                 </ChakraDashboardHeading>
                 {scraperStatus['is_live'] ? 
                 <Text    
+                color='darkMode.lightestBlueSlate'
                 fontSize='4xl'
                 fontWeight='700'     
                 display='flex'
@@ -71,9 +75,10 @@ export const Dashboard: React.FC = () => {
                     <Icon as={IoCloudOfflineOutline}/> Offline
                 </Text>}
                 <ChakraDashboardHeading
+
                     >Next scheduled scrape:
                 </ChakraDashboardHeading>
-                <Text 
+                <Text
                     fontSize='3xl'>{nextScheduledScrape()}</Text>
                 <ChakraDashboardHeading>Last scrape: </ChakraDashboardHeading>
                 <Text 

@@ -72,8 +72,6 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
             })
             return rank
         }
-
-        console.log(windowWidth)
          return (
             <PieGraphContainer>
                 <ResponsiveContainer 
@@ -113,6 +111,7 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                         This makes {viewTechnology} the <span className='font-700'>{getRankingInRegion()}</span> most popular technology in {convertNames[selectedRegionID]} at the time of data collection.
                     </Text>
                     <Heading
+      
                     size='xl'
                     width='100%'
                     borderBottom='1px solid var(--teal-med)'

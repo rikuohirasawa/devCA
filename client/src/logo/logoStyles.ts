@@ -13,6 +13,7 @@ export const Icon = styled.div`
     bottom: 38%;
     border-bottom: 1px solid var(--teal);
     padding: 0 0 0 6px;
+    color: var(--teal);
     `
 
 export const LogoText = styled.div`
@@ -22,5 +23,6 @@ export const LogoText = styled.div`
     position: absolute;
     bottom: -1%;
     right: 2%;
+    color: var(--teal);
     /* border-top: 1px solid var(--teal); */
 `

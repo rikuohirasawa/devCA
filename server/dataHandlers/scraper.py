@@ -100,13 +100,15 @@ def scraper():
 			try:
 				if not (check_int(num_jobs_string)):
 					num_jobs = 0
-				else:
+				elif (len(num_jobs_string) >= 5):
+					num_jobs = int(num_jobs_string.replace(',', ''))
+				else: 
 					num_jobs = int(num_jobs_string)	
 				scraper_stats[date_key][region_name][skill] = 'success'
 				region_data[date_key]['technologies'][skill] = num_jobs
 				total_job_count += num_jobs
-				# add 0.5s delay in loop iterations to not overload their servers when scraping - i'm sure they are fine but just in case :)
-				sleep(0.5)
+				# add 0.2s delay in loop iterations to not overload their servers when scraping - i'm sure they are fine but just in case :)
+				sleep(0.2)
 			except Exception as err:
 				num_jobs = 0
 				region_data[date_key]['technologies'][skill] = num_jobs

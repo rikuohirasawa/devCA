@@ -9,7 +9,7 @@ export const RadioScrollColumn = styled.div`
     overflow-y: scroll;
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
-    border: 1px solid rgba(49, 151, 149, 0.3);
+    border: 1px solid var(--blue-slate-light);
     margin: 8px 0;
     `
 

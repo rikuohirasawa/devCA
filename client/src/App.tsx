@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { Dashboard } from './dashboard/Dashboard';
 
 import { PageContext, PageContextProvider } from './states/PageContext';
+import { About } from './about/About';
 
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/about' element={<About/>}/>
         </Routes>
       </BrowserRouter>
     </PageContextProvider>

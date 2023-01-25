@@ -55,7 +55,7 @@ export const SettingDisplay: React.FC = () => {
                                 </div>
                                 <Button 
                                     bgColor='var(--black)'
-                                    border='1px solid teal'
+                                    border='1px solid'
                                     fontWeight='400'
                                     marginTop='10px'
                                     _hover={{

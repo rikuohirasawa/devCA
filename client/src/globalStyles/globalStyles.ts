@@ -32,6 +32,8 @@ export const GlobalStyle = createGlobalStyle`
         --teal: #319795;
         --black: #262626;
         --dark-teal: #24879B;
+        --blue-slate: #8892b0;
+        --blue-slate-light: rgba(136, 146, 176, 0.35);
         --teal-light: rgba(49, 151, 149, 0.3);
         --teal-med: rgba(49, 151, 149, 0.6);
     }
@@ -62,13 +64,12 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar-thumb {
-    background: #319795;
+    background: #8892b0;
 
     &:hover {
-        background: #4BA694
+        background:#a8b2d1
     }
     }
-
 
     .css-wl0d9u {
         overflow: none !important;
