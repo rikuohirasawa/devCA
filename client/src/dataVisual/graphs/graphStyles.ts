@@ -8,66 +8,73 @@ export const PieGraphContainer = styled.div`
     justify-content: center;
     gap: 16px;
     width: 100%;
-
+    overflow-y: scroll;
+    height: 550px;
+    
     .font-700 {
         font-weight: 700;
     }
 
     @media only screen and (max-width: 900px) {
-        height: 900px;
+        height: 550px;
     }
     @media only screen and (max-width: 550px) {
-        height: 1000px;
+        height: 70vh;
+    }
+    @media only screen and (max-height: 700px) {
+        height: 65vh;
     }
     .recharts-responsive-container {
+        margin-top: 75px;
         @media only screen and (max-width: 1400px) {
-            margin-top: 250px;
-    }
+                margin-top: 300px;
+        }
+        @media only screen and (max-width: 900px) {
+            margin-top: 350px;
+        }
     }
     @media only screen and (max-width: 1400px) {
         flex-direction: column;
-        overflow-y: scroll;
         gap: 8px;
         min-width: 100%;
         padding: 16px 0;
         min-height: 100%;
     }
-
-    @media only screen and (min-width: 900px) {
-        max-height: 750px;
-
-    }
-
-
 `
 export const BarGraphContainer = styled.div`
     display: flex;
-    height: 700px;
+    height: 550px;
     overflow-y: scroll;
 
     @media only screen and (max-width: 900px) {
-        height: 900px;
+        height: 550px;
     }
     @media only screen and (max-width: 550px) {
-        height: 1000px;
+        height: 70vh;
+    }
+    @media only screen and (max-height: 700px) {
+        height: 65vh;
     }
 `
 
 export const LineGraphContainer = styled.div`
     padding: 16px 0;
     display: flex;
-    height: 750px;
+    height: 550px;
     flex-direction: column;
     max-width: 100%;
     align-items: center;
     overflow-y: scroll;
     
     @media only screen and (max-width: 900px) {
-        height: 900px;
+        height: 550px;
     }
     
     @media only screen and (max-width: 550px) {
-        height: 1000px;
+        height: 70vh;
+    }
+    @media only screen and (max-height: 700px) {
+        height: 65vh;
     }`
 
 export const StickyWrapper = styled.div``

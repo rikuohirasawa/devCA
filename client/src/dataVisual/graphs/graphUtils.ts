@@ -1,7 +1,10 @@
 import { getPercentage } from "../../utils";
 // data structure conversion, so can be used by recharts library
+import { BarGraphData } from "./BarGraph";
+import { PieGraphData } from "./PieGraph";
+
 export const getBarGraphData = (data: {[key:string]: number}, viewTechnology: string) => {
-    const graphData: {name: string, count: number, fill: string}[] = []
+    const graphData: BarGraphData[] = []
     for (let key in data) {
         // decode keys such as 'c%23' 'c%2B%2B' etc
         let decodedKey: string = decodeURIComponent(key);
@@ -20,7 +23,7 @@ export const getBarGraphData = (data: {[key:string]: number}, viewTechnology: st
 }
 
 export const getPieGraphData = (data: { [key: string]: number; }, viewTechnology: string, totalCount: number) => {
-    const graphData: {name: string, count: number, fill: string, stroke: string}[] = []
+    const graphData: PieGraphData[] = []
     // if technology is represented in less than 3% of listings, it is added to 'other' count
     let otherCount: number = 0;
     for (let key in data) {
@@ -39,15 +42,15 @@ export const getPieGraphData = (data: { [key: string]: number; }, viewTechnology
             graphData.push(Object.assign({}, {
                 name: key,
                 count: data[key],
-                fill: key === viewTechnology ? 'var(--teal)' : 'var(--teal-med)',
-                stroke: 'var(--teal-med)'
+                fill: key === viewTechnology ? '#319795' : 'rgba(136, 146, 176, 0.7)',
+                stroke: '#8892b0'
             }))
         }
     } otherCount > 0 && graphData.push(Object.assign({}, {
         name: 'Other',
         count: otherCount,
-        fill: 'var(--teal-med)',
-        stroke: 'var(--teal-med)'
+        fill: 'rgba(136, 146, 176, 0.7)',
+        stroke: '#8892b0'
     }))
     return graphData
 }

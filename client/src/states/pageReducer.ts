@@ -83,7 +83,7 @@ export interface PageState {
     regionDataAll?: RegionData[],
     viewTechnology: string,
     viewDate: string,
-    selectedRegion?: RegionData | SelectedRegionData,
+    selectedRegion?: RegionData,
     selectedRegionID?: string,
     technologyDataAll?: TechnologyData[],
     viewByPercentage?: boolean,

@@ -13,7 +13,7 @@ import { Heading, Text, Flex } from '@chakra-ui/react'
 
 import { SelectedRegionData } from '../../states/pageReducer'
 
-interface PieData {
+export interface PieGraphData {
     name: string,
     count: number,
     fill: string,
@@ -25,14 +25,16 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
     { selectedRegion, selectedRegionID, viewTechnology, viewDate, sumJobs, windowWidth } = state
 
     if (selectedRegion && selectedRegionID && sumJobs) {
+
+        console.log(selectedRegion)
         const totalCountRegion = (selectedRegion as unknown as SelectedRegionData)[viewDate]['total_job_count']
-        const technologyList = (selectedRegion as unknown as SelectedRegionData)[viewDate]['technologies'],      
-        regionByDate: any = selectedRegion[viewDate],
-        totalCountInRegion = regionByDate['total_job_count'],
-        count: any = regionByDate['technologies'][viewTechnology],
-        percentInRegion = (count/totalCountInRegion * 100).toFixed(2),
-        percentInCanada = (count/sumJobs * 100).toFixed(2),
-        pieData: PieData[] = getPieGraphData(technologyList, viewTechnology, totalCountInRegion)
+        const technologyList = selectedRegion[viewDate]['technologies'],      
+        regionByDate = selectedRegion[viewDate],
+        totalCountInRegion: number = regionByDate['total_job_count'],
+        count: number = regionByDate['technologies'][viewTechnology],
+        percentInRegion: string = (count/totalCountInRegion * 100).toFixed(2),
+        percentInCanada: string = (count/sumJobs * 100).toFixed(2),
+        pieData: PieGraphData[] = getPieGraphData(technologyList, viewTechnology, totalCountInRegion)
         const renderLabel = (e: any) => {
             console.log(e)
             const name: string = e['payload']['payload']['name']
@@ -53,7 +55,7 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
             x={e['x']}
             y={e['y']}
             textAnchor='middle'
-            stroke={name === viewTechnology ? 'rgba(255, 255, 255, 0.7)' : 'var(--teal)'}
+            stroke={name === viewTechnology ? '#8892b0' :   '#ccd6f6'}
             fontWeight={100}>{
             `${decodeTechnologyName(name)} (${getPercentage(e['count'], totalCountInRegion)}%)`
             }
@@ -63,8 +65,8 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
         // get ranking within region
         const getRankingInRegion = () => {
             let rank: string = ''
-            const regionRankingList = pieData.filter((e: PieData)=> e['name'] !== 'Other' && e).sort((a, b)=> b['count'] - a['count']);
-            regionRankingList.forEach((e: PieData, index: number)=> {
+            const regionRankingList = pieData.filter((e: PieGraphData)=> e['name'] !== 'Other' && e).sort((a, b)=> b['count'] - a['count']);
+            regionRankingList.forEach((e: PieGraphData, index: number)=> {
                 if (e['name'] === viewTechnology) {
                     const num: number = index + 1
                     rank = num === 1 ? '' : num === 2 ? num + 'nd' : num === 3 ? num + 'rd' : num + 'th'
@@ -76,7 +78,7 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
             <PieGraphContainer>
                 <ResponsiveContainer 
                 width={windowWidth < 900 ? '90%' : windowWidth < 1200 ? '80%' : '70%'}
-                height={700}
+                height={windowWidth > 1400 ? 600: 500}
                 >
                 <PieChart>
                     <Pie 

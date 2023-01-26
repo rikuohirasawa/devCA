@@ -49,7 +49,7 @@ export const RegionModal: React.FC = () => {
         percentageInCanada = (regionByDate['technologies'][viewTechnology]/Number(sumJobs) * 100).toFixed(2)     
         return (
             <Modal
-            size={windowWidth < 550 ? 'full' : 'md'}
+            size={windowWidth < 550 ? 'full' : 'lg'}
             closeOnOverlayClick
             isCentered
             isOpen={modalOpen}
@@ -57,10 +57,11 @@ export const RegionModal: React.FC = () => {
                 <ModalOverlay/>
                 {selectedRegion && regionDataAll && selectedRegionID ? 
                 <ModalContent 
-                zIndex='9999'
+                zIndex=''
                 bg='var(--black)'
                 maxW={windowWidth < 550 ? '100%' : windowWidth < 900 ? '90%': '80%'}
-                h={windowWidth < 550 ? '100%': windowWidth < 900 ? '90%' : '80%'}
+                h={windowWidth < 550 ? '100%': windowWidth < 900 ? '90%' : 'auto'}
+                maxH='80%'
                 padding={windowWidth < 900 ? '12px 0' : '12px'}>
                     <ModalHeader><Heading as='h1' size='xl'>{regionName} - {decodeTechnologyName(viewTechnology)}</Heading>
                     <Heading as='h3' size='lg' marginTop='8px'>{getMonth + ' ' + getDay + ', ' + getYear}</Heading></ModalHeader>

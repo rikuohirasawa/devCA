@@ -22,8 +22,7 @@ export const Homepage: React.FC = () => {
       }, [])
     useEffect(()=>{
         fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
-        .then(res=>{
-          return res.json()})
+        .then(res=>res.json())
         .then(data=>{
           const datesArray = Object.keys(data[0]).filter((e:string) => e !== 'region'),
           sumJobs = data.slice(-1)[0]['sum_jobs'];
@@ -39,9 +38,7 @@ export const Homepage: React.FC = () => {
       fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=technology_data`)
       .then(res=>res.json())
       .then(data=>{
-        console.log(data)
         dispatch({type: 'TECHNOLOGY_DATA', payload: data});
-
       })
     }, [])
 

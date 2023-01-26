@@ -28,9 +28,8 @@ export const LineGraph: React.FC = () => {
         if (key === 'region') {
             continue
         }
-        const count = (selectedRegion as unknown as SelectedRegionData)[key]['technologies'][viewTechnology];
+        const count: number = selectedRegion[key]['technologies'][viewTechnology];
         lineGraphRange.push(count)
-        console.log(lineGraphRange)
         lineGraphData.push(Object.assign({}, {
             date: key, 
             count: count,

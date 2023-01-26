@@ -27,13 +27,13 @@ export const GraphTabs: React.FC<GraphProps> = ({data}) => {
             padding='0'
            >
                 <TabList>
-                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Popular Technologies</Tab>
-                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>All Technologies</Tab>
-                    <Tab _selected={{border: '1px solid teal'}} borderBottom='1px solid teal'>Technology Trends</Tab>
+                    <Tab _selected={{border: '1px solid'}} borderBottom='1px solid'>Popular Technologies</Tab>
+                    <Tab _selected={{border: '1px solid'}} borderBottom='1px solid'>All Technologies</Tab>
+                    <Tab _selected={{border: '1px solid'}} borderBottom='1px solid'>Technology Trends</Tab>
                 </TabList>
                 <TabPanels color='teal'>
-                    <TabPanel height='fit-content'
-                    width='100%'
+                    <TabPanel
+                    height='100%'
                     padding='0'>
                         <PieGraph data={data}/>
                     </TabPanel>

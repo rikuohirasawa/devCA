@@ -13,6 +13,7 @@ const fillColors: string[] = [
     '#0A47A1',
     '#032DA1'
 ];
+
 export const getFillColor = (count: number, viewByFormat: string, totalCount?: number, rank?: number) => {
     let fillColor: string = ''
     const sliceFillColors = fillColors.slice(0, 11)

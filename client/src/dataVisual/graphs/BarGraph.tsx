@@ -11,18 +11,29 @@ export interface GraphProps {
         [key:string] : number
     } 
 }
+interface SortData {
+    name: string,
+    count: number,
+    fill: string
+}
 
+export interface BarGraphData {
+    name: string,
+    count: number,
+    fill: string
+}
 export const BarGraph: React.FC<GraphProps> = ()  => {
 
     const { state } = useContext(PageContext),
-    { selectedRegion, viewDate, viewTechnology, } = state
+    { selectedRegion, viewDate, viewTechnology, windowWidth } = state
 
     if (selectedRegion) {
-    const data: any = selectedRegion[viewDate]['technologies'],
-    sortData = getBarGraphData(data, viewTechnology);
+    const data: {[technology: string]: number} = selectedRegion[viewDate]['technologies'],
+    sortData: BarGraphData[] = getBarGraphData(data, viewTechnology);
     return (
         <BarGraphContainer>
-            <ResponsiveContainer height={1000}
+            <ResponsiveContainer 
+            height={1000}
             width='95%'
             >
                 <BarChart
