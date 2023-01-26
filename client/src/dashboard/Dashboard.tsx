@@ -10,6 +10,8 @@ import { decodeDate } from "../utils"
 import { IoCloudOutline, IoCloudOfflineOutline } from 'react-icons/io5'
 
 import { ChakraBtn, ChakraDashboardHeading } from "../themes/ChakraCustom"
+import { LoadingScreen } from "../loadingScreen/LoadingScreen"
+
 export interface ScrapedData {
     [date: string]: {
         [region: string] : {},
@@ -30,7 +32,6 @@ export const Dashboard: React.FC = () => {
     useEffect(()=>{
         fetch(`http://localhost:8000/scraper-status`)
         .then(res=>{
-            console.log(res)
             return res.json()})
         .then(data=>{
             
@@ -40,6 +41,7 @@ export const Dashboard: React.FC = () => {
 
     const [scraperStats, setScraperStats] = useState<ScrapedData[] | null>(null)
     const [scraperStatus, setScraperStatus] = useState<{'is_live': boolean} | null>(null)
+    const loading = false;
     if (scraperStats && scraperStatus !== null) {
         const scrapedDates = Object.keys(scraperStats),
         mostRecentScrape = scraperStats[scraperStats.length - 1]
@@ -95,7 +97,17 @@ export const Dashboard: React.FC = () => {
         )
     } else {
         return (
-            <div>loading</div>
+           <>
+           <DashboardWrapper>
+            <ChakraDashboardHeading 
+                as={'h1'}
+                size='2xl'
+                >Scraper Status 
+                </ChakraDashboardHeading>
+                <LoadingScreen/>
+           </DashboardWrapper>
+
+           </>
         )
     }
 

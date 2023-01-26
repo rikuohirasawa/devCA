@@ -35,18 +35,18 @@ export const ScraperStats: React.FC<DataProps> = ({data}: DataProps) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data.map(e=>{
+                        {data.map((e: ScrapedData, index: number)=>{
                             const dateKey = Object.keys(e)[0],
                             runTimeSeconds = (e[dateKey]['time_elapsed']).toFixed(2),
                             errorCount = e[dateKey]['total_error_count']
                             // 36 languages
                             // 13 provinces/territories
                             return (
-                                <Tr>
-                                    <Td>{decodeDate(dateKey)}</Td>
-                                    <Td>{runTimeSeconds}</Td>
-                                    <Td>{errorCount}</Td>
-                                    <Td>{(((36 * 13 - errorCount)/(36 * 13)) * 100).toFixed(2)}%</Td>
+                                <Tr key={`row ${dateKey}-${index}`}>
+                                    <Td key={`cell-1-${dateKey}-${index}`}>{decodeDate(dateKey)}</Td>
+                                    <Td key={`cell-2-${dateKey}-${index}`}>{runTimeSeconds}</Td>
+                                    <Td key={`cell-3-${dateKey}-${index}`}>{errorCount}</Td>
+                                    <Td key={`cell-4-${dateKey}-${index}`}>{(((36 * 13 - errorCount)/(36 * 13)) * 100).toFixed(2)}%</Td>
                                 </Tr>
                             )
                         })}   

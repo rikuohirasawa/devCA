@@ -42,9 +42,6 @@ export const Homepage: React.FC = () => {
       })
     }, [])
 
-    // useEffect(()=>{
-    //   fetch('http://localhost:8000/debug-sentry')
-    // })
     return (
     <Wrapper>
       <RegionModal/>

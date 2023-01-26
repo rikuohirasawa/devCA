@@ -11,11 +11,6 @@ export interface GraphProps {
         [key:string] : number
     } 
 }
-interface SortData {
-    name: string,
-    count: number,
-    fill: string
-}
 
 export interface BarGraphData {
     name: string,
