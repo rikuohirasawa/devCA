@@ -78,7 +78,7 @@ export const About: React.FC = () => {
     return (
         <AboutContainer>
             <AboutHeading as={'h1'} size='xl'>Hi, thanks for checking out my project :)</AboutHeading>
-            <AboutHeading as={'h2'} size='md'>Maybe you have a few questions (?), so I've written a bit here to try to answer some, as well as talk about a few limitations of the application etc.</AboutHeading>
+            <AboutHeading as={'h2'} size='md'>Maybe you have a few questions (?), so I've written a bit here to try to answer some, as well as talk about a few limitations of the application etc. Click a question to open a response.</AboutHeading>
             <Accordion allowMultiple>
                 <AccordionItem>
                     <AccordionButton>
@@ -93,7 +93,7 @@ export const About: React.FC = () => {
                         <AccordionHeading>How did you pick the technologies to scrape for?</AccordionHeading>
                     </AccordionButton>
                     <AccordionPanel>
-                    Most popular technologies from the <ExternalLink href="https://survey.stackoverflow.co/2022/#technology-most-popular-technologies" target='_blank'>StackOverflow 2022 developer survey</ExternalLink>
+                    Most popular technologies from the <ExternalLink href="https://survey.stackoverflow.co/2022/#technology-most-popular-technologies" target='_blank'>StackOverflow 2022 developer survey.</ExternalLink>
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem>
@@ -114,39 +114,18 @@ export const About: React.FC = () => {
                                 </Flex>
                             </AccordionButton>
                             <AccordionPanel>   
-                                <Heading>1.</Heading>                 
-                                <p>Certain technologies were not verbose enough in their search and returned a disproportionate amount of hits compared to the amount of relevant listings.</p>
-                                <p>e.g. the first scrape returned R as having 875 listings in Alberta, more than JavaScript (257) and Python (371) combined.</p>
-                                <p>As as result, Assembly, R, Go, C were appended 'developer'/'language' to their query, as I did not find they were accurately represented</p>
-                                <p>Swift, APL, VBA and Crystal were omitted entirely as their names were not verbose enough for the search engine to accurately represent their data - the solution of appending 'developer' or 'language' to the query proved was not effective </p>
-                                <p>This does mean that the data could be misrepresented, if you have any suggestions please feel free to contact me.
-                                </p>
+                                <Heading>1.</Heading>
+                                <Text>Certain technologies were not verbose enough in their search and returned a disproportionate amount of hits compared to the amount of relevant listings. e.g. the first scrape returned R as having 875 listings in Alberta, more than JavaScript (257) and Python (371) combined. As as result, Assembly, R, Go, C were appended 'developer'/'language' to their query, as I did not find they were accurately represented. Swift, APL, VBA and Crystal were omitted entirely as their names did not query the search engine in a way that accurately represent their data - the solution of appending 'developer' or 'language' to the query proved was not effective. This does mean that the data could be misrepresented</Text>                 
                                 <Heading>2.</Heading>
+                                <Text>Only one job search engine/board was scraped, scraping a variety of websites would give more insights. Initially I had looked into scraping both LinkedIn and Indeed, however Indeed blocks scraping via Cloudflare, as well as deprecating certain features of their API, and LinkedIn is generally not fond of web scraping. In the future I may return to look into alternatives such as CareerBeacon, UpWork etc.</Text>
                                 <Heading>3.</Heading>
+                                <Text>Data is scraped in a way that makes it representative of a very specific point in time. I would like to aggregrate the data in some way, e.g. getting ALL jobs for a given week.</Text>
                         </AccordionPanel>
                         </AccordionItem>
                     </AccordionPanel>
                 </AccordionItem>
             
             </Accordion>
-
-            <QAContainer>
-                <Question>Where did you scrape the data?</Question>
-                <Answer>Data was scraped from Adzuna, a job search engine.</Answer>
-                <Question>How did you pick the technologies to scrape for?</Question>
-                <Answer as={'div'}>
-                    <p>Top technologies from StackOverflow 2022 survey.</p>
-                </Answer>
-                <Question>Limitations</Question>
-                <Answer as={'div'}>
-                    <p>Certain technologies were not verbose enough in their search and returned a disproportionate amount of hits compared to the amount of relevant listings.</p>
-                    <p>e.g. the first scrape returned R as having 875 listings in Alberta, more than JavaScript (257) and Python (371) combined.</p>
-                    <p>As as result, Assembly, R, Go, C were appended 'developer'/'language' to their query, as I did not find they were accurately represented</p>
-                    <p>Swift, APL, VBA and Crystal were omitted entirely as their names were not verbose enough for the search engine to accurately represent their data - the solution of appending 'developer' or 'language' to the query proved was not effective </p>
-                    <p>This does mean that the data could be misrepresented, if you have any suggestions please feel free to contact me.</p>
-                </Answer>
-            </QAContainer>
-
         </AboutContainer>
     )
 }

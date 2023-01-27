@@ -6,6 +6,7 @@ import { useContext } from "react"
 import { PageContext } from "../../states/PageContext"
 
 import { getBarGraphData } from "./graphUtils"
+
 export interface GraphProps {
     data : {
         [key:string] : number
@@ -20,7 +21,10 @@ export interface BarGraphData {
 export const BarGraph: React.FC<GraphProps> = ()  => {
 
     const { state } = useContext(PageContext),
-    { selectedRegion, viewDate, viewTechnology, windowWidth } = state
+    { selectedRegion, viewDate, viewTechnology, windowWidth, windowDimensions } = state
+    console.log('height', windowDimensions['innerHeight'])
+
+    const windowHeight = windowDimensions['innerHeight']
 
     if (selectedRegion) {
     const data: {[technology: string]: number} = selectedRegion[viewDate]['technologies'],
@@ -28,7 +32,7 @@ export const BarGraph: React.FC<GraphProps> = ()  => {
     return (
         <BarGraphContainer>
             <ResponsiveContainer 
-            height={1000}
+            height={windowHeight > 1050 ? 900: 1000}
             width='95%'
             >
                 <BarChart

@@ -64,6 +64,10 @@ export interface SelectedRegion {
 //     } & string
 // }
 
+export interface ErrorData {
+    isError: boolean,
+    message?: string,
+}
 export interface TechnologyData {
     [date:string]: {
         regions: {
@@ -89,8 +93,10 @@ export interface PageState {
     viewByPercentage?: boolean,
     viewByFormat: string,
     scrapedDates?: string[],
-    windowWidth: number
-    rData?: RData[]
+    windowWidth: number,
+    windowDimensions: Window,
+    rData?: RData[],
+    isError: ErrorData,
 }
 
 export enum ActionTypes {
@@ -108,7 +114,9 @@ export enum ActionTypes {
     viewByFormat = 'VIEW_BY_FORMAT',
     scrapedDates = 'SCRAPED_DATES',
     windowWidth = 'WINDOW_WIDTH',
-    rData = 'R_DATA'
+    windowDimensions = 'WINDOW_DIMENSIONS',
+    rData = 'R_DATA',
+    isError = 'IS_ERROR'
 }
 
 interface PageAction {
@@ -120,7 +128,9 @@ interface PageAction {
     viewDate: string;
     viewTechnology: string;
     windowWidth: number;
-    regionDataAll: RData[]
+    regionDataAll: RData[];
+    windowDimensions: Window,
+    isError: ErrorData
 }
 
 export const pageReducer = (state: PageState, action: PageAction) => {
@@ -194,6 +204,16 @@ export const pageReducer = (state: PageState, action: PageAction) => {
             return {
                 ...state,
                 rData: action.regionDataAll
+            }
+        } case ActionTypes.windowDimensions: {
+            return {
+                ...state,
+                windowDimensions: action.windowDimensions
+            }
+        } case ActionTypes.isError: {
+            return {
+                ...state, 
+                isError: action.isError
             }
         }
         default: return state;

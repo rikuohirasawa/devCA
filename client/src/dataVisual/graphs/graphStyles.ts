@@ -14,7 +14,9 @@ export const PieGraphContainer = styled.div`
     .font-700 {
         font-weight: 700;
     }
-
+    @media only screen and (min-height: 1100px) {
+        height: 70vh;
+    }
     @media only screen and (max-width: 900px) {
         height: 550px;
     }
@@ -46,6 +48,10 @@ export const BarGraphContainer = styled.div`
     height: 550px;
     overflow-y: scroll;
 
+    @media only screen and (min-height: 1100px) {
+        height: 70vh;
+    }
+
     @media only screen and (max-width: 900px) {
         height: 550px;
     }
@@ -65,6 +71,11 @@ export const LineGraphContainer = styled.div`
     max-width: 100%;
     align-items: center;
     overflow-y: scroll;
+
+    @media only screen and (min-height: 1100px) {
+        height: 70vh;
+        justify-content: center;
+    }
     
     @media only screen and (max-width: 900px) {
         height: 550px;

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { PageState, pageReducer, ActionTypes, RegionData, SelectedRegion, TechnologyData } from "./pageReducer";
+import { PageState, pageReducer, ActionTypes, ErrorData, RegionData, SelectedRegion, TechnologyData } from "./pageReducer";
 
 const initialPageState: PageState = {
     modalOpen: false,
@@ -9,7 +9,11 @@ const initialPageState: PageState = {
     viewByPercentage: false,
     viewByFormat: 'Ranking',
     scrapedDates: [],
-    windowWidth: window.innerWidth
+    windowWidth: window.innerWidth,
+    windowDimensions: window,
+    isError: {
+        isError: false,
+    },
 }
 
 export const PageContext = createContext<{state: PageState, dispatch: React.Dispatch<ActionTypes | any>}>({

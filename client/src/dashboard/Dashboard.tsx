@@ -3,14 +3,15 @@ import { DashboardWrapper } from "./dashboardStyles"
 import { Heading, Text, Spinner, Flex, Icon, Button } from "@chakra-ui/react"
 
 import { ScraperStats } from "./scraperStats/ScraperStats"
-import { useState, useEffect } from "react"
-
+import { useState, useEffect, useContext } from "react"
+import { PageContext } from "../states/PageContext"
 import { decodeDate } from "../utils"
 
 import { IoCloudOutline, IoCloudOfflineOutline } from 'react-icons/io5'
 
 import { ChakraBtn, ChakraDashboardHeading } from "../themes/ChakraCustom"
 import { LoadingScreen } from "../loadingScreen/LoadingScreen"
+import { ErrorScreen } from "../errorScreen/ErrorScreen"
 
 export interface ScrapedData {
     [date: string]: {
@@ -21,36 +22,93 @@ export interface ScrapedData {
 }
 
 export const Dashboard: React.FC = () => {
-
+    const { state, dispatch } = useContext(PageContext),
+    { isError } = state;
     useEffect(()=>{
-        fetch(`http://localhost:8000/scraper-stats`)
-        .then(res=>res.json())
-        .then(data=>{
-            setScraperStats(data)})
-    },[])
-
-    useEffect(()=>{
-        fetch(`http://localhost:8000/scraper-status`)
-        .then(res=>{
-            return res.json()})
-        .then(data=>{
+        Promise.all([
+            fetch(`http://localhost:8000/scraper-stats`),
+            fetch(`http://localhost:8000/scraper-status`)
+        ]).then((responses: Response[])=>{
+            const responsesJSON = (responses.map(res=>{
+                if (res['status'] > 400) {
+                    throw new Error(`${res['status']}, ${res['statusText']}`);
+                }
+                return res.json()
+            })
+            )
+            // this became really difficult really fast, I wanted to return a tuple at first, but there were issues with that, when attempting to set the state to the values, specfically: 
+            // Argument of type '[ScrapedData[], { is_live: boolean; }]' is not assignable to parameter of type 'SetStateAction<ScrapedData[] | null>'.
+            // syntax was: Promise.all<[ScrapedData[], {'is_live': boolean}]>(responsesJSON)
+            // this solution is admittedly a hack for the time being
+            return Promise.all<ScrapedData[] & {'is_live': boolean}>(responsesJSON)
             
-            setScraperStatus(data)})
-    },[])
+        }).then(([stats , status])=>{
+            setScraperStats(stats)
+            setScraperStatus(status)
+        })
+        .catch((err: Error) => {
+            dispatch({type: 'IS_ERROR', isError: {isError: true, message: err['message']}})
+        })
+    }, [])
+
+    // useEffect(()=>{
+    //     fetch(`http://localhost:8000/scraper-stats`)
+    //     .then((res: Response)=>{
+    //         if (res['status'] > 400) {
+    //             throw new Error(`${res['status']}, ${res['statusText']}`)
+    //         }
+
+    //         return res.json()
+    //     })
+    //     .then((data: ScrapedData[])=>{
+    //         setScraperStats(data)
+    //         })
+    //     .catch((err: Error)=>{
+    //         dispatch({type: 'IS_ERROR', isError: {isError: true, message: err['message']}})
+    //         })
+    //     return dispatch({type: 'IS_ERROR', isError: {isError: false}})
+    // },
+    // [])
+
+    // useEffect(()=>{
+    //     fetch(`http://localhost:8000/scraper-status`)
+    //     .then((res: Response)=>{
+    //         if (res['status'] > 400) {
+    //             throw new Error(`${res['status']}, ${res['statusText']}`)
+    //         }
+    //         return res.json()
+    //     })
+    //     .then((data: {'is_live': boolean})=>{
+    //         setScraperStatus(data)}
+    //         ).catch((err: Error)=>{
+    //             dispatch({type: 'IS_ERROR', isError: {isError: true, message: err['message']}})
+    //         })
+    //     return dispatch({type: 'IS_ERROR', isError: {isError: false}})
+    // },
+    // [])
 
 
     const [scraperStats, setScraperStats] = useState<ScrapedData[] | null>(null)
     const [scraperStatus, setScraperStatus] = useState<{'is_live': boolean} | null>(null)
     const loading = false;
-    if (scraperStats && scraperStatus !== null) {
+    if (isError['isError']) {
+        return ( 
+        <DashboardWrapper>
+            <ChakraDashboardHeading 
+                as={'h1'}
+                size='2xl'
+                >Scraper Status 
+                </ChakraDashboardHeading>
+                <ErrorScreen/>
+       </DashboardWrapper> 
+       )
+    } else if (scraperStats && scraperStatus !== null) {
         const scrapedDates = Object.keys(scraperStats),
-        mostRecentScrape = scraperStats[scraperStats.length - 1]
-        
+        mostRecentScrape = scraperStats[scraperStats.length - 1]   
         const nextScheduledScrape = () => {
             const lastScrapeDate = new Date(Object.keys(mostRecentScrape).toString())
             return decodeDate((new Date(lastScrapeDate.setDate(lastScrapeDate.getDate() + 7))).toString())
         }
-
         return (
             <DashboardWrapper>
                 <ChakraDashboardHeading 
@@ -106,7 +164,6 @@ export const Dashboard: React.FC = () => {
                 </ChakraDashboardHeading>
                 <LoadingScreen/>
            </DashboardWrapper>
-
            </>
         )
     }

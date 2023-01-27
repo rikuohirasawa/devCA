@@ -22,11 +22,10 @@ export interface PieGraphData {
 export const PieGraph: React.FC<GraphProps> = ({data}) => {
 
     const { state } = useContext(PageContext),
-    { selectedRegion, selectedRegionID, viewTechnology, viewDate, sumJobs, windowWidth } = state
+    { selectedRegion, selectedRegionID, viewTechnology, viewDate, sumJobs, windowDimensions } = state
+    const windowWidth = windowDimensions['innerWidth']
 
     if (selectedRegion && selectedRegionID && sumJobs) {
-
-        console.log(selectedRegion)
         const totalCountRegion = (selectedRegion as unknown as SelectedRegionData)[viewDate]['total_job_count']
         const technologyList = selectedRegion[viewDate]['technologies'],      
         regionByDate = selectedRegion[viewDate],
@@ -34,9 +33,8 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
         count: number = regionByDate['technologies'][viewTechnology],
         percentInRegion: string = (count/totalCountInRegion * 100).toFixed(2),
         percentInCanada: string = (count/sumJobs * 100).toFixed(2),
-        pieData: PieGraphData[] = getPieGraphData(technologyList, viewTechnology, totalCountInRegion)
-        const renderLabel = (e: any) => {
-            console.log(e)
+        pieData: PieGraphData[] = getPieGraphData(technologyList, viewTechnology, totalCountInRegion),
+        renderLabel = (e: any) => {
             const name: string = e['payload']['payload']['name']
             if (name === 'Other') {
                 return (
@@ -50,6 +48,7 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                     </text>
                 )
             }
+
             return (
             <text
             x={e['x']}
