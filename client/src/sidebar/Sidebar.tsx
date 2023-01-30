@@ -8,7 +8,7 @@ import { ContentColumn, LinkContainer, LinkBtn } from './siderbarStyles';
 
 import { BsGithub, BsFillQuestionCircleFill } from 'react-icons/bs'
 import {AiOutlineQuestionCircle} from 'react-icons/ai'
-
+import { useNavigate } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
     const { state, dispatch } = useContext(PageContext),
@@ -16,7 +16,8 @@ export const Sidebar: React.FC = () => {
     toggleSidebar = () => {
         dispatch({type: 'TOGGLE_SIDEBAR'})
     },
-    {isOpen, onOpen, onClose } = useDisclosure();
+    {isOpen, onOpen, onClose } = useDisclosure(),
+    navigate = useNavigate();
     return (
         <Drawer
         placement='right'
@@ -52,7 +53,8 @@ export const Sidebar: React.FC = () => {
                                     opacity: 0.7,
                                     transform: 'scale(1.08)',
                                     transition: 'all 0.2s ease'
-                                }}>
+                                }}
+                                onClick={()=>{navigate('/about')}}>
                                 <Icon 
                                     as={BsFillQuestionCircleFill} 
                                     boxSize={7}/>

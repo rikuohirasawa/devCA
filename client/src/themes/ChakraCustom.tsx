@@ -16,7 +16,7 @@ export const ChakraBtn = (props: ButtonProps) => {
         bgColor='darkMode.black'
         border='1px solid'
         _hover={{
-        bg: 'darkMode.blueSlate', 
+        bg: 'darkMode.teal', 
         color: 'var(--black)',
         border: '1px solid var(--black)'
         }}

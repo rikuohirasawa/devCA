@@ -8,7 +8,7 @@ export const TooltipWrapper = styled.div<{$display:string}>`
     z-index: 999999999999;
     
     background: var(--black);
-    color: var(--teal-med);
+    color: var(--teal);
     border: 1px solid var(--teal-light);
     padding: 12px 18px;
     border-radius: 8px;

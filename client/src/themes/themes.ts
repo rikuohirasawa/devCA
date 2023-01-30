@@ -15,7 +15,7 @@ export const theme = extendTheme({
         global: {
             body: {
                 bg: 'darkMode.black',
-                color: 'darkMode.blueSlate'
+                color: 'darkMode.teal'
             }
         }
 

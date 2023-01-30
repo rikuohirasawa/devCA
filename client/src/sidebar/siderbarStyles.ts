@@ -46,6 +46,7 @@ export const ContentColumn = styled.div`
 
 export const LinkContainer = styled.div`
     display: flex;
-    gap: 6px;`
+    gap: 12px;
+    justify-content: flex-end;`
 
 export const LinkBtn = styled.a``
