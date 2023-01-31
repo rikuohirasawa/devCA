@@ -1,3 +1,4 @@
+import React from 'react'
 import { FaBomb } from 'react-icons/fa'
 import { Box, BoxProps, Icon, Heading, Text, Button} from '@chakra-ui/react'
 import { useContext } from 'react'

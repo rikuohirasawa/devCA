@@ -1,10 +1,9 @@
+import React from 'react'
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Label } from "recharts"
-import { BarGraphContainer, StickyWrapper } from "./graphStyles"
+import { BarGraphContainer } from "./graphStyles"
 import { CustomToolTipBarGraph } from "./CustomToolTip"
-
 import { useContext } from "react"
 import { PageContext } from "../../states/PageContext"
-
 import { getBarGraphData } from "./graphUtils"
 
 export interface GraphProps {
@@ -18,12 +17,11 @@ export interface BarGraphData {
     count: number,
     fill: string
 }
+
 export const BarGraph: React.FC<GraphProps> = ()  => {
 
     const { state } = useContext(PageContext),
     { selectedRegion, viewDate, viewTechnology, windowWidth, windowDimensions } = state
-    console.log('height', windowDimensions['innerHeight'])
-
     const windowHeight = windowDimensions['innerHeight']
 
     if (selectedRegion) {

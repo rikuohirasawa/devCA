@@ -8,6 +8,8 @@ import {
     Radio,
     RadioProps } from "@chakra-ui/react";
 
+    import * as React from 'react'
+
 
 export const ChakraBtn = (props: ButtonProps) => {
     return (

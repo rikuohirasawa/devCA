@@ -1,11 +1,5 @@
-
+import React from 'react'
 import { ScrapedData } from '../Dashboard'
-
-import { Accordion, AccordionItem, Heading, Text } from "@chakra-ui/react"
-import { ChakraDashboardHeading } from "../../themes/ChakraCustom"
-
-
-
 import { DashboardHeading, DashboardCard } from "../Dashboard"
 
 import {

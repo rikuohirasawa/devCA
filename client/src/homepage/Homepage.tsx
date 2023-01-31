@@ -1,14 +1,12 @@
+import React from 'react'
 import { Wrapper } from "./homepageStyles"
 
 import { ChoroplethMap } from "../dataVisual/ChoroplethMap"
-import { useEffect, useContext, useRef } from "react"
+import { useEffect, useContext } from "react"
 
 import { PageContext } from "../states/PageContext"
-import { DataMap } from "../dataVisual/DataMap"
-import { SimpleMap } from "../dataVisual/SimpleMap"
 import { RegionModal } from "../dataVisual/modal/RegionModal"
 import { LeafletMap } from "../dataVisual/map/LeafletMap"
-import { decodeDate } from "../utils"
 import { ErrorScreen } from "../errorScreen/ErrorScreen"
 import { RegionData } from "../states/pageReducer"
 

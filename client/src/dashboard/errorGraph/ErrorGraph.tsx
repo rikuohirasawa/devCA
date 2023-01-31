@@ -1,3 +1,4 @@
+import React from 'react'
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, Tooltip, Label, ResponsiveContainer } from "recharts"
 import { Box, BoxProps, useMediaQuery } from '@chakra-ui/react'
 import { ErrorStats, DashboardCard } from "../Dashboard"
@@ -7,18 +8,7 @@ interface ErrorGraphProps {
     data: ErrorStats[]
 }
 
-interface ErrorGraphData {
-    date: string,
-    count: number,
-    fill?: string,
-    stroke?: string
-}
-
 export const ErrorGraph: React.FC<ErrorGraphProps> = ({data}) => {
-    const errorData: ErrorGraphData[] = []
-    data.forEach(e=>{
-        console.log(e)
-    })
     return (
         <DashboardCard
         colSpan={3}

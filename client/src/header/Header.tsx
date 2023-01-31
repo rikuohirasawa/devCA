@@ -1,14 +1,8 @@
-
-import { BsGithub } from 'react-icons/bs'
+import React from 'react'
 import { Link as RRLink, type LinkProps as RRLinkProps, useLocation } from 'react-router-dom'
-
 import { Sidebar } from '../sidebar/Sidebar'
-
 import { useContext } from 'react'
 import { PageContext } from '../states/PageContext'
-import { decodeDate } from '../utils'
-import { Button } from '@chakra-ui/react'
-
 import { IoMdSettings } from 'react-icons/io'
 import { Logo } from '../logo/Logo'
 import { ChakraBtn } from '../themes/ChakraCustom'

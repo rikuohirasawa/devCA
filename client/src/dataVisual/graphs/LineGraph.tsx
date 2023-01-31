@@ -1,15 +1,12 @@
+import React from 'react'
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, Tooltip, ResponsiveContainer } from "recharts"
 import { LineGraphContainer } from "./graphStyles"
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { PageContext } from '../../states/PageContext'
-import { decodeTechnologyName, decodeDate, convertNames } from '../../utils'
+import { decodeDate, convertNames } from '../../utils'
 import { CustomToolTipLineGraph } from "./CustomToolTip"
 
 import { Flex, Heading, Text } from '@chakra-ui/react'
-
-import { SelectedRegionData } from '../../states/pageReducer'
-
-import {ParagraphText} from '../../themes/chakraComponents'
 
 interface LineGraphData {
     date: string,

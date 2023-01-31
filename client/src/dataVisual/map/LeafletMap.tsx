@@ -3,25 +3,16 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css';
 import './leafletmap.css'
 
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { PageContext } from '../../states/PageContext';
 import data from '../geojson.json';
 import { GeoJsonObject } from 'geojson';
-import { style } from 'd3';
-import { LatLngExpression } from 'leaflet';
 import { RegionTooltip } from './tooltip/RegionTooltip';
-
-import { SelectedRegion } from '../../states/pageReducer';
-
 import { getFillColor } from './mapUtils';
-
-import { MapLegend } from './legend/MapLegend';
 import { SettingDisplay } from './settingsDisplay/SettingsDisplay';
 
 import { TechnologyData } from '../../states/pageReducer';
-
-
-const CANADA_TOPO_JSON = require('../Canada.topo.json')
+import { LoadingScreen } from '../../loadingScreen/LoadingScreen';
 
 const Map = () => {
     const map = useMap()
@@ -231,7 +222,7 @@ export const LeafletMap: React.FC = () => {
         </MapContainer>
     )
     } else {
-        return <div>loading</div>
+        return <LoadingScreen/>
     }
 }
 

@@ -1,5 +1,5 @@
 import { TooltipWrapper } from './regionToolTipStyles'
-import { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { PageContext } from '../../../states/PageContext';
 import { ToolTipState } from '../LeafletMap'
 import { decodeTechnologyName } from '../../../utils';
