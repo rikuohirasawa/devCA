@@ -35,7 +35,6 @@ export const ErrorGraph: React.FC<ErrorGraphProps> = ({data}) => {
                         fill='var(--teal)'/>
                     </YAxis>
                     <Tooltip content={<CustomToolTipLineGraph/>}/>
-
                     <CartesianGrid
                     stroke='var(--teal)'
                     strokeDasharray='2'

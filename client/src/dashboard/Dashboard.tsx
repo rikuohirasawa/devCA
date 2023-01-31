@@ -5,9 +5,7 @@ import { ScraperStats } from "./scraperStats/ScraperStats"
 import { useState, useEffect, useContext } from "react"
 import { PageContext } from "../states/PageContext"
 import { decodeDate } from "../utils"
-
 import { IoCloudOutline, IoCloudOfflineOutline } from 'react-icons/io5'
-
 import { LoadingScreen } from "../loadingScreen/LoadingScreen"
 import { ErrorScreen } from "../errorScreen/ErrorScreen"
 import { ErrorGraph } from "./errorGraph/ErrorGraph"
@@ -156,7 +154,6 @@ export const Dashboard: React.FC = () => {
                             <Icon as={IoCloudOfflineOutline}/> Offline
                         </Text>}
                     </DashboardCard>
-
                     <DashboardCard colSpan={isSmallerThan1150 ? 1 : 2}>
                         <DashboardHeading
                             >Next scheduled scrape:
