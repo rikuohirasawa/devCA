@@ -1,13 +1,11 @@
-
+import React from 'react'
 import { Heading, Text, Spinner, Flex, Icon, Button, HeadingProps, Box, BoxProps, ButtonProps, Grid, GridProps, GridItem, GridItemProps, useMediaQuery } from "@chakra-ui/react"
 import { ChakraBtn } from "../themes/ChakraCustom"
 import { ScraperStats } from "./scraperStats/ScraperStats"
 import { useState, useEffect, useContext } from "react"
 import { PageContext } from "../states/PageContext"
 import { decodeDate } from "../utils"
-
 import { IoCloudOutline, IoCloudOfflineOutline } from 'react-icons/io5'
-
 import { LoadingScreen } from "../loadingScreen/LoadingScreen"
 import { ErrorScreen } from "../errorScreen/ErrorScreen"
 import { ErrorGraph } from "./errorGraph/ErrorGraph"
@@ -94,7 +92,6 @@ export const Dashboard: React.FC = () => {
                     'count': stat[date]['total_error_count']
                 }))
                 setErrorStats(errorCount)
-                console.log('array', errorStats)
             })
         })
         .catch((err: Error) => {
@@ -104,8 +101,7 @@ export const Dashboard: React.FC = () => {
 
     const [scraperStats, setScraperStats] = useState<ScrapedData[] | null>(null)
     const [scraperStatus, setScraperStatus] = useState<{'is_live': boolean} | null>(null)
-    const [errorStats, setErrorStats] = useState<ErrorStats[]>([])
-    const loading = false;
+    const [errorStats, setErrorStats] = useState<ErrorStats[]>([]);
     if (isError['isError']) {
         return ( 
         <DashboardWrapper>
@@ -132,7 +128,6 @@ export const Dashboard: React.FC = () => {
                 <DashboardHeading as={'h1'} size='2xl'>Scraper Dashboard</DashboardHeading>
                 <Grid
                 padding='16px 0'
-    
                 templateColumns={'repeat(4, 25%)'}
                 display={isSmallerThan1150 ? 'flex' : 'grid'}
                 flexDirection='column'
@@ -161,7 +156,6 @@ export const Dashboard: React.FC = () => {
                             <Icon as={IoCloudOfflineOutline}/> Offline
                         </Text>}
                     </DashboardCard>
-
                     <DashboardCard colSpan={isSmallerThan1150 ? 1 : 2}>
                         <DashboardHeading
                             >Next scheduled scrape:

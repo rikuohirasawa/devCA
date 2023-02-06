@@ -1,20 +1,10 @@
-// import Modal from 'react-modal'
 import moment from 'moment'
-import { GrClose } from 'react-icons/gr'
-import { MdClose } from 'react-icons/md'
-
-import React, { useState, useContext, useEffect, useRef, MutableRefObject } from 'react'
-
-import { BackDrop, Wrapper, CloseButton, Content } from './modalStyles';
-
-import { decodeTechnologyName, decodeDate } from '../../utils';
-
+import React, { useContext } from 'react'
+import { decodeTechnologyName } from '../../utils';
 import { PageContext } from "../../states/PageContext";
-import { BarGraph } from '../graphs/BarGraph'
-import { PieGraph } from '../graphs/PieGraph'
 import { GraphTabs } from '../graphTabs/GraphTabs';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, useDisclosure, ModalCloseButton, Text } from '@chakra-ui/react'
-
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Heading, useDisclosure, ModalCloseButton } from '@chakra-ui/react'
+import { LoadingScreen } from '../../loadingScreen/LoadingScreen';
 export const RegionModal: React.FC = () => {
 
     const { state, dispatch } = useContext(PageContext),
@@ -41,7 +31,7 @@ export const RegionModal: React.FC = () => {
     getDay = moment(viewDate).format('DD');
 
     const {isOpen, onOpen, onClose} = useDisclosure();
-
+    const loading = false;
     if (selectedRegion && regionDataAll && selectedRegionID && sumJobs) {
         const regionByDate: any = selectedRegion[viewDate],
         regionName = convertNames[selectedRegionID],
@@ -73,13 +63,25 @@ export const RegionModal: React.FC = () => {
                     </ModalBody>
                 </ModalContent>
                 :
-                <div>loading</div>}
+                <LoadingScreen/>}
             </Modal>
         )
     } else {
         return (
-            <>
-            </>
+            <Modal
+            size={windowWidth < 550 ? 'full' : 'lg'}
+            closeOnOverlayClick
+            isCentered
+            isOpen={modalOpen}
+            onClose={toggleModal}>
+                <ModalOverlay/>
+                <ModalContent 
+                opacity='0'
+                bg='transparent'>
+                    <LoadingScreen/>
+                </ModalContent>
+
+            </Modal>
         )
     }
 }

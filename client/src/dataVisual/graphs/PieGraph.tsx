@@ -1,3 +1,4 @@
+import React from 'react'
 import { PieChart,Pie, ResponsiveContainer, LabelList, Label } from 'recharts'
 
 import { GraphProps } from './BarGraph'
@@ -96,9 +97,6 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                     borderBottom='1px solid var(--teal-med)'
                     paddingBottom='16px'
                     >{convertNames[selectedRegionID]}</Heading>
-                    {/* <h1
-                    style={{fontSize: '2.25rem',
-                    fontWeight: '700'}}>Test</h1> */}
                     <Text 
                     fontSize='xl'
                     width='100%'
@@ -112,7 +110,6 @@ export const PieGraph: React.FC<GraphProps> = ({data}) => {
                         This makes {viewTechnology} the <span className='font-700'>{getRankingInRegion()}</span> most popular technology in {convertNames[selectedRegionID]} at the time of data collection.
                     </Text>
                     <Heading
-      
                     size='xl'
                     width='100%'
                     borderBottom='1px solid var(--teal-med)'

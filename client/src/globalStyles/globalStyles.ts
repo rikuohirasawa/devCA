@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import "@fontsource/open-sans"
+import React from 'react'
 
 
 export const GlobalStyle = createGlobalStyle`

@@ -1,9 +1,6 @@
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
-import requests
-from flask import Response, Request, jsonify, json
-import json
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 DB_NAME = os.getenv('DB_NAME')
@@ -35,10 +32,3 @@ def get_data(collection_name, date):
         return err
 
 get_data('region_data', '2022-12-23')
-
-# def get_data_by_technology(collection_name, date): 
-#     client = MongoClient(MONGO_URI)
-#     try:
-#         db = client[DB_NAME]
-#         collection = db[collection_name]
-#         data = list()

@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from "styled-components";
 
 import { ChakraComponent, TextProps, Text, color } from "@chakra-ui/react";

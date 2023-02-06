@@ -1,3 +1,4 @@
+import React from 'react'
 import { PieGraph } from '../graphs/PieGraph'
 import { BarGraph } from '../graphs/BarGraph'
 import { LineGraph } from '../graphs/LineGraph'

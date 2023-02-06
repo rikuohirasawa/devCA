@@ -37,4 +37,3 @@ def scraper_status():
         print(err)
         return err
     
-print(scraper_status())

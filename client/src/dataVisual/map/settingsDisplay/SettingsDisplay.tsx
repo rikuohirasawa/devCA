@@ -1,3 +1,4 @@
+import React from 'react'
 import { MapLegend } from "../legend/MapLegend"
 
 import { SettingsDisplayWrapper, TextContainer, SettingsDisplayHeader, MinimizeIcon } from "./settingsDisplayStyles"

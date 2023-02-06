@@ -1,13 +1,11 @@
 import { Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Button, DrawerHeader, Input,
  DrawerFooter, Flex, Icon, Box } from '@chakra-ui/react'
 
-import { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { PageContext } from '../states/PageContext';
 import { FilterMenu } from './FilterMenu';
-import { ContentColumn, LinkContainer, LinkBtn } from './siderbarStyles';
-
+import { ContentColumn, LinkContainer } from './siderbarStyles';
 import { BsGithub, BsFillQuestionCircleFill } from 'react-icons/bs'
-import {AiOutlineQuestionCircle} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
@@ -56,6 +54,7 @@ export const Sidebar: React.FC = () => {
                                 }}
                                 onClick={()=>{navigate('/about')}}>
                                 <Icon 
+                                onClick={toggleSidebar}
                                     as={BsFillQuestionCircleFill} 
                                     boxSize={7}/>
                                 </Box>

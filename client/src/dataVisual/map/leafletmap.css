@@ -1,5 +1,5 @@
 .leaflet-bar a {
-    background: var(--bg-black);
+    background: var(--black);
     color: #fff;
     border: none;
     border: 1px solid rgba(49, 151, 149, 0.3);
@@ -7,7 +7,7 @@
 
 .leaflet-bar a:hover {
     background: var(--teal);
-    color: var(--bg-black);
+    color: var(--black);
     border: 1px solid rgba(255, 255, 255, 0.3)
 } 
 
@@ -18,21 +18,15 @@
 .leaflet-bar a.leaflet-disabled {
     background-color:  rgba(49, 151, 149, 0.4);
 }
-/* @keyframes fadein {
-    0% {opacity: 0}
-    100% {opacity: 1}
-}
-#map-container {
-    transition: fadein 8s ease-in;
-} */
+
 .leaflet-top {
     right: 5%;
-    top: 6%;
+    top: 8%;
     left: auto;
 }
 
 .leaflet-container .leaflet-control-attribution {
-    background: var(--bg-black);
+    background: var(--black);
     color: var(--teal);
 }
 

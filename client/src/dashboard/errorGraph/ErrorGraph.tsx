@@ -1,3 +1,4 @@
+import React from 'react'
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, Tooltip, Label, ResponsiveContainer } from "recharts"
 import { Box, BoxProps, useMediaQuery } from '@chakra-ui/react'
 import { ErrorStats, DashboardCard } from "../Dashboard"
@@ -5,13 +6,6 @@ import { CustomToolTipLineGraph } from "../../dataVisual/graphs/CustomToolTip"
 
 interface ErrorGraphProps {
     data: ErrorStats[]
-}
-
-interface ErrorGraphData {
-    date: string,
-    count: number,
-    fill?: string,
-    stroke?: string
 }
 
 export const ErrorGraph: React.FC<ErrorGraphProps> = ({data}) => {
@@ -41,7 +35,6 @@ export const ErrorGraph: React.FC<ErrorGraphProps> = ({data}) => {
                         fill='var(--teal)'/>
                     </YAxis>
                     <Tooltip content={<CustomToolTipLineGraph/>}/>
-
                     <CartesianGrid
                     stroke='var(--teal)'
                     strokeDasharray='2'

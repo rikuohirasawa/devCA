@@ -3,7 +3,7 @@ import os
 from pymongo import MongoClient
 from scraper import scraper
 
-
+# import fxs - no longer in use as update fxs have replace them
 # load mongodb information stored in .env
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
