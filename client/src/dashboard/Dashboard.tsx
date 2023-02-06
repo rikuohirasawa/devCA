@@ -114,7 +114,9 @@ export const Dashboard: React.FC = () => {
                 size='2xl'
                 >Scraper Dashboard 
                 </DashboardHeading>
-                <ErrorScreen/>
+                <ErrorScreen
+                transform='translate(-50%, -50%)'
+                />
        </DashboardWrapper> 
        )
     } else if (scraperStats && scraperStatus !== null && errorStats.length > 0) {

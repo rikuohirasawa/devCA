@@ -2,20 +2,8 @@ import { FaBomb } from 'react-icons/fa'
 import { Box, BoxProps, Icon, Heading, Text, Button} from '@chakra-ui/react'
 import { useContext } from 'react'
 import { PageContext } from '../states/PageContext'
-const ErrorContainer = (props: BoxProps) => {
-    return (
-        <Box 
-        position='absolute'
-        top='50%'
-        left='50%'
-        width='200px'
-        height='200px'
-        transform='translate(-50%, -50%)' 
-        {...props}
-        />
-    )
-}
-export const ErrorScreen = () => {
+
+export const ErrorScreen = (props: BoxProps) => {
     const { state } = useContext(PageContext),
     { isError } = state
     return (
@@ -28,7 +16,8 @@ export const ErrorScreen = () => {
         top='50%'
         left='50%'
         width='100%'
-        transform='translate(-50%, -50%)'>
+        transform='translate(-50%, 50%)'
+        {...props}>
             <Icon 
             opacity='0.75'
             height='200px'

@@ -15,10 +15,6 @@ interface ErrorGraphData {
 }
 
 export const ErrorGraph: React.FC<ErrorGraphProps> = ({data}) => {
-    const errorData: ErrorGraphData[] = []
-    data.forEach(e=>{
-        console.log(e)
-    })
     return (
         <DashboardCard
         colSpan={3}

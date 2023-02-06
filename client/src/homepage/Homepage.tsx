@@ -69,9 +69,6 @@ export const Homepage: React.FC = () => {
         <Wrapper>
           <RegionModal/>
           <LeafletMap/>
-            {/* <ChoroplethMap/> */}
-            {/* <SimpleMap/> */}
-            {/* <DataMap/> */}
         </Wrapper>
         )
     }
