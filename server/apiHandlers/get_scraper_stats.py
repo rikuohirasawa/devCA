@@ -14,7 +14,6 @@ def scraper_stats():
         data = list(collection.find({}))
         for doc in data:
             del doc['_id']
-        print(data)
         return data
     except Exception as err:
         print(type(err))
@@ -29,7 +28,6 @@ def scraper_status():
         collection = db['scraper_status']
         data = collection.find_one()
         del data['_id']
-        print(data)
         return data
     except Exception as err:
         print(type(err))
