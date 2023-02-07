@@ -51,7 +51,7 @@ def scraper_status(start_end):
 			end_scraper = scraper_status_collection.find_one_and_update(
 				{'is_live': True},
      			{'$set': {'is_live': False}}
-			)
+				)
 			if (end_scraper == None):
 				raise Exception('document not found, check parameter is set appropriately to start or end')
 		else: raise Exception('please ensure parameter and set to start or end')
