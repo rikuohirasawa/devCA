@@ -1,4 +1,5 @@
 appdirs==1.4.4
+aws-wsgi==0.2.7
 beautifulsoup4==4.11.1
 blinker==1.5
 bs4==0.0.1

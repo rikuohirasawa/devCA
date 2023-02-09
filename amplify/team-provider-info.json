@@ -1,0 +1,52 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyc411819dfec64-staging-171424-authRole",
+      "UnauthRoleArn": "arn:aws:iam::989290120393:role/amplify-amplifyc411819dfec64-staging-171424-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::989290120393:role/amplify-amplifyc411819dfec64-staging-171424-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifyc411819dfec64-staging-171424-deployment",
+      "UnauthRoleName": "amplify-amplifyc411819dfec64-staging-171424-unauthRole",
+      "StackName": "amplify-amplifyc411819dfec64-staging-171424",
+      "StackId": "arn:aws:cloudformation:us-east-1:989290120393:stack/amplify-amplifyc411819dfec64-staging-171424/3411b160-a89d-11ed-9489-0aed5ae7e23b",
+      "AmplifyAppId": "d30ronbjp3dcp5"
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-devca-dev-151802-authRole",
+      "UnauthRoleArn": "arn:aws:iam::989290120393:role/amplify-devca-dev-151802-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::989290120393:role/amplify-devca-dev-151802-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-devca-dev-151802-deployment",
+      "UnauthRoleName": "amplify-devca-dev-151802-unauthRole",
+      "StackName": "amplify-devca-dev-151802",
+      "StackId": "arn:aws:cloudformation:us-east-1:989290120393:stack/amplify-devca-dev-151802/4b6880c0-a8aa-11ed-85b3-0aabee588f9f",
+      "AmplifyAppId": "d30zlaek5pg4mg"
+    }
+  },
+  "flask": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-devca-flask-153657-authRole",
+      "UnauthRoleArn": "arn:aws:iam::989290120393:role/amplify-devca-flask-153657-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::989290120393:role/amplify-devca-flask-153657-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-devca-flask-153657-deployment",
+      "UnauthRoleName": "amplify-devca-flask-153657-unauthRole",
+      "StackName": "amplify-devca-flask-153657",
+      "StackId": "arn:aws:cloudformation:us-east-1:989290120393:stack/amplify-devca-flask-153657/ed625840-a8ac-11ed-8c67-0ebd50139c35",
+      "AmplifyAppId": "d30ronbjp3dcp5"
+    },
+    "categories": {
+      "function": {
+        "devca7f7e3e90": {
+          "deploymentBucketName": "amplify-devca-flask-153657-deployment",
+          "s3Key": "amplify-builds/devca7f7e3e90-7539757964346e2f2b49-build.zip"
+        }
+      },
+      "api": {
+        "flask": {}
+      }
+    }
+  }
+}

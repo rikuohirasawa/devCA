@@ -10,7 +10,9 @@ import { LeafletMap } from "../dataVisual/map/LeafletMap"
 import { ErrorScreen } from "../errorScreen/ErrorScreen"
 import { RegionData } from "../states/pageReducer"
 
+
 export const Homepage: React.FC = () => {
+
     const { state, dispatch } = useContext(PageContext),
     { isError } = state
     useEffect(()=>{

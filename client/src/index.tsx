@@ -6,6 +6,10 @@ import { BrowserTracing } from '@sentry/tracing'
 
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './themes/themes'
+import { Amplify } from 'aws-amplify'
+import config from './aws-exports'
+
+Amplify.configure(config)
 
 Sentry.init({
   dsn: "https://f2d0f58e80e64c608a0ad0d264bfbf56@o4504565682667520.ingest.sentry.io/4504565687255042",

@@ -20,6 +20,7 @@
     "@types/react-modal": "^3.13.1",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "aws-amplify": "^5.0.13",
     "d3-geo-projection": "^4.0.0",
     "datamaps": "^0.5.9",
     "framer-motion": "^6",
