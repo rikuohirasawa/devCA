@@ -69,14 +69,19 @@ export const Dashboard: React.FC = () => {
         'Access-Control-Allow-Origin': '*',
     }
     useEffect(()=>{
-        fetch('http://127.0.0.1:8000/test')
-        .then(res=>res.json())
+        fetch('http://localhost:8000/test', {
+            referrerPolicy: "unsafe-url",
+            mode: "no-cors"
+        })
+        .then(res=>{
+            console.log('res', res)
+            return res.json()})
         .then(data=>console.log(data))
     })
     useEffect(()=>{
         Promise.all([
-            fetch(`44.205.19.65/scraper-stats`),
-            fetch(`https://ec2-user@44.205.19.65/scraper-stats`)
+            fetch(`http://localhost:8000/scraper-stats`),
+            fetch(`http://localhost:8000/scraper-stats`)
         ]).then((responses: Response[])=>{
 
             const responsesJSON = (responses.map(res=>{
