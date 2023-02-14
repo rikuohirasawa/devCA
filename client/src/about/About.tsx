@@ -7,6 +7,8 @@ import { useState } from "react"
 
 import { BsGithub } from 'react-icons/bs'
 
+import { useEffect } from "react"
+
 const AboutContainer = (props: BoxProps) => {
     return (
         <Box
@@ -61,6 +63,18 @@ const ExternalLink = (props: LinkProps) => {
 
 export const About: React.FC = () => {
     const [btnClick, setBtnClick] = useState(false);
+    useEffect(()=>{
+        const url = 'http://ec2-user@44.205.19.65:80/test'
+        fetch(url, {
+            referrer: "http://ec2-user@44.205.19.65:80/test",
+            referrerPolicy: "unsafe-url",
+            mode: "no-cors"})
+        .then(res=>{
+            console.log(res)
+            console.log(url)
+            return res.json()})
+        .then(data=>console.log(data))
+    }, [])
     return (
         <AboutContainer>
             <AboutHeading 

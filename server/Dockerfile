@@ -1,8 +1,7 @@
-FROM python:3.11
-ADD ./ app/
-EXPOSE 8000/tcp
+FROM --platform=linux/amd64 python:3.11
 WORKDIR /app
-COPY requirements.txt requirements.txt
+COPY . .
+EXPOSE 80
 RUN pip3 install -r requirements.txt
 COPY server.py .
 CMD [ "python", "./server.py" ]

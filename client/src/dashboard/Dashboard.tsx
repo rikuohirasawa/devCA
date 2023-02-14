@@ -63,20 +63,27 @@ export const Dashboard: React.FC = () => {
     const { state, dispatch } = useContext(PageContext),
     { isError } = state,
     [isSmallerThan1150] = useMediaQuery('(max-width: 1150px)')
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+    }
     useEffect(()=>{
-        fetch('http://127.0.ec2-user@44.205.19.65/test')
+        fetch('http://127.0.0.1:8000/test')
         .then(res=>res.json())
         .then(data=>console.log(data))
     })
     useEffect(()=>{
         Promise.all([
-            fetch(`http://localhost:8000/scraper-stats`),
-            fetch(`http://localhost:8000/scraper-status`)
+            fetch(`44.205.19.65/scraper-stats`),
+            fetch(`https://ec2-user@44.205.19.65/scraper-stats`)
         ]).then((responses: Response[])=>{
+
             const responsesJSON = (responses.map(res=>{
                 if (res['status'] > 400) {
                     throw new Error(`${res['status']}, ${res['statusText']}`);
                 }
+                console.log(res)
                 return res.json()
             })
             )
