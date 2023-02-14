@@ -64,7 +64,7 @@ export const Dashboard: React.FC = () => {
     { isError } = state,
     [isSmallerThan1150] = useMediaQuery('(max-width: 1150px)')
     useEffect(()=>{
-        fetch('http://127.0.0.1:8000/test')
+        fetch('http://127.0.ec2-user@44.205.19.65/test')
         .then(res=>res.json())
         .then(data=>console.log(data))
     })
