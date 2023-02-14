@@ -65,23 +65,21 @@ export const Dashboard: React.FC = () => {
     [isSmallerThan1150] = useMediaQuery('(max-width: 1150px)')
 
     useEffect(()=>{
-        fetch('http://localhost:8000/api/test')
+        fetch('https://www.devcanada.online/test')
         .then(res=>{
-            console.log('res', res)
             return res.json()})
         .then(data=>console.log(data))
     })
     useEffect(()=>{
         Promise.all([
-            fetch(`http://localhost:8000/api/scraper-stats`),
-            fetch(`http://localhost:8000/api/scraper-stats`)
+            fetch(`https://www.devcanada.online/scraper-stats`),
+            fetch(`https://www.devcanada.online/scraper-status`)
         ]).then((responses: Response[])=>{
 
             const responsesJSON = (responses.map(res=>{
                 if (res['status'] > 400) {
                     throw new Error(`${res['status']}, ${res['statusText']}`);
                 }
-                console.log(res)
                 return res.json()
             })
             )
