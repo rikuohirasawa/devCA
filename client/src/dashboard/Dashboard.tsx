@@ -64,15 +64,8 @@ export const Dashboard: React.FC = () => {
     { isError } = state,
     [isSmallerThan1150] = useMediaQuery('(max-width: 1150px)')
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    }
     useEffect(()=>{
-        fetch('http://localhost:8000/test', {
-            referrerPolicy: "unsafe-url",
-            mode: "no-cors"
-        })
+        fetch('http://localhost:8000/api/test')
         .then(res=>{
             console.log('res', res)
             return res.json()})
@@ -80,8 +73,8 @@ export const Dashboard: React.FC = () => {
     })
     useEffect(()=>{
         Promise.all([
-            fetch(`http://localhost:8000/scraper-stats`),
-            fetch(`http://localhost:8000/scraper-stats`)
+            fetch(`http://localhost:8000/api/scraper-stats`),
+            fetch(`http://localhost:8000/api/scraper-stats`)
         ]).then((responses: Response[])=>{
 
             const responsesJSON = (responses.map(res=>{

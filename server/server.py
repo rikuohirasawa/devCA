@@ -16,32 +16,32 @@ sentry_sdk.init(
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/test', methods=['GET'])
+@app.route('/api/test', methods=['GET'])
 def test():
     return jsonify({'content': 'hello', 'sentBy': 'server'})
 
-@app.route('/get-region-data', methods=['GET'])
+@app.route('/api/get-region-data', methods=['GET'])
 def get_region():
     data = get_data(request.args.get('table'), request.args.get('date'))
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route('/get-technology-data', methods=['GET'])
+@app.route('/api/get-technology-data', methods=['GET'])
 def get_technologies():
     data = get_data(request.args.get('table'), request.args.get('date'))
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route('/scraper-stats', methods=['GET'])
+@app.route('/api/scraper-stats', methods=['GET'])
 def get_scraper_stats():
     data = scraper_stats()
     response = jsonify(data)
     response.headers.set('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route('/scraper-status', methods=['GET'])
+@app.route('/api/scraper-status', methods=['GET'])
 def get_scraper_status():
     data = scraper_status()
     response = jsonify(data)

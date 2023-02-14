@@ -24,7 +24,7 @@ export const Homepage: React.FC = () => {
       return ()=> window.removeEventListener('resize', onResize)
       }, [])
     useEffect(()=>{
-      fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=region_data`)
+      fetch(`http://localhost:8000/api/get-region-data?date=${'2022-12-23'}&table=region_data`)
       .then((res: Response)=>{
         if (res['status'] > 400) {
           throw new Error(`${res['status']}, ${res['statusText']}`)
@@ -45,7 +45,7 @@ export const Homepage: React.FC = () => {
     }, [])
 
     useEffect(()=>{
-      fetch(`http://localhost:8000/get-region-data?date=${'2022-12-23'}&table=technology_data`)
+      fetch(`http://localhost:8000/api/get-region-data?date=${'2022-12-23'}&table=technology_data`)
       .then((res: Response)=>{
         if (res['status'] > 400) {
           throw new Error(`${res['status']}, ${res['statusText']}`)
