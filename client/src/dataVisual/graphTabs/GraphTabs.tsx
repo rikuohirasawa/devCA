@@ -15,7 +15,8 @@ export interface GraphProps {
 export const GraphTabs: React.FC<GraphProps> = ({data}) => {
 
     const { state } = useContext(PageContext),
-    { windowWidth } = state
+    { windowWidth, windowDimensions } = state,
+    windowHeight = windowDimensions['innerHeight']
     if (data) {
         return (
             <Tabs 
@@ -34,18 +35,22 @@ export const GraphTabs: React.FC<GraphProps> = ({data}) => {
                 </TabList>
                 <TabPanels color='teal'>
                     <TabPanel
-                    height='100%'
+                    overflow='hidden'
+                    height={windowHeight < 950 && windowWidth > 550 ? '500px' : '100%'}
                     padding='0'>
                         <PieGraph data={data}/>
                     </TabPanel>
                     <TabPanel 
+                    overflow='hidden'
                     padding='0'
-                    height='100%'>
+                    height={windowHeight < 950 && windowWidth > 550 ? '500px' : '100%'}
+                    >
                         <BarGraph data={data}/>
                     </TabPanel>
                     <TabPanel 
+                    overflow='hidden'
                     padding='0'
-                    height='100%'>
+                    height={windowHeight < 950 && windowWidth > 550 ? '500px' : '100%'}>
                         <LineGraph/>
                     </TabPanel>
                 </TabPanels>
