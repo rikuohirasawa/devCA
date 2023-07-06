@@ -1,7 +1,5 @@
 # devCA
 
-### Introduction
-
 This is a full-stack application created for the purpose of displaying popularity of various technologies across Canada (e.g. Python, C++). Data is scraped from job search engine Adzuna, and is subsequently stored, from which it may be served to the client.
 
 The backend for the app is built in Python, and has two primary functionalities. The first being a scraper, which makes heavy use of the Beautiful Soup library. The second is a Flask app that serves the scraped data to the client.
