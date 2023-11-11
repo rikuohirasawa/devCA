@@ -1,4 +1,4 @@
-# devCA
+# Adzuna job board scraper
 
 This is a full-stack application created for the purpose of displaying popularity of various technologies across Canada (e.g. Python, C++). Data is scraped from job search engine Adzuna, and is subsequently stored, from which it may be served to the client.
 
