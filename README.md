@@ -6,9 +6,7 @@ The backend for the app is built in Python, and has two primary functionalities.
 
 The frontend is created using Typescript/React, with the primary feature being a choropleth map (react-leaflet) that visualizes the data by region. There are also smaller visualizations that make use of the Recharts library.
 
-The client is hosted at: https://client.devcanada.online/
-
-At the current moment the full application is NOT live. 
+At the current moment the application is NOT live. 
 
 I have intentionally throttled the scraper as to respect the Adzuna servers. As a result, the runtime of the scraper exceeds the maximum timeout of a serverless function. This means in order to serve the app, I had to deploy it on a server, which required $$$$. 
 
